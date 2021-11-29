@@ -1,0 +1,28 @@
+@import "./vars.scss";
+
+input::placeholder {
+  color: #8b8b8b;
+  font-style: italic;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 24px 33px 40px;
+  background-color: white;
+  width: var(--width-app);
+  margin: 0 auto;
+  justify-content: center;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 800px) {
+  .content {
+    padding: 32px 28px;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
