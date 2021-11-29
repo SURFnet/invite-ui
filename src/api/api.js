@@ -9,7 +9,7 @@ function validateResponse(showErrorDialog) {
                 refreshTokens().then(json => {
                     sessionStorage.setItem("accessToken", json.access_token);
                     sessionStorage.setItem("refreshToken", json.refresh_token);
-                    window.location.href = "/";
+                    window.location.reload(true);
                 })
                 return;
             }
@@ -19,9 +19,6 @@ function validateResponse(showErrorDialog) {
             }
             const error = new Error(res.statusText);
             error.response = res;
-            if (showErrorDialog && res.status === 401) {
-                window.location.reload(true);
-            }
             if (showErrorDialog) {
                 setTimeout(() => {
                     throw error;
@@ -65,9 +62,9 @@ function fetchDelete(path, showErrorDialog = true) {
 
 //Base
 export function oauth() {
-    return postPutJson("/guests/api/public/authorize", {state: window.location.href}, "POST");
+    return postPutJson("/guests/api/public/authorize", {}, "POST");
 }
 
 export function me() {
-    return fetchJson("/guests/api/users");
+    return fetchJson("/guests/api/users", {}, {}, false);
 }

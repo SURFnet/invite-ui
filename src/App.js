@@ -16,6 +16,7 @@ const App = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const inAuthRedirect = urlSearchParams.has("code");
         if (!accessToken && !options) {
+            sessionStorage.setItem("path", `${window.location.pathname}${window.location.search}`);
             oauth().then(r => {
                 sessionStorage.setItem("options", JSON.stringify(r));
                 window.location.href = r.authorizationUrl;
@@ -29,11 +30,17 @@ const App = () => {
                 sessionStorage.setItem("clientId", optionsDict.clientId);
                 sessionStorage.setItem("tokenUrl", optionsDict.tokenUrl);
                 sessionStorage.removeItem("options");
-                me().then(user => {
-                    sessionStorage.setItem("user", JSON.stringify(user));
-                    navigate('/user', {replace: true});
-                    setLoading(false);
-                });
+                me()
+                    .then(user => {
+                        sessionStorage.setItem("user", JSON.stringify(user));
+                        navigate(sessionStorage.getItem("path"), {replace: true});
+                        setLoading(false);
+                    })
+                    .catch(() => {
+                        //Unknown user who has received an invitation
+                        navigate(sessionStorage.getItem("path"), {replace: true});
+                        setLoading(false);
+                    });
             });
         } else {
             setLoading(false);
