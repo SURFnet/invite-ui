@@ -1,0 +1,27 @@
+@import "../styles/vars.scss";
+
+.header {
+  display: flex;
+  background-color: $primary-blue;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  flex-direction: row;
+  height: 80px;
+  border-left: 28px solid $primary-blue;
+
+  .logo {
+    padding: 10px 0;
+  }
+
+  h1 {
+    color: white;
+    margin-left: 25px;
+  }
+
+  a.logout {
+    margin: 0 25px 0 auto;
+  }
+
+}
+

@@ -1,0 +1,96 @@
+@import "../styles/vars.scss";
+
+section.button-container {
+    display: flex;
+
+    a.button, label.button {
+        min-width: 140px !important;
+        max-width: 340px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+a.button, label.button {
+    display: inline-block;
+    padding: 6px 15px;
+    background-color: #0077c8;
+    color: white;
+    border-radius: $br;
+    min-width: 140px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+
+    svg {
+        margin-left: 25px;
+    }
+
+    &:hover {
+        background-color: $hover-blue;
+    }
+
+    &:hover, &:visited {
+        text-decoration: none;
+        color: white;
+    }
+
+    &.small {
+        min-width: initial;
+    }
+
+    &.cancel, &.white {
+        background-color: white;
+        color: #0077c8;
+        border: 1px solid #0077c8;
+        min-width: 120px;
+
+        &:hover {
+            background-color: #ddf2fd;
+            color: $hover-blue;
+        }
+
+        i {
+            color: $primary-blue;
+            margin: 0;
+            font-size: larger;
+        }
+    }
+
+    &.delete {
+        color: $primary-red;
+        border: none;
+        background-color: $primary-grey;
+        display: flex;
+        min-width: initial;
+
+        font-size: 22px;
+
+        &:hover {
+            color: darken($primary-red, 10%);
+        }
+
+        &:disabled {
+            color: $primary-grey;
+        }
+
+        svg {
+            margin: auto;
+        }
+    }
+
+    &.disabled {
+        cursor: no-drop;
+        background-color: #cccccc;
+        border-color: #cccccc;
+        color: white;
+
+        &:hover {
+            background-color: #cccccc;
+            color: white;
+        }
+    }
+
+}
+

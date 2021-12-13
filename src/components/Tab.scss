@@ -1,0 +1,83 @@
+@import "../styles/vars.scss";
+
+
+.tab {
+  min-width: 110px;
+  padding: 10px 15px;
+  margin: 0 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 3px solid $background;
+
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  svg {
+    width: 20px;
+    font-size: 18px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  &:not(.active) {
+    cursor: pointer;
+
+    p, svg {
+      color: $primary-grey;
+    }
+
+    &:not(.read-only):hover {
+      p, svg {
+        color: black;
+      }
+
+      border-bottom: 3px solid $secondary-grey;
+    }
+
+    &.read-only {
+      cursor: not-allowed;
+
+      p, svg {
+        color: $primary-grey;
+      }
+
+    }
+  }
+
+  &.active {
+    border-bottom: 3px solid $primary-green;
+
+    p, svg {
+      color: $primary-green;
+      font-weight: bold;
+    }
+
+  }
+
+  span.notifier {
+    border-radius: 50%;
+    background-color: $primary-blue;
+    color: white;
+    font-size: 14px;
+    display: inline-block;
+    width: 18px;
+    text-align: center;
+    height: 18px;
+    line-height: 18px;
+    position: absolute;
+    right: 0;
+    top: -4px;
+
+
+  }
+
+}
+
+

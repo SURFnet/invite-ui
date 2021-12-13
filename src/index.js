@@ -1,27 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {render} from "react-dom";
+import {render} from 'react-dom';
 import './index.scss';
 import App from './App';
-import {Router} from "react-router-dom";
-import {
-    BrowserRouter,
-    Routes,
-    Route
-} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import "./locales/en";
+
+import I18n from "i18n-js";
+
+I18n.locale = "en";
 
 render(
     <React.StrictMode>
         <BrowserRouter>
             <Routes>
-                <Route path="*" element={<App/>}>
-                    {/*<Route index element={<Home/>}/>*/}
-                    {/*<Route path="teams" element={<Teams/>}>*/}
-                    {/*    <Route path=":teamId" element={<Team/>}/>*/}
-                    {/*    <Route path="new" element={<NewTeamForm/>}/>*/}
-                    {/*    <Route index element={<LeagueStandings/>}/>*/}
-                    {/*</Route>*/}
-                </Route>
+                <Route path="/*" element={<App/>}/>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,

@@ -64,7 +64,11 @@ function fetchDelete(path, showErrorDialog = true) {
 export function oauth() {
     return postPutJson("/guests/api/public/authorize", {}, "POST");
 }
-
+//Users
 export function me() {
     return fetchJson("/guests/api/users", {}, {}, false);
+}
+//Institutions
+export function allInstitutions() {
+    return fetchJson("/guests/api/institutions");
 }
