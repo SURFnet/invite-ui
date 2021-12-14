@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./Spinner.scss"
+import "../components/Spinner.scss"
 import {useNavigate, useParams} from "react-router-dom";
 import {
     deleteInstitution,
@@ -8,19 +8,33 @@ import {
     institutionSchacHomeExists,
     saveInstitution
 } from "../api/api";
-import Spinner from "./Spinner";
+import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
 import {setFlash} from "../flash/events";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
 import {isEmpty} from "../utils/forms";
-import ConfirmationDialog from "./ConfirmationDialog";
-import InputField from "./InputField";
-import ErrorIndicator from "./ErrorIndicator";
+import ConfirmationDialog from "../components/ConfirmationDialog";
+import InputField from "../components/InputField";
+import ErrorIndicator from "../components/ErrorIndicator";
 
 const InstitutionForm = ({user}) => {
 
-    const required = ["displayName", "entityId", "homeInstitution"]
     const navigate = useNavigate();
+
+    const doDelete = showConfirmation => () => {
+        if (showConfirmation) {
+            setConfirmation({...confirmation, open: true});
+        } else {
+            deleteInstitution(institution).then(r => {
+                navigate("/institutions");
+                setFlash(I18n.t("institutions.flash.deleted"));
+            })
+        }
+    };
+
+    const cancel = () => navigate("/institutions");
+
+    const required = ["displayName", "entityId", "homeInstitution"]
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
@@ -29,7 +43,7 @@ const InstitutionForm = ({user}) => {
         question: I18n.t("institutions.confirmation"),
         warning: false,
         action: doDelete(true),
-        cancel: setConfirmation({...confirmation, open: false})
+        cancel: cancel
     });
     const [alreadyExists, setAlreadyExists] = useState({});
     let originalName;
@@ -58,7 +72,7 @@ const InstitutionForm = ({user}) => {
                 originalName = res.displayName;
             });
         }
-    }, [user]);
+    }, []);
 
     const validateEntityId = e =>
         institutionEntityIdExists(e.target.value, !isNew).then(json => {
@@ -69,19 +83,6 @@ const InstitutionForm = ({user}) => {
         institutionSchacHomeExists(e.target.value, !isNew).then(json => {
             setAlreadyExists({...alreadyExists, homeInstitution: json.exists});
         });
-
-    const cancel = () => navigate("/institutions");
-
-    const doDelete = showConfirmation => () => {
-        if (showConfirmation) {
-            setConfirmation({...confirmation, open: true});
-        } else {
-            deleteInstitution(institution).then(r => {
-                navigate("/institutions");
-                setFlash(I18n.t("institutions.flash.deleted"));
-            })
-        }
-    };
 
     const isValid = () => {
         const inValid = Object.values(alreadyExists).some(val => val) || required.some(attr => isEmpty(institution[attr]));
@@ -103,7 +104,11 @@ const InstitutionForm = ({user}) => {
         }
     };
 
-    const setState = (attr, value) => setInstitution({...institution, attr: value});
+    const setState = (attr, value) => {
+        debugger;
+        const newInstitution = {...institution, [attr]: value};
+        setInstitution(newInstitution);
+    }
 
     if (loading) {
         return <Spinner/>
@@ -117,7 +122,7 @@ const InstitutionForm = ({user}) => {
                                 isWarning={confirmation.warning}
                                 question={confirmation.question}/>
 
-            <h1 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name:originalName})}</h1>
+            <h1 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h1>
 
             <InputField value={institution.displayName}
                         onChange={e => setState("displayName", e.target.value)}

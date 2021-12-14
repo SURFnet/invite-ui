@@ -19,7 +19,7 @@ const Institutions = ({user}) => {
             setInstitutions(res);
             setLoading(false);
         })
-    });
+    }, []);
 
     const openInstitution = institution => e => {
         stopEvent(e);
@@ -62,7 +62,7 @@ const Institutions = ({user}) => {
                       hideTitle={true}
                       rowLinkMapper={() => openInstitution}
                       showNew={user.authority === AUTHORITIES.SUPER_ADMIN.name}
-                      newEntityPath={"/new-institution"}
+                      newEntityPath={"/institution/new"}
                       loading={loading}/>
         </div>
     )

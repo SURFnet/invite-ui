@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import Applications from "./pages/Applications";
 import Application from "./pages/Application";
 import NotFound from "./pages/NotFound";
-import InstitutionForm from "./components/InstitutionForm";
+import InstitutionForm from "./pages/InstitutionForm";
 
 addIcons();
 
@@ -70,23 +70,23 @@ const App = () => {
                         <Route path=":tab" element={<Home user={user}/>}/>
                         <Route path="" element={<Home user={user}/>}/>
                     </Route>
-                    <Route path="institution/:institutionId" element={InstitutionForm}/>
-                        <Route path="institution-detail">
-                            <Route path=":tab" element={<Home user={user}/>}/>
-                            <Route path="" element={<Home user={user}/>}/>
-                        </Route>
-                        <Route path="new-" element={<Applications/>}/>
-                        <Route path="applications" element={<Applications/>}/>
-                        <Route path="applications/:applicationId" element={<Application/>}/>
-                        <Route path="*" element={<NotFound/>}/>
+                    <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
+                    <Route path="institution-detail">
+                        <Route path=":tab" element={<Home user={user}/>}/>
+                        <Route path="" element={<Home user={user}/>}/>
+                    </Route>
+                    <Route path="new-" element={<Applications/>}/>
+                    <Route path="applications" element={<Applications/>}/>
+                    <Route path="applications/:applicationId" element={<Application/>}/>
+                    <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>
                     <Route path="invitation/:hash" element={<Application/>}/>
                     <Route path="*" element={<NotFound/>}/>
-                    </Routes>}
-                    </div>
-                    </div>
-                    );
-                }
+                </Routes>}
+            </div>
+        </div>
+    );
+}
 
-                export default App;
+export default App;

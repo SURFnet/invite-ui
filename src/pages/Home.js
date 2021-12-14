@@ -11,20 +11,18 @@ const Home = ({user}) => {
     const navigate = useNavigate();
     const {tab = "institutions"} = useParams();
     const [currentTab, setCurrentTab] = useState(tab);
-    const [tabs, setTabs] = useState([]);
 
-    useEffect(() => {
-        const initialTabs = [];
-        if (isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
-            initialTabs.push(<div key="institutions"
-                                  name="institutions"
-                                  label={I18n.t("home.tabs.institutions")}
-                                  icon={<FontAwesomeIcon icon="university"/>}>
+    const tabs = [];
+
+    if (isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
+        tabs.push(
+            <div key="institutions"
+                 name="institutions"
+                 label={I18n.t("home.tabs.institutions")}
+                 icon={<FontAwesomeIcon icon="university"/>}>
                 <Institutions user={user}/>
             </div>)
-        }
-        setTabs(initialTabs);
-    });
+    }
 
     const tabChanged = name => {
         setCurrentTab(name);
