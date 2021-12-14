@@ -1,0 +1,55 @@
+@import "../styles/vars.scss";
+
+div.flash {
+    color: white;
+
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 6;
+    opacity: .97;
+
+    transition: top 150ms ease-in-out;
+
+    &.hide {
+        transition: top 1000ms ease-in-out;
+        top: -80px;
+    }
+
+    &.info {
+        background-color: $primary-green;
+        color: white;
+        font-weight: bold;
+    }
+
+    &.warning {
+        background-color: $primary-orange;
+    }
+
+    &.error {
+        background-color: $primary-red;
+    }
+
+    .message-container {
+        margin: 0 auto;
+        position: relative;
+
+        p {
+            padding: 10px 25px 10px 35px;
+        }
+
+    }
+
+    a.close {
+        text-decoration: none;
+        position: absolute;
+        right: 6px;
+        top: -2px;
+        color: white;
+        padding: 6px;
+        font-size: 16px;
+        font-weight: normal;
+    }
+
+
+}

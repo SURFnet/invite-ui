@@ -1,0 +1,164 @@
+@import "../styles/vars";
+
+.mod-entities {
+
+  padding: 0 25px 25px 25px;
+
+  .entities-search {
+    display: flex;
+    align-items: center;
+    padding: 32px 0 28px 0;
+    min-height: 40px;
+
+    @media (max-width: $mobile) {
+      flex-direction: column;
+      align-items: normal;
+    }
+
+    h1 {
+      font-size: 22px;
+      line-height: 26px;
+
+      @media (max-width: $mobile) {
+        margin-bottom: 15px
+      }
+
+    }
+
+    .search {
+      position: relative;
+
+      &.standalone {
+        margin-left: auto;
+      }
+
+      @media (max-width: $mobile) {
+        margin-left: 0;
+      }
+
+      display: flex;
+
+      svg.fa-search {
+        position: absolute;
+        font-size: 16px;
+        color: $primary-blue;
+        top: 7px;
+        right: 9px;
+      }
+
+      input[type=text] {
+        flex-grow: 2;
+        border: 1px solid $primary-grey;
+        padding: 0 15px 0 10px;
+        min-height: 36px;
+        font-size: 16px;
+        border-radius: $br;
+        min-width: 360px;
+
+        @media (max-width: $mobile) {
+          min-width: 0;
+        }
+
+
+        &[disabled] {
+          background-color: $primary-grey;
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: 1px 1px 1px $primary-grey, -1px -1px 1px $primary-grey;
+        }
+      }
+    }
+
+    a.button.blue.plus {
+      margin-right: auto;
+      @media (max-width: $mobile) {
+        margin: 15px 0;
+      }
+
+    }
+
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+
+    thead {
+      tr {
+        border-bottom: 3px solid $primary-grey;
+      }
+
+      th {
+        padding: 10px 0;
+        color: $primary-green;
+
+        &.sortable {
+          cursor: pointer;
+        }
+
+        &.icon {
+          width: 64px;
+        }
+
+        &.logo {
+          width: 85px;
+        }
+
+        svg.fa-caret-up, svg.fa-caret-down {
+          margin-left: 5px;
+        }
+
+        &.checker {
+          width: 35px;
+        }
+
+        &.center {
+          text-align: center;
+        }
+
+        &.right {
+          text-align: right;
+        }
+
+      }
+
+
+    }
+
+    tbody {
+      tr {
+        color: black;
+        border-bottom: 1px solid $primary-grey;
+
+        &.clickable {
+          cursor: pointer;
+
+          &:hover {
+            background-color: $tertiary-grey;
+          }
+        }
+      }
+
+      td {
+        padding: 10px 0;
+        word-break: break-all;
+
+        &.center {
+          text-align: center;
+        }
+
+        &.right {
+          text-align: right;
+        }
+
+
+      }
+    }
+  }
+
+
+}
+
+

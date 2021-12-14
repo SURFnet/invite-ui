@@ -64,11 +64,70 @@ function fetchDelete(path, showErrorDialog = true) {
 export function oauth() {
     return postPutJson("/guests/api/public/authorize", {}, "POST");
 }
+
 //Users
 export function me() {
     return fetchJson("/guests/api/users", {}, {}, false);
 }
+
 //Institutions
 export function allInstitutions() {
     return fetchJson("/guests/api/institutions");
 }
+
+export function institutionById(id) {
+    return fetchJson(`/guests/api/institutions/${id}`);
+}
+
+export function institutionEntityIdExists(entityId, isExisting) {
+    return postPutJson("/guests/api/institutions/entity-id-exists", {
+        existingObject: isExisting,
+        uniqueAttribute: entityId
+    });
+}
+
+export function institutionSchacHomeExists(schacHome, isExisting) {
+    return postPutJson("/guests/api/institutions/schac-home-exists", {
+        existingObject: isExisting,
+        uniqueAttribute: schacHome
+    });
+}
+
+export function saveInstitution(institution) {
+    return postPutJson("/guests/api/institutions", institution, "post");
+}
+
+
+export function deleteInstitution(institution) {
+    return fetchDelete(`/guests/api/institutions/${institution.id}`);
+}
+
+// Roles
+export function allRoles() {
+    return fetchJson("/guests/api/roles");
+}
+
+export function roleById(id) {
+    return fetchJson(`/guests/api/roles/${id}`);
+}
+
+export function roleNameExists(name, isExisting, applicationId) {
+    return postPutJson("/guests/api/roles/entity-id-exists", {
+        existingObject: isExisting,
+        uniqueAttribute: name,
+        applicationId: applicationId
+    });
+}
+
+export function newRole(role) {
+    return postPutJson("/guests/api/roles", role, "post");
+}
+
+export function updateRole(role) {
+    return postPutJson("/guests/api/roles", role, "put");
+}
+
+export function deleteRole(role) {
+    return fetchDelete(`/guests/api/roles/${role.id}`);
+}
+

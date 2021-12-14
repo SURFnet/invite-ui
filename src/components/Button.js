@@ -2,11 +2,11 @@ import {stopEvent} from "../utils/forms";
 import "./Button.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-export default function Button({
-                                   onClick, txt, disabled = false, cancelButton = false,
-                                   warningButton = false, className = "", icon = null, small = false,
-                                   html = null, centralize = false
-                               }) {
+const Button = ({
+                    onClick, txt, disabled = false, cancelButton = false,
+                    warningButton = false, className = "", icon = null, small = false,
+                    html = null, centralize = false
+                }) => {
     const disable = disabled ? "disabled" : "";
     const cancel = cancelButton ? "cancel" : warningButton ? "delete" : "blue";
     const smallButton = small ? "small" : "";
@@ -35,3 +35,4 @@ export default function Button({
     }
     return html ? withHtml : withoutHtml;
 }
+export default Button;

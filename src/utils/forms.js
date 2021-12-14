@@ -20,3 +20,60 @@ export function isEmpty(obj) {
     }
     return false;
 }
+
+export function groupBy(arr, key) {
+    return arr.reduce((acc, item) => {
+        (acc[item[key]] = acc[item[key]] || []).push(item);
+        return acc;
+    }, {});
+}
+
+export function sortObjects(objects, attribute, reverse) {
+    return [...objects].sort((a, b) => {
+        const val1 = valueForSort(attribute, a);
+        const val2 = valueForSort(attribute, b);
+        if (typeof val1 === "number" && typeof val2 === "number") {
+            return (val1 - val2) * (reverse ? -1 : 1);
+        }
+        const aS = val1.toString();
+        const bs = val2.toString();
+        return aS.localeCompare(bs) * (reverse ? -1 : 1);
+    });
+}
+
+export function valueForSort(attribute, obj) {
+    if (attribute.endsWith("_date")) {
+        return obj[attribute] || Number.MAX_SAFE_INTEGER;
+    }
+    const val = obj[attribute];
+    if (!isEmpty(val)) {
+        return val;
+    }
+    const parts = attribute.replace(/__/g, ".").split(".");
+    const res = parts.reduce((acc, e) => {
+        if (isEmpty(acc)) {
+            return "";
+        }
+        return acc[e];
+    }, obj);
+    return res || "";
+
+}
+
+export function escapeHtmlTooltip(msg) {
+    msg = escape(msg);
+    msg = msg.replace(/\n/g, "<br/>");
+    msg = msg.replace(/%20/g, " ");
+    return msg;
+}
+
+const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+
+export function pseudoGuid() {
+    return (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+}
+
+export const removeDuplicates = (arr, attr) => arr
+    .filter((obj, pos, arr) => arr.map(mapObj => mapObj[attr]).indexOf(obj[attr]) === pos);
+
+

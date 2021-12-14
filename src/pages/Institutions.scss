@@ -1,0 +1,32 @@
+div.institutions {
+  background-color: white;
+
+  table.institutions {
+
+    thead {
+      th {
+        &.displayName {
+          width: 25%;
+        }
+
+        &.entityId {
+          width: 25%;
+        }
+
+        &.homeInstitution {
+          width: 15%;
+        }
+
+        &.aupUrl {
+          width: 35%;
+        }
+      }
+    }
+
+    tbody {
+      td {
+      }
+    }
+  }
+}
+

@@ -13,7 +13,22 @@ I18n.translations.en = {
         }
     },
     institutions: {
-        title: "Institutions"
+        title: "Institutions",
+        displayName: "Name",
+        entityId: "Entity ID",
+        homeInstitution: "Schac home",
+        aupUrl: "AUP Url",
+        searchPlaceHolder: "Search institutions",
+        new: "New institution",
+        noEntities: "There are no institutions...",
+        newTitle: "New institution",
+        editTitle: "Edit {{name}}",
+        namePlaceholder: "Display name of the institution"
+    },
+    confirmationDialog: {
+        confirm: "Please confirm",
+        title: "Confirm"
     }
+
 
 }
