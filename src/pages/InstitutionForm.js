@@ -105,7 +105,6 @@ const InstitutionForm = ({user}) => {
     };
 
     const setState = (attr, value) => {
-        debugger;
         const newInstitution = {...institution, [attr]: value};
         setInstitution(newInstitution);
     }
