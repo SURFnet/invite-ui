@@ -101,6 +101,38 @@ export function saveInstitution(institution) {
 export function deleteInstitution(institution) {
     return fetchDelete(`/guests/api/institutions/${institution.id}`);
 }
+//Applications
+export function applicationsByInstitution(institutionId) {
+    return fetchJson(`/guests/api/applications/institution/${institutionId}`);
+}
+//TODO
+export function institutionById(id) {
+    return fetchJson(`/guests/api/institutions/${id}`);
+}
+
+export function institutionEntityIdExists(entityId, isExisting) {
+    return postPutJson("/guests/api/institutions/entity-id-exists", {
+        existingObject: isExisting,
+        uniqueAttribute: entityId
+    }, "post");
+}
+
+export function institutionSchacHomeExists(schacHome, isExisting) {
+    return postPutJson("/guests/api/institutions/schac-home-exists", {
+        existingObject: isExisting,
+        uniqueAttribute: schacHome
+    }, "post");
+}
+
+export function saveInstitution(institution) {
+    return postPutJson("/guests/api/institutions", institution, "post");
+}
+
+
+export function deleteInstitution(institution) {
+    return fetchDelete(`/guests/api/institutions/${institution.id}`);
+}
+
 
 // Roles
 export function allRoles() {
