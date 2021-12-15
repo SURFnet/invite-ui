@@ -23,7 +23,7 @@ const Institutions = ({user}) => {
 
     const openInstitution = institution => e => {
         stopEvent(e);
-        navigate(`/institutions/${institution.id}`);
+        navigate(`/institution-detail/${institution.id}`);
     };
 
     if (loading) {
@@ -48,7 +48,8 @@ const Institutions = ({user}) => {
         {
             key: "aupUrl",
             header: I18n.t("institutions.aupUrl"),
-            mapper: institution => institution.aupUrl,
+            ignoreRowClick: true,
+            mapper: institution => <a href={institution.aupUrl} target="_blank" rel="noreferrer">{institution.aupUrl}</a> ,
         },
 
     ]
@@ -57,7 +58,7 @@ const Institutions = ({user}) => {
             <Entities entities={institutions}
                       modelName="institutions"
                       searchAttributes={["displayName", "homeInstitution", "entityId"]}
-                      defaultSort="name"
+                      defaultSort="displayName"
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={() => openInstitution}

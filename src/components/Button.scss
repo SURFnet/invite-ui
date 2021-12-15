@@ -59,7 +59,7 @@ a.button, label.button {
     }
 
     &.delete {
-        color: $primary-red;
+        color: darken($primary-red, 10%);
         border: none;
         background-color: $primary-grey;
         display: flex;
@@ -68,7 +68,7 @@ a.button, label.button {
         font-size: 22px;
 
         &:hover {
-            color: darken($primary-red, 10%);
+            color: darken($primary-red, 20%);
         }
 
         &:disabled {

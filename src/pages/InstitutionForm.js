@@ -22,38 +22,20 @@ const InstitutionForm = ({user}) => {
 
     const navigate = useNavigate();
 
-    const doDelete = showConfirmation => () => {
-        if (showConfirmation) {
-            setConfirmation({...confirmation, open: true});
-        } else {
-            deleteInstitution(institution).then(r => {
-                navigate("/institutions");
-                setFlash(I18n.t("institutions.flash.deleted"));
-            })
-        }
-    };
-
-    const cancel = () => navigate("/home");
+    const cancel = () => navigate(-1);
 
     const required = ["displayName", "entityId", "homeInstitution"];
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
     const [isNew, setIsNew] = useState(false);
-    const [confirmation, setConfirmation] = useState({
-        open: false,
-        question: I18n.t("confirmationDialog.questions.delete", {
-            name: institution.name,
-            object: I18n.t("institutions.object").toLowerCase()
-        }),
-        warning: false,
-        action: doDelete(true),
-        cancel: cancel
-    });
+    const [confirmation, setConfirmation] = useState({});
+    const [confirmationOpen, setConfirmationOpen] = useState(false);
     const [alreadyExists, setAlreadyExists] = useState({});
     const [invalid, setInvalid] = useState({});
     const [originalName, setOriginalName] = useState("");
     const {institutionId} = useParams();
+
 
     useEffect(() => {
         if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
@@ -100,24 +82,47 @@ const InstitutionForm = ({user}) => {
         return !inValid
     };
 
+    const doDelete = showConfirmation => {
+        if (showConfirmation) {
+            setConfirmation({
+                cancel: () => setConfirmationOpen(false),
+                action: () => doDelete(false),
+                warning: true,
+                question: I18n.t("confirmationDialog.questions.delete", {
+                    name: institution.displayName,
+                    object: I18n.t("institutions.object").toLowerCase()
+                })
+            });
+            setConfirmationOpen(true);
+        } else {
+            deleteInstitution(institution).then(() => {
+                navigate("/home");
+                setFlash(I18n.t("forms.flash.deleted", {
+                    name: institution.displayName,
+                    object: I18n.t("institutions.object").toLowerCase()
+                }));
+            })
+        }
+    };
+
     const submit = () => {
         if (initial) {
             setInitial(false);
         }
         if (isValid()) {
             setLoading(true);
-            saveInstitution(institution).then(() => {
-                navigate("/home")
+            saveInstitution(institution).then(res => {
+                navigate(`/institution-detail/${res.id}`);
                 setFlash(I18n.t("forms.flash.created",
                     {
                         object: I18n.t("institutions.object").toLowerCase(),
                         name: institution.displayName
                     }))
-            });
+            })
         } else {
             window.scrollTo(0, 0);
         }
-    };
+    }
 
     const setState = (attr, value) => {
         const newInstitution = {...institution, [attr]: value};
@@ -131,11 +136,12 @@ const InstitutionForm = ({user}) => {
 
     return (
         <div className={"institution-form"}>
-            <ConfirmationDialog isOpen={confirmation.open}
-                                cancel={confirmation.cancel}
-                                confirm={confirmation.action}
-                                isWarning={confirmation.warning}
-                                question={confirmation.question}/>
+
+            {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
+                                                     cancel={confirmation.cancel}
+                                                     confirm={confirmation.action}
+                                                     isWarning={confirmation.warning}
+                                                     question={confirmation.question}/>}
 
             <h2 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h2>
 
@@ -209,7 +215,7 @@ const InstitutionForm = ({user}) => {
             <section className="actions">
                 {!isNew &&
                 <Button warningButton={true} txt={I18n.t("forms.delete")}
-                        onClick={doDelete}/>}
+                        onClick={() => doDelete(true)}/>}
                 <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
                 <Button disabled={disabledSubmit} txt={I18n.t("forms.save")} onClick={submit}/>
             </section>

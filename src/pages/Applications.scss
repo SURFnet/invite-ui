@@ -1,0 +1,27 @@
+div.applications {
+  background-color: white;
+
+  table.applications {
+
+    thead {
+      th {
+        &.displayName {
+          width: 20%;
+        }
+
+        &.entityId {
+          width: 20%;
+        }
+
+        &.landingPage {
+          width: 30%;
+        }
+
+        &.provisioning {
+          width: 30%;
+        }
+      }
+    }
+  }
+}
+

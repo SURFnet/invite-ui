@@ -142,7 +142,7 @@ const Entities = ({
                             className={`${(typeof rowLinkMapper === "function" && rowLinkMapper(entity)) ? "clickable" : ""}`}>
                             {columns.map(column =>
                                 <td key={column.key}
-                                    onClick={column.key !== "check" && column.key !== "role" ? onRowClick(rowLinkMapper, entity) : undefined}
+                                    onClick={column.key !== "check" && column.key !== "role" && !column.ignoreRowClick ? onRowClick(rowLinkMapper, entity) : undefined}
                                     className={`${column.key} ${column.nonSortable ? "" : "sortable"} ${column.className ? column.className : ""}`}>
                                     {getEntityValue(entity, column)}
                                 </td>)}

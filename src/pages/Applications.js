@@ -1,29 +1,29 @@
 import React, {useEffect, useState} from "react";
 import I18n from "i18n-js";
-import {allInstitutions} from "../api/api";
+import {applicationsByInstitution} from "../api/api";
 import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
-import {AUTHORITIES} from "../utils/authority";
-import "./Institutions.scss";
+import {AUTHORITIES, isAllowed} from "../utils/authority";
+import "./Applications.scss";
 
-const Applications = ({user}) => {
+const Applications = ({user, institutionId}) => {
 
     const [loading, setLoading] = useState(true);
     const [applications, setApplications] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        allInstitutions().then(res => {
-            setInstitutions(res);
+        applicationsByInstitution(institutionId).then(res => {
+            setApplications(res);
             setLoading(false);
         })
-    }, []);
+    }, [institutionId]);
 
-    const openInstitution = institution => e => {
+    const openApplication = application => e => {
         stopEvent(e);
-        navigate(`/institutions/${institution.id}`);
+        navigate(`/applications/${application.id}`);
     };
 
     if (loading) {
@@ -32,37 +32,37 @@ const Applications = ({user}) => {
     const columns = [
         {
             key: "displayName",
-            header: I18n.t("institutions.displayName"),
-            mapper: institution => institution.displayName,
+            header: I18n.t("applications.displayName"),
+            mapper: application => application.displayName,
         },
         {
             key: "entityId",
-            header: I18n.t("institutions.entityId"),
-            mapper: institution => institution.entityId,
+            header: I18n.t("applications.entityId"),
+            mapper: application => application.entityId,
         },
         {
-            key: "homeInstitution",
-            header: I18n.t("institutions.homeInstitution"),
-            mapper: institution => institution.homeInstitution,
+            key: "landingPage",
+            header: I18n.t("applications.landingPage"),
+            mapper: application => application.landingPage,
         },
         {
-            key: "aupUrl",
-            header: I18n.t("institutions.aupUrl"),
-            mapper: institution => institution.aupUrl,
+            key: "provisioning",
+            header: I18n.t("applications.provisioning"),
+            mapper: application => application.provisioningHookUrl || application.provisioningHookEmail || I18n.t("applications.noProvisioning"),
         },
 
     ]
     return (
-        <div className="institutions">
-            <Entities entities={institutions}
-                      modelName="institutions"
-                      searchAttributes={["displayName", "homeInstitution", "entityId"]}
-                      defaultSort="name"
+        <div className="applications">
+            <Entities entities={applications}
+                      modelName="applications"
+                      searchAttributes={["displayName", "entityId"]}
+                      defaultSort="displayName"
                       columns={columns}
                       hideTitle={true}
-                      rowLinkMapper={() => openInstitution}
-                      showNew={user.authority === AUTHORITIES.SUPER_ADMIN.name}
-                      newEntityPath={"/institution/new"}
+                      rowLinkMapper={() => openApplication}
+                      showNew={isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)}
+                      newEntityPath={"/application/new"}
                       loading={loading}/>
         </div>
     )

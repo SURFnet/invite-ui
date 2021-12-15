@@ -7,7 +7,7 @@ I18n.translations.en = {
     home: {
         tabs: {
             institutions: "Institutions",
-            applications: "Application",
+            applications: "Applications",
             roles: "Roles",
             profile: "Profile"
         }
@@ -29,9 +29,35 @@ I18n.translations.en = {
         editTitle: "Edit {{name}}",
         namePlaceholder: "Name of the institution"
     },
+    applications: {
+        title: "Applications",
+        displayName: "Name",
+        namePlaceholder: "Name of the application",
+        object: "Application",
+        entityId: "Entity ID",
+        entityIdPlaceholder: "Entity ID of the application",
+        provisioning: "Provisioning",
+        noProvisioning: "None",
+        landingPage: "Landing page URL",
+        landingPagePlaceholder: "Landing page of the application",
+        provisioningHookUrl: "Provisioning hook URL",
+        provisioningHookUrlPlaceholder: "Provisioning hook URL of the application",
+        provisioningHookUsername: "Provisioning hook username",
+        provisioningHookUsernamePlaceholder: "Provisioning hook username of the application",
+        provisioningHookPassword: "Provisioning hook password",
+        provisioningHookPasswordPlaceholder: "Provisioning hook password of the application",
+        provisioningHookEmail: "Provisioning hook email",
+        provisioningHookEmailPlaceholder: "Provisioning hook email of the application",
+        searchPlaceHolder: "Search applications",
+        new: "New application",
+        noEntities: "There are no applications...",
+        newTitle: "New application",
+        editTitle: "Edit {{name}}",
+    },
     confirmationDialog: {
-        confirm: "Please confirm",
-        title: "Confirm",
+        title: "Please confirm",
+        confirm: "Confirm",
+        cancel: "Cancel",
         questions: {
             delete: "Are you sure you want to delete {{object}} {{name}}?"
         }
@@ -41,6 +67,7 @@ I18n.translations.en = {
         delete: "Delete",
         submit: "Submit",
         save: "Save",
+        edit: "Edit",
         required: "{{attribute}} is a required attribute",
         alreadyExists: "An {{object}} with {{attribute}} {{value}} already exists.",
         invalid: "{{value}} for {{attribute}} is invalid.",

@@ -7,10 +7,11 @@ import {addIcons} from "./img/IconLibrary";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Applications from "./pages/Applications";
-import Application from "./pages/Application";
+import ApplicationDetail from "./pages/ApplicationDetail";
 import NotFound from "./pages/NotFound";
 import InstitutionForm from "./pages/InstitutionForm";
 import Flash from "./flash/Flash";
+import InstitutionDetail from "./pages/InstitutionDetail";
 
 addIcons();
 
@@ -73,17 +74,17 @@ const App = () => {
                         <Route path="" element={<Home user={user}/>}/>
                     </Route>
                     <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
-                    <Route path="institution-detail">
-                        <Route path=":tab" element={<InstitutionForm user={user}/>}/>
-                        <Route path="" element={<InstitutionForm user={user}/>}/>
+                    <Route path="institution-detail/:institutionId">
+                        <Route path=":tab" element={<InstitutionDetail user={user}/>}/>
+                        <Route path="" element={<InstitutionDetail user={user}/>}/>
                     </Route>
                     <Route path="new-" element={<Applications/>}/>
                     <Route path="applications" element={<Applications/>}/>
-                    <Route path="applications/:applicationId" element={<Application/>}/>
+                    <Route path="applications/:applicationId" element={<ApplicationDetail/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>
-                    <Route path="invitation/:hash" element={<Application/>}/>
+                    <Route path="invitation/:hash" element={<ApplicationDetail/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
             </div>

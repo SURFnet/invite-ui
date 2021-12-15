@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 
-const Application = () => {
+const ApplicationDetail = () => {
     let {applicationId} = useParams();
 
     return (
@@ -11,4 +11,4 @@ const Application = () => {
 
 }
 
-export default Application;
+export default ApplicationDetail;
