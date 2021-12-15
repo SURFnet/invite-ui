@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const Flash = () => {
 
-    const [flash, setFlash] = useState({msg: {}, className: "hide", type: "info"});
+    const [flash, setFlash] = useState({msg: "", className: "hide", type: "info"});
 
     const callback = flashCtx => {
         if (isEmpty(flashCtx)) {
@@ -19,7 +19,9 @@ const Flash = () => {
         }
     }
 
-    useEffect(() => emitter.addListener("flash", this.callback));
+    useEffect(() => {
+        emitter.addListener("flash", callback);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={`flash ${flash.className} ${flash.type}`}>

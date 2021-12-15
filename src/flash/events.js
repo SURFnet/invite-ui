@@ -6,12 +6,8 @@ export const emitter = new EventEmitter();
 //Sneaky global state
 let flash = {};
 
-export function getFlash() {
-    return {...flash};
-}
-
 export function setFlash(message, type) {
-    flash = {message, type: type || "info"};
+    flash = {msg: message, type: type || "info"};
     emitter.emit("flash", flash);
 }
 

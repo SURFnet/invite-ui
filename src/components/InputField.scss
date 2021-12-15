@@ -25,7 +25,7 @@
         }
 
         &.error {
-            background-color: $primary-red;
+            background-color: $secondary-red;
             border: 1px solid darken($primary-red, 20%);
         }
 

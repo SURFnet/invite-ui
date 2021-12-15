@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import "../components/Spinner.scss"
+import "./InstitutionForm.scss";
 import {useNavigate, useParams} from "react-router-dom";
 import {
     deleteInstitution,
     institutionById,
     institutionEntityIdExists,
     institutionSchacHomeExists,
-    saveInstitution
+    saveInstitution, validate
 } from "../api/api";
 import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
@@ -16,6 +16,7 @@ import {isEmpty} from "../utils/forms";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
+import Button from "../components/Button";
 
 const InstitutionForm = ({user}) => {
 
@@ -32,23 +33,27 @@ const InstitutionForm = ({user}) => {
         }
     };
 
-    const cancel = () => navigate("/institutions");
+    const cancel = () => navigate("/home");
 
-    const required = ["displayName", "entityId", "homeInstitution"]
+    const required = ["displayName", "entityId", "homeInstitution"];
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
+    const [isNew, setIsNew] = useState(false);
     const [confirmation, setConfirmation] = useState({
         open: false,
-        question: I18n.t("institutions.confirmation"),
+        question: I18n.t("confirmationDialog.questions.delete", {
+            name: institution.name,
+            object: I18n.t("institutions.object").toLowerCase()
+        }),
         warning: false,
         action: doDelete(true),
         cancel: cancel
     });
     const [alreadyExists, setAlreadyExists] = useState({});
-    let originalName;
+    const [invalid, setInvalid] = useState({});
+    const [originalName, setOriginalName] = useState("");
     const {institutionId} = useParams();
-    let isNew = false;
 
     useEffect(() => {
         if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
@@ -56,7 +61,7 @@ const InstitutionForm = ({user}) => {
             return;
         }
         if (institutionId === "new") {
-            isNew = true;
+            setIsNew(true);
             setInstitution({
                 "entityId": "",
                 "homeInstitution": "",
@@ -69,10 +74,10 @@ const InstitutionForm = ({user}) => {
             institutionById(institutionId).then(res => {
                 setInstitution(res);
                 setLoading(false);
-                originalName = res.displayName;
+                setOriginalName(res.displayName);
             });
         }
-    }, []);
+    }, [institutionId, user, navigate]);
 
     const validateEntityId = e =>
         institutionEntityIdExists(e.target.value, !isNew).then(json => {
@@ -84,8 +89,14 @@ const InstitutionForm = ({user}) => {
             setAlreadyExists({...alreadyExists, homeInstitution: json.exists});
         });
 
+    const validateAupUrl = e =>
+        validate("url", e.target.value).then(json => {
+            setInvalid({...setInvalid, aupUrl: !json.valid});
+        });
+
     const isValid = () => {
-        const inValid = Object.values(alreadyExists).some(val => val) || required.some(attr => isEmpty(institution[attr]));
+        const inValid = Object.values(invalid).some(val => val) || Object.values(alreadyExists).some(val => val) ||
+            required.some(attr => isEmpty(institution[attr]));
         return !inValid
     };
 
@@ -96,8 +107,12 @@ const InstitutionForm = ({user}) => {
         if (isValid()) {
             setLoading(true);
             saveInstitution(institution).then(() => {
-                navigate("/institutions")
-                setFlash(I18n.t("institutions.flash.created", {name: institution.displayName}))
+                navigate("/home")
+                setFlash(I18n.t("forms.flash.created",
+                    {
+                        object: I18n.t("institutions.object").toLowerCase(),
+                        name: institution.displayName
+                    }))
             });
         } else {
             window.scrollTo(0, 0);
@@ -112,6 +127,7 @@ const InstitutionForm = ({user}) => {
     if (loading) {
         return <Spinner/>
     }
+    const disabledSubmit = !initial && !isValid();
 
     return (
         <div className={"institution-form"}>
@@ -121,16 +137,82 @@ const InstitutionForm = ({user}) => {
                                 isWarning={confirmation.warning}
                                 question={confirmation.question}/>
 
-            <h1 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h1>
+            <h2 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h2>
 
             <InputField value={institution.displayName}
                         onChange={e => setState("displayName", e.target.value)}
-                        placeholder={I18n.t("institutions.namePlaceHolder")}
+                        placeholder={I18n.t("institutions.namePlaceholder")}
                         error={!initial && isEmpty(institution.displayName)}
                         name={I18n.t("institutions.displayName")}/>
-            {(!initial && isEmpty(institution.displayName)) && <ErrorIndicator msg={I18n.t("organisation.required", {
-                attribute: I18n.t("institutions.displayName").toLowerCase()
+            {(!initial && isEmpty(institution.displayName)) &&
+            <ErrorIndicator msg={I18n.t("forms.required", {
+                attribute: I18n.t("institutions.displayName")
             })}/>}
+
+            <InputField value={institution.entityId}
+                        onChange={e => {
+                            setState("entityId", e.target.value);
+                            setAlreadyExists({...alreadyExists, entityId: false});
+                        }}
+                        placeholder={I18n.t("institutions.entityIdPlaceholder")}
+                        onBlur={validateEntityId}
+                        error={alreadyExists.entityId || (!initial && isEmpty(institution.entityId))}
+                        name={I18n.t("institutions.entityId")}/>
+            {(!initial && isEmpty(institution.entityId)) &&
+            <ErrorIndicator msg={I18n.t("forms.required", {
+                attribute: I18n.t("institutions.entityId")
+            })}/>}
+
+            {alreadyExists.entityId &&
+            <ErrorIndicator msg={I18n.t("forms.alreadyExists", {
+                object: I18n.t("institutions.object").toLowerCase(),
+                attribute: I18n.t("institutions.entityId").toLowerCase(),
+                value: institution.entityId
+            })}/>}
+
+            <InputField value={institution.homeInstitution}
+                        onChange={e => {
+                            setState("homeInstitution", e.target.value);
+                            setAlreadyExists({...alreadyExists, homeInstitution: false});
+                        }}
+                        placeholder={I18n.t("institutions.homeInstitutionPlaceholder")}
+                        onBlur={validateSchacHome}
+                        error={alreadyExists.homeInstitution || (!initial && isEmpty(institution.homeInstitution))}
+                        name={I18n.t("institutions.homeInstitution")}/>
+            {(!initial && isEmpty(institution.homeInstitution)) &&
+            <ErrorIndicator msg={I18n.t("forms.required", {
+                attribute: I18n.t("institutions.homeInstitution")
+            })}/>}
+
+            {alreadyExists.homeInstitution &&
+            <ErrorIndicator msg={I18n.t("forms.alreadyExists", {
+                object: I18n.t("institutions.object").toLowerCase(),
+                attribute: I18n.t("institutions.homeInstitution").toLowerCase(),
+                value: institution.homeInstitution
+            })}/>}
+
+            <InputField value={institution.aupUrl}
+                        onChange={e => {
+                            setState("aupUrl", e.target.value);
+                            setInvalid({...setInvalid, aupUrl: false});
+                        }}
+                        placeholder={I18n.t("institutions.aupUrlPlaceholder")}
+                        onBlur={validateAupUrl}
+                        error={invalid.aupUrl}
+                        name={I18n.t("institutions.aupUrl")}/>
+            {invalid.aupUrl &&
+            <ErrorIndicator msg={I18n.t("forms.invalid", {
+                attribute: I18n.t("institutions.aupUrl").toLowerCase(),
+                value: institution.aupUrl
+            })}/>}
+
+            <section className="actions">
+                {!isNew &&
+                <Button warningButton={true} txt={I18n.t("forms.delete")}
+                        onClick={doDelete}/>}
+                <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
+                <Button disabled={disabledSubmit} txt={I18n.t("forms.save")} onClick={submit}/>
+            </section>
 
         </div>
     )

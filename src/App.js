@@ -10,6 +10,7 @@ import Applications from "./pages/Applications";
 import Application from "./pages/Application";
 import NotFound from "./pages/NotFound";
 import InstitutionForm from "./pages/InstitutionForm";
+import Flash from "./flash/Flash";
 
 addIcons();
 
@@ -63,6 +64,7 @@ const App = () => {
     return (
         <div className="invites">
             <div className="container">
+                <Flash/>
                 <Header user={user}/>
                 {user && <Routes>
                     <Route path="/" element={<Navigate replace to="home"/>}/>
@@ -72,8 +74,8 @@ const App = () => {
                     </Route>
                     <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
                     <Route path="institution-detail">
-                        <Route path=":tab" element={<Home user={user}/>}/>
-                        <Route path="" element={<Home user={user}/>}/>
+                        <Route path=":tab" element={<InstitutionForm user={user}/>}/>
+                        <Route path="" element={<InstitutionForm user={user}/>}/>
                     </Route>
                     <Route path="new-" element={<Applications/>}/>
                     <Route path="applications" element={<Applications/>}/>

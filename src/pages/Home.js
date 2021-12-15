@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
 import Tabs from "../components/Tabs";
 import I18n from "i18n-js";

@@ -83,14 +83,14 @@ export function institutionEntityIdExists(entityId, isExisting) {
     return postPutJson("/guests/api/institutions/entity-id-exists", {
         existingObject: isExisting,
         uniqueAttribute: entityId
-    });
+    }, "post");
 }
 
 export function institutionSchacHomeExists(schacHome, isExisting) {
     return postPutJson("/guests/api/institutions/schac-home-exists", {
         existingObject: isExisting,
         uniqueAttribute: schacHome
-    });
+    }, "post");
 }
 
 export function saveInstitution(institution) {
@@ -116,7 +116,7 @@ export function roleNameExists(name, isExisting, applicationId) {
         existingObject: isExisting,
         uniqueAttribute: name,
         applicationId: applicationId
-    });
+    }, "post");
 }
 
 export function newRole(role) {
@@ -129,5 +129,10 @@ export function updateRole(role) {
 
 export function deleteRole(role) {
     return fetchDelete(`/guests/api/roles/${role.id}`);
+}
+
+// Validations
+export function validate(type, value) {
+    return postPutJson("/guests/api/validations/validate", {type, value}, "post");
 }
 
