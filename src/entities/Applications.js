@@ -53,7 +53,7 @@ const Applications = ({user, institutionId}) => {
 
     ]
     return (
-        <div className="applications">
+        <div className="mod-applications">
             <Entities entities={applications}
                       modelName="applications"
                       searchAttributes={["displayName", "entityId"]}

@@ -1,0 +1,36 @@
+div.institutions {
+  background-color: white;
+
+  table.users {
+
+    thead {
+      th {
+        &.name {
+          width: 20%;
+        }
+
+        &.authority {
+          width: 20%;
+        }
+
+        &.status {
+          width: 20%;
+        }
+
+        &.email {
+          width: 20%;
+        }
+
+        &.createdAt {
+          width: 20%;
+        }
+      }
+    }
+
+    tbody {
+      td {
+      }
+    }
+  }
+}
+

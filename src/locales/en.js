@@ -9,7 +9,8 @@ I18n.translations.en = {
             institutions: "Institutions",
             applications: "Applications",
             roles: "Roles",
-            profile: "Profile"
+            profile: "Profile",
+            users: "Users"
         }
     },
     institutions: {
@@ -28,6 +29,31 @@ I18n.translations.en = {
         newTitle: "New institution",
         editTitle: "Edit {{name}}",
         namePlaceholder: "Name of the institution"
+    },
+    users: {
+        title: "Users",
+        name: "Name",
+        object: "User",
+        email: "Email",
+        role: "Role",
+        authority: "Role",
+        createdAt: "Created",
+        authorities: {
+            SUPER_ADMIN: "Super admin",
+            INSTITUTION_ADMINISTRATOR: "Institution admin",
+            INVITER: "Inviter",
+            GUEST: "Guest"
+        },
+        searchPlaceHolder: "Search users",
+        new: "Invite people",
+        noEntities: "There are no users...",
+        newTitle: "Invite new user",
+        editTitle: "Edit {{name}}",
+        status: "Status",
+        statuses: {
+            open: "Open",
+            expired: "Expired"
+        }
     },
     applications: {
         title: "Applications",

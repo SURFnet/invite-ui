@@ -4,11 +4,12 @@ import {AUTHORITIES, isAllowed} from "../utils/authority";
 import Tabs from "../components/Tabs";
 import I18n from "i18n-js";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Applications from "./Applications";
+import Applications from "../entities/Applications";
 import UnitHeader from "../components/UnitHeader";
 import {institutionById} from "../api/api";
 import Spinner from "../components/Spinner";
 import Button from "../components/Button";
+import Users from "../entities/Users";
 
 const InstitutionDetail = ({user}) => {
 
@@ -36,10 +37,19 @@ const InstitutionDetail = ({user}) => {
                 <Applications user={user} institutionId={institutionId}/>
             </div>)
     }
+    if (isAllowed(AUTHORITIES.INVITER, user)) {
+        tabs.push(<div key="users"
+                       name="users"
+                       label={I18n.t("home.tabs.users")}
+                       icon={<FontAwesomeIcon icon="user"/>}>
+            <Users institutionId={institutionId}/>
+        </div>)
+
+    }
 
     const tabChanged = name => {
         setCurrentTab(name);
-        navigate(`/institution-detail/${name}`, {replace: true});
+        navigate(`/institution-detail/${institutionId}/${name}`, {replace: true});
     }
 
     if (loading) {

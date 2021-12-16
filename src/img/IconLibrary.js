@@ -7,7 +7,8 @@ import {
     faCaretUp,
     faCaretDown,
     faExclamationCircle,
-    faTimes
+    faTimes,
+    faUser
 
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -20,6 +21,7 @@ export function addIcons() {
         faCaretUp,
         faCaretDown,
         faExclamationCircle,
-        faTimes
+        faTimes,
+        faUser
     );
 }

@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  border-bottom: 3px solid $background;
+  border-bottom: 3px solid $inactive-grey;
 
 
   &:first-child {
@@ -30,22 +30,22 @@
     cursor: pointer;
 
     p, svg {
-      color: $primary-grey;
+      color: $inactive-grey;
     }
 
     &:not(.read-only):hover {
       p, svg {
-        color: black;
+        color: darken($inactive-grey, 10%);
       }
 
-      border-bottom: 3px solid $secondary-grey;
+      border-bottom: 3px solid darken($inactive-grey, 10%);
     }
 
     &.read-only {
       cursor: not-allowed;
 
       p, svg {
-        color: $primary-grey;
+        color: $secondary-grey;
       }
 
     }

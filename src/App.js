@@ -6,7 +6,7 @@ import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {addIcons} from "./img/IconLibrary";
 import Home from "./pages/Home";
 import Header from "./components/Header";
-import Applications from "./pages/Applications";
+import Applications from "./entities/Applications";
 import ApplicationDetail from "./pages/ApplicationDetail";
 import NotFound from "./pages/NotFound";
 import InstitutionForm from "./pages/InstitutionForm";

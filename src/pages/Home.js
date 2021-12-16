@@ -4,7 +4,7 @@ import {AUTHORITIES, isAllowed} from "../utils/authority";
 import Tabs from "../components/Tabs";
 import I18n from "i18n-js";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Institutions from "./Institutions";
+import Institutions from "../entities/Institutions";
 
 const Home = ({user}) => {
 

@@ -67,7 +67,11 @@ export function oauth() {
 
 //Users
 export function me() {
-    return fetchJson("/guests/api/users", {}, {}, false);
+    return fetchJson("/guests/api/users/me", {}, {}, false);
+}
+
+export function allUsersByInstitution(institutionId) {
+    return fetchJson(`/guests/api/users/institution/${institutionId}`, {}, {}, false);
 }
 
 //Institutions
@@ -101,6 +105,7 @@ export function saveInstitution(institution) {
 export function deleteInstitution(institution) {
     return fetchDelete(`/guests/api/institutions/${institution.id}`);
 }
+
 //Applications
 export function applicationsByInstitution(institutionId) {
     return fetchJson(`/guests/api/applications/institution/${institutionId}`);
@@ -127,7 +132,7 @@ export function deleteApplication(application) {
 }
 
 
-// Roles
+//Roles
 export function allRoles() {
     return fetchJson("/guests/api/roles");
 }
@@ -156,8 +161,17 @@ export function deleteRole(role) {
     return fetchDelete(`/guests/api/roles/${role.id}`);
 }
 
-// Validations
+//Validations
 export function validate(type, value) {
     return postPutJson("/guests/api/validations/validate", {type, value}, "post");
+}
+
+//Invitations
+export function invitationByHash(hash) {
+    return fetchJson(`/guests/api/invitationss/${hash}`, {}, {}, false);
+}
+
+export function allInvitationsByInstitution(institutionId) {
+    return fetchJson(`/guests/api/invitations/institution/${institutionId}`, {}, {}, false);
 }
 
