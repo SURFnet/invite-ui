@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import InstitutionForm from "./pages/InstitutionForm";
 import Flash from "./flash/Flash";
 import InstitutionDetail from "./pages/InstitutionDetail";
+import ApplicationForm from "./pages/ApplicationForm";
 
 addIcons();
 
@@ -80,7 +81,8 @@ const App = () => {
                     </Route>
                     <Route path="new-" element={<Applications/>}/>
                     <Route path="applications" element={<Applications/>}/>
-                    <Route path="applications/:applicationId" element={<ApplicationDetail/>}/>
+                    <Route path="application/:institutionId/:applicationId" element={<ApplicationForm user={user}/>}/>
+                    <Route path="application-detail/:applicationId" element={<ApplicationDetail/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

@@ -53,6 +53,7 @@ I18n.translations.en = {
         noEntities: "There are no applications...",
         newTitle: "New application",
         editTitle: "Edit {{name}}",
+        conflictProvisioning: "You can not both configure a provisioningHookUrl and a provisioningHookEmail"
     },
     confirmationDialog: {
         title: "Please confirm",

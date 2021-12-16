@@ -45,11 +45,11 @@ const InstitutionForm = ({user}) => {
         if (institutionId === "new") {
             setIsNew(true);
             setInstitution({
-                "entityId": "",
-                "homeInstitution": "",
-                "displayName": "",
-                "aupUrl": "",
-                "aupVersion": "1"
+                entityId: "",
+                homeInstitution: "",
+                displayName: "",
+                aupUrl: "",
+                aupVersion: "1"
             });
             setLoading(false);
         } else {
