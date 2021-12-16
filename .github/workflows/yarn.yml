@@ -16,5 +16,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - run: CI=true yarn test && yarn install
+      - run: yarn install && CI=true yarn test
         working-directory: .
