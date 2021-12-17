@@ -21,8 +21,6 @@ const Users = ({institutionId}) => {
                 invitation.isInvitation = true;
             });
             setUsers(allUsers.concat(allInvitations));
-
-            debugger;
             setLoading(false);
         })
     }, [institutionId]);

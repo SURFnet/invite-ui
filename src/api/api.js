@@ -1,5 +1,9 @@
 //Internal API
 import {refreshTokens} from "./frontChannelTokenRequest";
+import {config} from "../conf/server";
+
+//Internal API
+const serverUrl = config.serverUrl;
 
 function validateResponse(showErrorDialog) {
     return res => {
@@ -44,7 +48,7 @@ function validFetch(path, options, headers = {}, showErrorDialog = true) {
         credentials: "same-origin",
         redirect: "manual"
     });
-    return fetch(path, fetchOptions).then(validateResponse(showErrorDialog))
+    return fetch(`${serverUrl}${path}`, fetchOptions).then(validateResponse(showErrorDialog))
 }
 
 function fetchJson(path, options = {}, headers = {}, showErrorDialog = true) {
@@ -133,8 +137,12 @@ export function deleteApplication(application) {
 
 
 //Roles
-export function allRoles() {
-    return fetchJson("/guests/api/roles");
+export function allRolesByInstitution(institutionId) {
+    return fetchJson(`/guests/api/roles/institution/${institutionId}`);
+}
+
+export function allRolesByApplication(applicationId) {
+    return fetchJson(`/guests/api/roles/application/${applicationId}`);
 }
 
 export function roleById(id) {

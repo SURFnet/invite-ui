@@ -13,7 +13,7 @@ import Button from "../components/Button";
 const ApplicationDetail = ({user}) => {
 
     const navigate = useNavigate();
-    const {applicationId, tab = "users"} = useParams();
+    const {applicationId, tab = "roles"} = useParams();
     const [loading, setLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState(tab);
     const [application, setApplication] = useState(tab);

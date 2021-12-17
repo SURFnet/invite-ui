@@ -103,6 +103,10 @@ I18n.translations.en = {
             updated: "Updated {{object}} {{name}}",
             deleted: "Deleted {{object}} {{name}}",
         }
+    },
+    invitation: {
+        inviteesPlaceholder: "Invitee email addresses",
+        inviteesMessagesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
     }
 
 
