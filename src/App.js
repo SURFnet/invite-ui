@@ -82,7 +82,7 @@ const App = () => {
                     <Route path="new-" element={<Applications/>}/>
                     <Route path="applications" element={<Applications/>}/>
                     <Route path="application/:institutionId/:applicationId" element={<ApplicationForm user={user}/>}/>
-                    <Route path="application-detail/:applicationId" element={<ApplicationDetail/>}/>
+                    <Route path="application-detail/:applicationId" element={<ApplicationDetail user={user}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

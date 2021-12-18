@@ -8,7 +8,8 @@ import {
     faCaretDown,
     faExclamationCircle,
     faTimes,
-    faUser
+    faUser,
+    faHatCowboy
 
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -22,6 +23,7 @@ export function addIcons() {
         faCaretDown,
         faExclamationCircle,
         faTimes,
-        faUser
+        faUser,
+        faHatCowboy
     );
 }

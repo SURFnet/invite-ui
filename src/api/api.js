@@ -75,7 +75,11 @@ export function me() {
 }
 
 export function allUsersByInstitution(institutionId) {
-    return fetchJson(`/guests/api/users/institution/${institutionId}`, {}, {}, false);
+    return fetchJson(`/guests/api/users/institution/${institutionId}`);
+}
+
+export function allUsersByApplication(applicationId) {
+    return fetchJson(`/guests/api/users/application/${applicationId}`);
 }
 
 //Institutions
@@ -180,6 +184,9 @@ export function invitationByHash(hash) {
 }
 
 export function allInvitationsByInstitution(institutionId) {
-    return fetchJson(`/guests/api/invitations/institution/${institutionId}`, {}, {}, false);
+    return fetchJson(`/guests/api/invitations/institution/${institutionId}`);
 }
 
+export function allInvitationsByApplication(applicationId) {
+    return fetchJson(`/guests/api/invitations/application/${applicationId}`);
+}

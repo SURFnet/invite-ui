@@ -35,9 +35,8 @@ I18n.translations.en = {
         name: "Name",
         object: "User",
         email: "Email",
-        role: "Role",
-        authority: "Role",
-        createdAt: "Created",
+        roles: "Roles",
+        authority: "Authority",
         authorities: {
             SUPER_ADMIN: "Super admin",
             INSTITUTION_ADMINISTRATOR: "Institution admin",
@@ -51,8 +50,8 @@ I18n.translations.en = {
         editTitle: "Edit {{name}}",
         status: "Status",
         statuses: {
-            open: "Open",
-            expired: "Expired"
+            open: "Open invitation",
+            expired: "Expired invitation"
         }
     },
     applications: {
@@ -81,6 +80,10 @@ I18n.translations.en = {
         editTitle: "Edit {{name}}",
         conflictProvisioning: "You can not both configure a provisioningHookUrl and a provisioningHookEmail"
     },
+    roles: {
+        name: "Name",
+        applicationName: "Application"
+    },
     confirmationDialog: {
         title: "Please confirm",
         confirm: "Confirm",
@@ -95,6 +98,7 @@ I18n.translations.en = {
         submit: "Submit",
         save: "Save",
         edit: "Edit",
+        createdAt: "Created",
         required: "{{attribute}} is a required attribute",
         alreadyExists: "An {{object}} with {{attribute}} {{value}} already exists.",
         invalid: "{{value}} for {{attribute}} is invalid.",

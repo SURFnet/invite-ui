@@ -1,25 +1,25 @@
 import React, {useEffect, useState} from "react";
 import I18n from "i18n-js";
-import { allRolesByInstitution} from "../api/api";
+import {allRolesByApplication, allRolesByInstitution} from "../api/api";
 import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
-import {AUTHORITIES} from "../utils/authority";
 import "./Roles.scss";
 
-const Roles = ({institutionId}) => {
+const Roles = ({institutionId, applicationId = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [roles, setRoles] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        allRolesByInstitution().then(res => {
+        const promise = applicationId ? allRolesByApplication(applicationId) : allRolesByInstitution(institutionId);
+        promise.then(res => {
             setRoles(res);
             setLoading(false);
         })
-    }, []);
+    }, [applicationId, institutionId]);
 
     const openRole = role => e => {
         stopEvent(e);
@@ -31,38 +31,31 @@ const Roles = ({institutionId}) => {
     }
     const columns = [
         {
-            key: "displayName",
-            header: I18n.t("roles.displayName"),
-            mapper: role => role.displayName,
+            key: "name",
+            header: I18n.t("roles.name"),
+            mapper: role => role.name,
         },
         {
-            key: "entityId",
-            header: I18n.t("roles.entityId"),
-            mapper: role => role.entityId,
+            key: "name",
+            header: I18n.t("roles.applicationName"),
+            mapper: role => role.applicationName,
         },
         {
-            key: "homeRole",
-            header: I18n.t("roles.homeRole"),
-            mapper: role => role.homeRole,
+            key: "auditable_createdAt",
+            header: I18n.t("forms.createdAt"),
+            mapper: role => role.auditable.createdAt,
         },
-        {
-            key: "aupUrl",
-            header: I18n.t("roles.aupUrl"),
-            ignoreRowClick: true,
-            mapper: role => <a href={role.aupUrl} target="_blank" rel="noreferrer">{role.aupUrl}</a> ,
-        },
-
     ]
     return (
         <div className="roles">
             <Entities entities={roles}
                       modelName="roles"
-                      searchAttributes={["displayName", "homeRole", "entityId"]}
-                      defaultSort="displayName"
+                      searchAttributes={["name"]}
+                      defaultSort="name"
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={() => openRole}
-                      showNew={user.authority === AUTHORITIES.SUPER_ADMIN.name}
+                      showNew={true}
                       newEntityPath={"/role/new"}
                       loading={loading}/>
         </div>

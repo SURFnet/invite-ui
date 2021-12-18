@@ -23,7 +23,7 @@ const Applications = ({user, institutionId}) => {
 
     const openApplication = application => e => {
         stopEvent(e);
-        navigate(`/applications/${application.id}`);
+        navigate(`/application-detail/${application.id}`);
     };
 
     if (loading) {

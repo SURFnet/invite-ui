@@ -1,20 +1,27 @@
 import React, {useEffect, useState} from "react";
 import I18n from "i18n-js";
-import {allInvitationsByInstitution, allUsersByInstitution} from "../api/api";
+import {
+    allInvitationsByApplication,
+    allInvitationsByInstitution,
+    allUsersByApplication,
+    allUsersByInstitution
+} from "../api/api";
 import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
 
-const Users = ({institutionId}) => {
+const Users = ({institutionId, applicationId = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        Promise.all([allUsersByInstitution(institutionId), allInvitationsByInstitution(institutionId)]).then(res => {
+        const promises = applicationId ? [allUsersByApplication(applicationId), allInvitationsByApplication(applicationId)] :
+            [allUsersByInstitution(institutionId), allInvitationsByInstitution(institutionId)];
+        Promise.all(promises).then(res => {
             const allUsers = res[0];
             const allInvitations = res[1];
             allInvitations.forEach(invitation => {
@@ -23,7 +30,7 @@ const Users = ({institutionId}) => {
             setUsers(allUsers.concat(allInvitations));
             setLoading(false);
         })
-    }, [institutionId]);
+    }, [institutionId, applicationId]);
 
     const openUser = user => e => {
         stopEvent(e);
@@ -33,6 +40,13 @@ const Users = ({institutionId}) => {
     if (loading) {
         return <Spinner/>
     }
+
+    const getRoles = user => {
+        return <ul>
+            {user.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.applicationName})`}</li>)}
+        </ul>
+    }
+
     const columns = [
         {
             key: "name",
@@ -55,7 +69,12 @@ const Users = ({institutionId}) => {
             header: I18n.t("users.status"),
             mapper: user => user.isInvitation ? I18n.t(`users.statuses.open`) : "",
         },
-
+        {
+            key: "roles",
+            sortable: false,
+            header: I18n.t("users.roles"),
+            mapper: user => user.isInvitation ? "" : getRoles(user),
+        },
     ]
     return (
         <div className="users">
