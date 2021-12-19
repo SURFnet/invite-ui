@@ -10,14 +10,16 @@ import Spinner from "../components/Spinner";
 import Button from "../components/Button";
 import Roles from "../entities/Roles";
 import Users from "../entities/Users";
+import {BreadCrumb} from "../components/BreadCrumb";
 
 const ApplicationDetail = ({user}) => {
 
     const navigate = useNavigate();
-    const {applicationId, tab = "roles"} = useParams();
+    const {institutionId, applicationId, tab = "roles"} = useParams();
+
     const [loading, setLoading] = useState(true);
     const [currentTab, setCurrentTab] = useState(tab);
-    const [application, setApplication] = useState(tab);
+    const [application, setApplication] = useState({});
     const tabs = [];
 
     useEffect(() => {
@@ -34,20 +36,20 @@ const ApplicationDetail = ({user}) => {
                  name="roles"
                  label={I18n.t("home.tabs.roles")}
                  icon={<FontAwesomeIcon icon="hat-cowboy"/>}>
-                <Roles applicationId={applicationId}/>
+                <Roles application={application} institutionId={institutionId}/>
             </div>)
         tabs.push(
             <div key="users"
                  name="users"
                  label={I18n.t("home.tabs.users")}
                  icon={<FontAwesomeIcon icon="user"/>}>
-                <Users applicationId={applicationId}/>
+                <Users application={application} institutionId={institutionId}/>
             </div>)
     }
 
     const tabChanged = name => {
         setCurrentTab(name);
-        navigate(`/application-detail/${name}`, {replace: true});
+        navigate(`/application-detail/${institutionId}/${applicationId}/${name}`, {replace: true});
     }
 
     if (loading) {
@@ -56,6 +58,12 @@ const ApplicationDetail = ({user}) => {
 
     return (
         <div className="application-detail">
+            <BreadCrumb paths={[
+                {path: "/", value: I18n.t("breadcrumbs.home")},
+                {path: `/institution-detail/${institutionId}`, value: application.institutionName},
+                {value: application.displayName}
+            ]}/>
+
             <UnitHeader>
                 <div className="info">
                     <h2>{`${I18n.t("applications.object")} ${application.displayName}`}</h2>
@@ -65,7 +73,8 @@ const ApplicationDetail = ({user}) => {
                     {application.landingPage && <p>{application.landingPage}</p>}
                 </div>
                 <div className="actions">
-                    <Button txt={I18n.t("forms.edit")} onClick={() => navigate(`/application/${application.id}`)}/>
+                    <Button txt={I18n.t("forms.edit")}
+                            onClick={() => navigate(`/application/${institutionId}/${application.id}`)}/>
                 </div>
             </UnitHeader>
             <Tabs activeTab={currentTab} tabChanged={tabChanged}>

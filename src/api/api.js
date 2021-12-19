@@ -149,24 +149,20 @@ export function allRolesByApplication(applicationId) {
     return fetchJson(`/guests/api/roles/application/${applicationId}`);
 }
 
-export function roleById(id) {
-    return fetchJson(`/guests/api/roles/${id}`);
+export function roleById(roleId) {
+    return fetchJson(`/guests/api/roles/${roleId}`);
 }
 
 export function roleNameExists(name, isExisting, applicationId) {
-    return postPutJson("/guests/api/roles/entity-id-exists", {
+    return postPutJson("/guests/api/roles/name-exists", {
         existingObject: isExisting,
         uniqueAttribute: name,
         applicationId: applicationId
     }, "post");
 }
 
-export function newRole(role) {
+export function saveRole(role) {
     return postPutJson("/guests/api/roles", role, "post");
-}
-
-export function updateRole(role) {
-    return postPutJson("/guests/api/roles", role, "put");
 }
 
 export function deleteRole(role) {

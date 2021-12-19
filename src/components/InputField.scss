@@ -19,7 +19,7 @@
         color: black;
 
         &[disabled] {
-            background-color: $secondary-grey;
+            background-color: $background;
             cursor: not-allowed;
             color: black;
         }

@@ -10,6 +10,8 @@ import {institutionById} from "../api/api";
 import Spinner from "../components/Spinner";
 import Button from "../components/Button";
 import Users from "../entities/Users";
+import Roles from "../entities/Roles";
+import {BreadCrumb} from "../components/BreadCrumb";
 
 const InstitutionDetail = ({user}) => {
 
@@ -27,6 +29,9 @@ const InstitutionDetail = ({user}) => {
         })
     }, [institutionId]);
 
+    if (loading) {
+        return <Spinner/>
+    }
 
     if (isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
         tabs.push(
@@ -34,7 +39,7 @@ const InstitutionDetail = ({user}) => {
                  name="applications"
                  label={I18n.t("home.tabs.applications")}
                  icon={<FontAwesomeIcon icon="mobile-alt"/>}>
-                <Applications user={user} institutionId={institutionId}/>
+                <Applications user={user} institution={institution}/>
             </div>)
     }
     if (isAllowed(AUTHORITIES.INVITER, user)) {
@@ -42,9 +47,16 @@ const InstitutionDetail = ({user}) => {
                        name="users"
                        label={I18n.t("home.tabs.users")}
                        icon={<FontAwesomeIcon icon="user"/>}>
-            <Users institutionId={institutionId}/>
+            <Users institution={institution}/>
         </div>)
-
+    }
+    if (false && isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+        tabs.push(<div key="roles"
+                       name="roles"
+                       label={I18n.t("home.tabs.roles")}
+                       icon={<FontAwesomeIcon icon="hat-cowboy"/>}>
+            <Roles institutionId={institutionId}/>
+        </div>)
     }
 
     const tabChanged = name => {
@@ -52,12 +64,12 @@ const InstitutionDetail = ({user}) => {
         navigate(`/institution-detail/${institutionId}/${name}`, {replace: true});
     }
 
-    if (loading) {
-        return <Spinner/>
-    }
-
     return (
         <div className="institution-detail">
+            <BreadCrumb paths={[
+                {path: "/", value: I18n.t("breadcrumbs.home")},
+                {value: institution.displayName}
+            ]}/>
             <UnitHeader>
                 <div className="info">
                     <h2>{`${I18n.t("institutions.object")} ${institution.displayName}`}</h2>

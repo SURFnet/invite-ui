@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from "react";
 import "./ApplicationForm.scss";
 import {useNavigate, useParams} from "react-router-dom";
-import {applicationById, applicationEntityIdExists, deleteApplication, saveApplication, validate} from "../api/api";
+import {
+    applicationById,
+    applicationEntityIdExists,
+    deleteApplication,
+    institutionById,
+    saveApplication,
+    validate
+} from "../api/api";
 import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
 import {setFlash} from "../flash/events";
@@ -11,15 +18,19 @@ import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
 import Button from "../components/Button";
+import {BreadCrumb} from "../components/BreadCrumb";
 
 const ApplicationForm = ({user}) => {
 
     const navigate = useNavigate();
 
+    const {institutionId, applicationId} = useParams();
+
     const cancel = () => navigate(-1);
 
     const required = ["displayName", "entityId"];
     const [application, setApplication] = useState({});
+    const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
     const [isNew, setIsNew] = useState(false);
@@ -28,7 +39,6 @@ const ApplicationForm = ({user}) => {
     const [alreadyExists, setAlreadyExists] = useState({});
     const [invalid, setInvalid] = useState({});
     const [originalName, setOriginalName] = useState("");
-    const {institutionId, applicationId} = useParams();
 
     useEffect(() => {
         if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
@@ -36,23 +46,28 @@ const ApplicationForm = ({user}) => {
             return;
         }
         if (applicationId === "new") {
-            setIsNew(true);
-            setApplication({
-                displayName: "",
-                entityId: "",
-                landingPage: "",
-                provisioningHookUrl: "",
-                provisioningHookUsername: "",
-                provisioningHookPassword: "",
-                provisioningHookEmail: "",
-                institution: {
-                    id: institutionId
-                }
-
-            });
-            setLoading(false);
+            institutionById(institutionId).then(res => {
+                setIsNew(true);
+                setInstitution(res);
+                setApplication({
+                    displayName: "",
+                    entityId: "",
+                    landingPage: "",
+                    provisioningHookUrl: "",
+                    provisioningHookUsername: "",
+                    provisioningHookPassword: "",
+                    provisioningHookEmail: "",
+                    institution: {
+                        id: institutionId
+                    }
+                });
+                setLoading(false);
+            })
         } else {
             applicationById(applicationId).then(res => {
+                res.institution = {
+                    id: institutionId
+                }
                 setApplication(res);
                 setLoading(false);
                 setOriginalName(res.displayName);
@@ -117,7 +132,7 @@ const ApplicationForm = ({user}) => {
         if (isValid()) {
             setLoading(true);
             saveApplication(application).then(res => {
-                navigate(`/application-detail/${res.id}`);
+                navigate(`/application-detail/${institutionId}/${res.id}`);
                 setFlash(I18n.t("forms.flash.created",
                     {
                         object: I18n.t("applications.object").toLowerCase(),
@@ -141,6 +156,17 @@ const ApplicationForm = ({user}) => {
 
     return (
         <div className={"application-form"}>
+            <BreadCrumb inForm={true} paths={[
+                {path: "/", value: I18n.t("breadcrumbs.home")},
+                {
+                    path: `/institution-detail/${institutionId}`,
+                    value: isNew ? institution.displayName : application.institutionName
+                },
+                {
+                    value: isNew ? I18n.t("forms.new", {object: I18n.t("applications.object")}) :
+                        application.displayName
+                }
+            ]}/>
 
             {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
                                                      cancel={confirmation.cancel}
@@ -148,7 +174,12 @@ const ApplicationForm = ({user}) => {
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
 
-            <h2 className="section-separator">{I18n.t(`applications.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h2>
+            <h2 className="section-separator">
+                {I18n.t(`forms.${isNew ? "new" : "editObject"}`, {
+                    object: I18n.t("applications.object"),
+                    name: originalName
+                })}
+            </h2>
 
             <InputField value={application.displayName}
                         onChange={e => setState("displayName", e.target.value)}

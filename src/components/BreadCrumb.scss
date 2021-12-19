@@ -1,0 +1,46 @@
+@import "../styles/vars.scss";
+
+.bread-crumb-container {
+  margin: 0 auto;
+  color: black;
+  background-color: $background;
+  padding: 10px 0 0 20px;
+
+  &.form {
+    padding: 10px 0 0 0;
+  }
+
+  .bread-crumb {
+    @media (max-width: $mobile) {
+      padding: 0 15px;
+    }
+    min-height: 32px;
+    margin: 0 auto 0 auto;
+    position: relative;
+    transition: margin 150ms ease-in-out;
+    display: flex;
+    align-items: center;
+
+    div.path {
+      display: flex;
+      align-items: center;
+
+    }
+
+    a.link {
+      color: $secondary-grey;
+    }
+
+    svg.fa-chevron-right {
+      color: $secondary-grey;
+      font-size: 14px;
+      margin: 0 8px;
+    }
+
+    span.last {
+      color: $inactive-grey;
+    }
+
+  }
+
+}

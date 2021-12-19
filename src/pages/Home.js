@@ -5,6 +5,7 @@ import Tabs from "../components/Tabs";
 import I18n from "i18n-js";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Institutions from "../entities/Institutions";
+import {BreadCrumb} from "../components/BreadCrumb";
 
 const Home = ({user}) => {
 
@@ -31,6 +32,7 @@ const Home = ({user}) => {
 
     return (
         <div className="home">
+            <BreadCrumb paths={[{path: "/", value: I18n.t("breadcrumbs.home")}]}/>
             <Tabs activeTab={currentTab} tabChanged={tabChanged}>
                 {tabs}
             </Tabs>

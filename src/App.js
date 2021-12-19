@@ -6,13 +6,13 @@ import {Navigate, Route, Routes, useNavigate} from 'react-router-dom';
 import {addIcons} from "./img/IconLibrary";
 import Home from "./pages/Home";
 import Header from "./components/Header";
-import Applications from "./entities/Applications";
 import ApplicationDetail from "./pages/ApplicationDetail";
 import NotFound from "./pages/NotFound";
 import InstitutionForm from "./pages/InstitutionForm";
 import Flash from "./flash/Flash";
 import InstitutionDetail from "./pages/InstitutionDetail";
 import ApplicationForm from "./pages/ApplicationForm";
+import RoleForm from "./pages/RoleForm";
 
 addIcons();
 
@@ -79,10 +79,12 @@ const App = () => {
                         <Route path=":tab" element={<InstitutionDetail user={user}/>}/>
                         <Route path="" element={<InstitutionDetail user={user}/>}/>
                     </Route>
-                    <Route path="new-" element={<Applications/>}/>
-                    <Route path="applications" element={<Applications/>}/>
                     <Route path="application/:institutionId/:applicationId" element={<ApplicationForm user={user}/>}/>
-                    <Route path="application-detail/:applicationId" element={<ApplicationDetail user={user}/>}/>
+                    <Route path="application-detail/:institutionId/:applicationId">
+                        <Route path=":tab" element={<ApplicationDetail user={user}/>}/>
+                        <Route path="" element={<ApplicationDetail user={user}/>}/>
+                    </Route>
+                    <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

@@ -17,6 +17,7 @@ import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
 import Button from "../components/Button";
+import {BreadCrumb} from "../components/BreadCrumb";
 
 const InstitutionForm = ({user}) => {
 
@@ -113,7 +114,7 @@ const InstitutionForm = ({user}) => {
             setLoading(true);
             saveInstitution(institution).then(res => {
                 navigate(`/institution-detail/${res.id}`);
-                setFlash(I18n.t("forms.flash.created",
+                setFlash(I18n.t(`forms.flash.${isNew ? "created" : "updated"}`,
                     {
                         object: I18n.t("institutions.object").toLowerCase(),
                         name: institution.displayName
@@ -136,15 +137,25 @@ const InstitutionForm = ({user}) => {
 
     return (
         <div className={"institution-form"}>
+            <BreadCrumb inForm={true} paths={[
+                {path: "/", value: I18n.t("breadcrumbs.home")},
+                {
+                    value: isNew ? I18n.t("forms.new", {object: I18n.t("institutions.object")}) :
+                        institution.displayName
+                }
+            ]}/>
 
             {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
                                                      cancel={confirmation.cancel}
                                                      confirm={confirmation.action}
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
-
-            <h2 className="section-separator">{I18n.t(`institutions.${isNew ? "newTitle" : "editTitle"}`, {name: originalName})}</h2>
-
+            <h2 className="section-separator">
+                {I18n.t(`forms.${isNew ? "new" : "editObject"}`, {
+                    object: I18n.t("institutions.object"),
+                    name: originalName
+                })}
+            </h2>
             <InputField value={institution.displayName}
                         onChange={e => setState("displayName", e.target.value)}
                         placeholder={I18n.t("institutions.namePlaceholder")}

@@ -13,6 +13,9 @@ I18n.translations.en = {
             users: "Users"
         }
     },
+    breadcrumbs: {
+        home: "Home"
+    },
     institutions: {
         title: "Institutions",
         displayName: "Name",
@@ -26,8 +29,6 @@ I18n.translations.en = {
         searchPlaceHolder: "Search institutions",
         new: "New institution",
         noEntities: "There are no institutions...",
-        newTitle: "New institution",
-        editTitle: "Edit {{name}}",
         namePlaceholder: "Name of the institution"
     },
     users: {
@@ -46,8 +47,6 @@ I18n.translations.en = {
         searchPlaceHolder: "Search users",
         new: "Invite people",
         noEntities: "There are no users...",
-        newTitle: "Invite new user",
-        editTitle: "Edit {{name}}",
         status: "Status",
         statuses: {
             open: "Open invitation",
@@ -76,13 +75,17 @@ I18n.translations.en = {
         searchPlaceHolder: "Search applications",
         new: "New application",
         noEntities: "There are no applications...",
-        newTitle: "New application",
-        editTitle: "Edit {{name}}",
         conflictProvisioning: "You can not both configure a provisioningHookUrl and a provisioningHookEmail"
     },
     roles: {
         name: "Name",
-        applicationName: "Application"
+        applicationName: "Application",
+        new: "New role",
+        searchPlaceHolder: "Search roles",
+        noEntities: "No roles found...",
+        object: "Role",
+        application: "Application",
+        namePlaceholder: "Name of the role"
     },
     confirmationDialog: {
         title: "Please confirm",
@@ -99,6 +102,8 @@ I18n.translations.en = {
         save: "Save",
         edit: "Edit",
         createdAt: "Created",
+        new: "New {{object}}",
+        editObject: "Edit {{name}}",
         required: "{{attribute}} is a required attribute",
         alreadyExists: "An {{object}} with {{attribute}} {{value}} already exists.",
         invalid: "{{value}} for {{attribute}} is invalid.",

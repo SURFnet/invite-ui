@@ -43,7 +43,7 @@ const NewInvitation = ({institution}) => {
     const [applications, setApplications] = useState([]);
 
     const isValid = () => {
-        return (!isEmpty(administrators) && !isEmpty(intendedRole);
+        return !isEmpty(administrators) && !isEmpty(intendedRole);
     };
 
     const doSubmit = () => {
@@ -111,7 +111,7 @@ const NewInvitation = ({institution}) => {
         }
     }
 
-    const invitationForm = (disabledSubmit) =>
+    const invitationForm = (disabledSubmit) => (
         <div className={"invitation-form"}>
 
             <EmailField value={email}
@@ -163,7 +163,7 @@ const NewInvitation = ({institution}) => {
 
 
             {renderActions(disabledSubmit)}
-        </div>;
+        </div>);
 
     const renderActions = (disabledSubmit) => (
         <section className="actions">
@@ -173,28 +173,28 @@ const NewInvitation = ({institution}) => {
     );
 
     if (loading) {
-        return <Spinner>
-            }
-            const disabledSubmit = (!initial && !this.isValid());
-            return (
-            <>
-                <UnitHeader obj={collaboration}
-                            name={collaboration.name}/>
-                <ConfirmationDialog isOpen={confirmationDialogOpen}
-                                    cancel={cancelDialogAction}
-                                    confirm={confirmationDialogAction}
-                                    leavePage={leavePage}/>
-                <div className="mod-new-collaboration-invitation">
-                    <h1>{I18n.t("tabs.invitation_form")}</h1>
-                    <div className="new-collaboration-invitation">
-                        {this.invitationForm(email, fileInputKey, fileName, fileTypeError, fileEmails, initial,
-                            administrators, intended_role, message, expiry_date, disabledSubmit, groups,
-                            selectedGroup, membership_expiry_date)}
-                    </div>
+        return <Spinner/>
+    }
+    const disabledSubmit = (!initial && !this.isValid());
+    return (
+        <>
+            <UnitHeader>
+
+            </UnitHeader>
+            <ConfirmationDialog isOpen={confirmationDialogOpen}
+                                cancel={cancelDialogAction}
+                                confirm={confirmationDialogAction}
+                                leavePage={leavePage}/>
+            <div className="mod-new-collaboration-invitation">
+                <h1>{I18n.t("tabs.invitation_form")}</h1>
+                <div className="new-collaboration-invitation">
+                    {this.invitationForm(email, fileInputKey, fileName, fileTypeError, fileEmails, initial,
+                        administrators, intended_role, message, expiry_date, disabledSubmit, groups,
+                        selectedGroup, membership_expiry_date)}
                 </div>
-            </>)
-            ;
-            };
+            </div>
+        </>)
+};
 
 
-            export default NewInvitation;
+export default NewInvitation;

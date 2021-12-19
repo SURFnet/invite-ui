@@ -2,6 +2,7 @@ import {library} from '@fortawesome/fontawesome-svg-core'
 import {
     faMobileAlt,
     faUniversity,
+    faChevronRight,
     faSearch,
     faTrash,
     faCaretUp,
@@ -17,6 +18,7 @@ export function addIcons() {
     library.add(
         faMobileAlt,
         faUniversity,
+        faChevronRight,
         faSearch,
         faTrash,
         faCaretUp,

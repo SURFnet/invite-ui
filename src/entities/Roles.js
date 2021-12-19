@@ -1,29 +1,30 @@
 import React, {useEffect, useState} from "react";
 import I18n from "i18n-js";
-import {allRolesByApplication, allRolesByInstitution} from "../api/api";
+import {allRolesByApplication} from "../api/api";
 import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Roles.scss";
+import {formatDate} from "../utils/date";
 
-const Roles = ({institutionId, applicationId = null}) => {
+const Roles = ({institutionId, application = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [roles, setRoles] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const promise = applicationId ? allRolesByApplication(applicationId) : allRolesByInstitution(institutionId);
+        const promise = allRolesByApplication(application.id);
         promise.then(res => {
             setRoles(res);
             setLoading(false);
         })
-    }, [applicationId, institutionId]);
+    }, [application, institutionId]);
 
     const openRole = role => e => {
         stopEvent(e);
-        navigate(`/role-detail/${role.id}`);
+        navigate(`/role/${institutionId}/${application.id}/${role.id}`);
     };
 
     if (loading) {
@@ -36,14 +37,14 @@ const Roles = ({institutionId, applicationId = null}) => {
             mapper: role => role.name,
         },
         {
-            key: "name",
+            key: "applicationName",
             header: I18n.t("roles.applicationName"),
             mapper: role => role.applicationName,
         },
         {
             key: "auditable_createdAt",
             header: I18n.t("forms.createdAt"),
-            mapper: role => role.auditable.createdAt,
+            mapper: role => formatDate(role.auditable.createdAt),
         },
     ]
     return (
@@ -56,7 +57,7 @@ const Roles = ({institutionId, applicationId = null}) => {
                       hideTitle={true}
                       rowLinkMapper={() => openRole}
                       showNew={true}
-                      newEntityPath={"/role/new"}
+                      newEntityPath={`/role/${institutionId}/${application.id}/new`}
                       loading={loading}/>
         </div>
     )

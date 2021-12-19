@@ -126,8 +126,8 @@ const Entities = ({
                 <table className={tableClassName || modelName}>
                     <thead>
                     <tr>
-                        {columns.map(column =>
-                            <th key={column.key}
+                        {columns.map((column, index) =>
+                            <th key={index}
                                 className={`${column.key} ${column.class || ""} ${column.nonSortable ? "" : "sortable"}`}
                                 onClick={setSortedColumn(column.key)}>
                                 {column.header}

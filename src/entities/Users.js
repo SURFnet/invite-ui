@@ -12,15 +12,15 @@ import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
 
-const Users = ({institutionId, applicationId = null}) => {
+const Users = ({institution, application = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const promises = applicationId ? [allUsersByApplication(applicationId), allInvitationsByApplication(applicationId)] :
-            [allUsersByInstitution(institutionId), allInvitationsByInstitution(institutionId)];
+        const promises = application ? [allUsersByApplication(application.id), allInvitationsByApplication(application.id)] :
+            [allUsersByInstitution(institution.id), allInvitationsByInstitution(institution.id)];
         Promise.all(promises).then(res => {
             const allUsers = res[0];
             const allInvitations = res[1];
@@ -30,7 +30,7 @@ const Users = ({institutionId, applicationId = null}) => {
             setUsers(allUsers.concat(allInvitations));
             setLoading(false);
         })
-    }, [institutionId, applicationId]);
+    }, [institution, application]);
 
     const openUser = user => e => {
         stopEvent(e);

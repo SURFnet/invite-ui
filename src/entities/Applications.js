@@ -8,22 +8,22 @@ import Entities from "../components/Entities";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
 import "./Applications.scss";
 
-const Applications = ({user, institutionId}) => {
+const Applications = ({user, institution}) => {
 
     const [loading, setLoading] = useState(true);
     const [applications, setApplications] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        applicationsByInstitution(institutionId).then(res => {
+        applicationsByInstitution(institution.id).then(res => {
             setApplications(res);
             setLoading(false);
         })
-    }, [institutionId]);
+    }, [institution]);
 
     const openApplication = application => e => {
         stopEvent(e);
-        navigate(`/application-detail/${application.id}`);
+        navigate(`/application-detail/${institution.id}/${application.id}`);
     };
 
     if (loading) {
@@ -62,7 +62,7 @@ const Applications = ({user, institutionId}) => {
                       hideTitle={true}
                       rowLinkMapper={() => openApplication}
                       showNew={isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)}
-                      newEntityPath={`/application/${institutionId}/new`}
+                      newEntityPath={`/application/${institution.id}/new`}
                       loading={loading}/>
         </div>
     )
