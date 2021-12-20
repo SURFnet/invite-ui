@@ -12,7 +12,7 @@ import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
 import {setFlash} from "../flash/events";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
-import {isEmpty} from "../utils/forms";
+import {isEmpty, nameUrnCompatibilityCheck} from "../utils/forms";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
@@ -189,7 +189,7 @@ const InstitutionForm = ({user}) => {
 
             <InputField value={institution.homeInstitution}
                         onChange={e => {
-                            setState("homeInstitution", e.target.value);
+                            setState("homeInstitution", nameUrnCompatibilityCheck(e.target.value));
                             setAlreadyExists({...alreadyExists, homeInstitution: false});
                         }}
                         placeholder={I18n.t("institutions.homeInstitutionPlaceholder")}

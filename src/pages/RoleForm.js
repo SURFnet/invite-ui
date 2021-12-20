@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
 import {setFlash} from "../flash/events";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
-import {isEmpty} from "../utils/forms";
+import {isEmpty, nameUrnCompatibilityCheck} from "../utils/forms";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
@@ -153,7 +153,7 @@ const RoleForm = ({user}) => {
             </h2>
 
             <InputField value={role.name}
-                        onChange={e => setState("name", e.target.value)}
+                        onChange={e => nameUrnCompatibilityCheck(setState("name", e.target.value))}
                         placeholder={I18n.t("roles.namePlaceholder")}
                         onBlur={validateName}
                         error={alreadyExists.name || (!initial && isEmpty(role.name))}

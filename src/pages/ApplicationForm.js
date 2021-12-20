@@ -13,7 +13,7 @@ import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
 import {setFlash} from "../flash/events";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
-import {isEmpty} from "../utils/forms";
+import {isEmpty, nameUrnCompatibilityCheck} from "../utils/forms";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
@@ -182,7 +182,7 @@ const ApplicationForm = ({user}) => {
             </h2>
 
             <InputField value={application.displayName}
-                        onChange={e => setState("displayName", e.target.value)}
+                        onChange={e => setState("displayName", nameUrnCompatibilityCheck(e.target.value))}
                         placeholder={I18n.t("applications.namePlaceholder")}
                         error={!initial && isEmpty(application.displayName)}
                         name={I18n.t("applications.displayName")}/>

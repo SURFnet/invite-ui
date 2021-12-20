@@ -77,3 +77,14 @@ export const removeDuplicates = (arr, attr) => arr
     .filter((obj, pos, arr) => arr.map(mapObj => mapObj[attr]).indexOf(obj[attr]) === pos);
 
 
+export const nameUrnCompatibilityCheck = s => {
+    if (isEmpty(s)) {
+        return "";
+    }
+    return s.trim()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .replace(/ /g, "_")
+        .replace(/[^A-Za-z0-9_.]/g, "")
+        .replaceAll(/-/g, "");
+}
