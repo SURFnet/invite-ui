@@ -86,5 +86,5 @@ export const nameUrnCompatibilityCheck = s => {
         .replace(/\p{Diacritic}/gu, "")
         .replace(/ /g, "_")
         .replace(/[^A-Za-z0-9_.]/g, "")
-        .replaceAll(/-/g, "");
+        .replace(/-/g, "");
 }
