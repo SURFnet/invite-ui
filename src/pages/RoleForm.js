@@ -153,9 +153,13 @@ const RoleForm = ({user}) => {
             </h2>
 
             <InputField value={role.name}
-                        onChange={e => nameUrnCompatibilityCheck(setState("name", e.target.value))}
+                        onChange={e => {
+                            setAlreadyExists({...alreadyExists, name: false})
+                            nameUrnCompatibilityCheck(setState("name", e.target.value));
+                        }}
                         placeholder={I18n.t("roles.namePlaceholder")}
                         onBlur={validateName}
+                        toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("institutions.object")})}
                         error={alreadyExists.name || (!initial && isEmpty(role.name))}
                         name={I18n.t("roles.name")}/>
             {(!initial && isEmpty(role.name)) &&
@@ -163,11 +167,8 @@ const RoleForm = ({user}) => {
                 attribute: I18n.t("roles.name")
             })}/>}
             {alreadyExists.name &&
-            <ErrorIndicator msg={I18n.t("forms.alreadyExists", {
-                object: I18n.t("roles.object").toLowerCase(),
-                attribute: I18n.t("roles.name").toLowerCase(),
-                value: role.name
-            })}/>}
+            <ErrorIndicator
+                msg={I18n.t("roles.alreadyExists", {value: role.name, application: application.displayName})}/>}
 
 
             <InputField value={application.displayName}

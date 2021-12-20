@@ -3,7 +3,7 @@ import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import {collaborationInvitations} from "../api";
+import {createInvitation} from "../api/api";
 import I18n from "i18n-js";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
@@ -35,11 +35,9 @@ const NewInvitation = ({institution}) => {
 
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
-    const [expiryDate, setExpiryDate] = useState(futureDate(14));
+    const [invitation, setInvitation] = useState({});
     const [email, setEmail] = useState("");
     const [administrators, setAdministrators] = useState([]);
-    const [intendedRole, setIntendedRole] = useState("");
-    const [message, setMessage] = useState("");
     const [applications, setApplications] = useState([]);
 
     const isValid = () => {
@@ -49,8 +47,8 @@ const NewInvitation = ({institution}) => {
     const doSubmit = () => {
         if (isValid()) {
             setLoading(true);
-            collaborationInvitations({
-                administrators: administrators.concat(fileEmails),
+            createInvitation({
+                administrators: administrators,
                 message,
                 membership_expiry_date: membership_expiry_date ? membership_expiry_date.getTime() / 1000 : null,
                 intended_role: intended_role,
@@ -58,8 +56,8 @@ const NewInvitation = ({institution}) => {
                 groups: selectedGroup.map(ag => ag.value),
                 expiry_date: expiry_date.getTime() / 1000
             }).then(res => {
-                this.props.history.push(`/collaborations/${collaboration.id}/${isAdminView ? "admins" : "members"}`);
-                setFlash(I18n.t("invitation.flash.created", {name: collaboration.name}))
+                this.props.history.push(`/institutions/${institution.id}/users`);
+                setFlash(I18n.t("invitations.flash.send"))
             });
         } else {
             window.scrollTo(0, 0);
@@ -93,11 +91,10 @@ const NewInvitation = ({institution}) => {
         }
         if (isEmpty(emails)) {
             setEmail("");
-            this.setState({email: ""});
         } else {
             const uniqueEmails = [...new Set(administrators.concat(emails))];
-            this.setState({email: ""});
             setAdministrators(uniqueEmails);
+            setEmail("");
         }
         return true;
     };
@@ -115,33 +112,33 @@ const NewInvitation = ({institution}) => {
         <div className={"invitation-form"}>
 
             <EmailField value={email}
-                        onChange={e => this.setState({email: e.target.value})}
+                        onChange={e => setEmail(e.target.value))}
                         addEmail={addEmail}
                         removeMail={removeMail}
-                        name={I18n.t("invitation.invitees")}
+                        name={I18n.t("invitations.invitees")}
                         emails={administrators}
-                        error={!initial && isEmpty(administrators) && isEmpty(fileEmails)}/>
+                        error={!initial && isEmpty(administrators)}/>
             {(!initial && isEmpty(administrators)) &&
-            <ErrorIndicator msg={I18n.t("invitation.requiredEmail")}/>}
+            <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}
 
             <SelectField value={intendedRolesOptions.find(option => option.value === intendedRole)}
                          options={intendedRolesOptions}
-                         name={I18n.t("invitation.intendedRole")}
+                         name={I18n.t("invitations.intendedRole")}
                          small={true}
-                         toolTip={I18n.t("invitation.intendedRoleTooltip")}
-                         placeholder={I18n.t("collaboration.selectRole")}
+                         clearable={false}
+                         toolTip={I18n.t("invitations.intendedRoleTooltip")}
                          onChange={selectedOption => setIntendedRole(selectedOption ? selectedOption.value : null)}/>
 
-            <SelectField value={selectedGroup}
-                         options={groups
-                             .filter(group => !selectedGroup.find(selectedGroup => selectedGroup.value === group.value))}
-                         name={I18n.t("invitation.groups")}
-                         toolTip={I18n.t("invitation.groupsTooltip")}
+            <SelectField value={applications}
+                         options={allApplications
+                             .filter(app => !applications.find(selectedGroup => selectedGroup.value === group.value))}
+                         name={I18n.t("invitations.applications")}
+                         toolTip={I18n.t("invitations.applicationsTooltip")}
                          isMulti={true}
-                         placeholder={I18n.t("invitation.groupsPlaceHolder")}
+                         placeholder={I18n.t("invitations.applicationsPlaceHolder")}
                          onChange={applicationsChanged}/>
 
-            <DateField value={membership_expiry_date}
+            <DateField value={expiryDate}
                        onChange={e => this.setState({membership_expiry_date: e})}
                        allowNull={true}
                        showYearDropdown={true}
@@ -177,23 +174,19 @@ const NewInvitation = ({institution}) => {
     }
     const disabledSubmit = (!initial && !this.isValid());
     return (
-        <>
+        <div className="new-invitation">
             <UnitHeader>
 
             </UnitHeader>
-            <ConfirmationDialog isOpen={confirmationDialogOpen}
-                                cancel={cancelDialogAction}
-                                confirm={confirmationDialogAction}
-                                leavePage={leavePage}/>
-            <div className="mod-new-collaboration-invitation">
-                <h1>{I18n.t("tabs.invitation_form")}</h1>
-                <div className="new-collaboration-invitation">
+
+                <h1>{I18n.t("invitations.title")}</h1>
+                <div className="new-invitation-form">
                     {this.invitationForm(email, fileInputKey, fileName, fileTypeError, fileEmails, initial,
                         administrators, intended_role, message, expiry_date, disabledSubmit, groups,
                         selectedGroup, membership_expiry_date)}
                 </div>
             </div>
-        </>)
+        )
 };
 
 

@@ -182,9 +182,13 @@ const ApplicationForm = ({user}) => {
             </h2>
 
             <InputField value={application.displayName}
-                        onChange={e => setState("displayName", nameUrnCompatibilityCheck(e.target.value))}
+                        onChange={e => {
+                            setAlreadyExists({...alreadyExists, name: false});
+                            setState("displayName", nameUrnCompatibilityCheck(e.target.value))
+                        }}
                         placeholder={I18n.t("applications.namePlaceholder")}
                         error={!initial && isEmpty(application.displayName)}
+                        toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("applications.object")})}
                         name={I18n.t("applications.displayName")}/>
             {(!initial && isEmpty(application.displayName)) &&
             <ErrorIndicator msg={I18n.t("forms.required", {

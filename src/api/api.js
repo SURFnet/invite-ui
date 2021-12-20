@@ -176,7 +176,11 @@ export function validate(type, value) {
 
 //Invitations
 export function invitationByHash(hash) {
-    return fetchJson(`/guests/api/invitationss/${hash}`, {}, {}, false);
+    return fetchJson(`/guests/api/invitations/${hash}`, {}, {}, false);
+}
+
+export function createInvitation(invitation) {
+    return postPutJson("/guests/api/invitations", invitation, "post");
 }
 
 export function allInvitationsByInstitution(institutionId) {

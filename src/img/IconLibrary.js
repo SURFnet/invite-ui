@@ -7,6 +7,7 @@ import {
     faTrash,
     faCaretUp,
     faCaretDown,
+    faInfoCircle,
     faExclamationCircle,
     faTimes,
     faUser,
@@ -18,6 +19,7 @@ export function addIcons() {
     library.add(
         faMobileAlt,
         faUniversity,
+        faInfoCircle,
         faChevronRight,
         faSearch,
         faTrash,

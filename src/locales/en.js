@@ -83,6 +83,7 @@ I18n.translations.en = {
         new: "New role",
         searchPlaceHolder: "Search roles",
         noEntities: "No roles found...",
+        alreadyExists: "A Role with name {{value}} already exists for application {{application}}.",
         object: "Role",
         application: "Application",
         namePlaceholder: "Name of the role"
@@ -111,11 +112,15 @@ I18n.translations.en = {
             created: "Created {{object}} {{name}}",
             updated: "Updated {{object}} {{name}}",
             deleted: "Deleted {{object}} {{name}}",
-        }
+        },
+        nameTooltip: "The name of the {{object}} is part of the group membership URN that is send to services. Therefore it may not contain spaces or other non-asci characters."
     },
-    invitation: {
+    invitations: {
         inviteesPlaceholder: "Invitee email addresses",
         inviteesMessagesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
+        requiredEmail: "At least one email is required",
+        intendedRole: "Authority",
+        intendedRoleTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation"
     }
 
 

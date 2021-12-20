@@ -194,6 +194,7 @@ const InstitutionForm = ({user}) => {
                         }}
                         placeholder={I18n.t("institutions.homeInstitutionPlaceholder")}
                         onBlur={validateSchacHome}
+                        toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("institutions.object")})}
                         error={alreadyExists.homeInstitution || (!initial && isEmpty(institution.homeInstitution))}
                         name={I18n.t("institutions.homeInstitution")}/>
             {(!initial && isEmpty(institution.homeInstitution)) &&
