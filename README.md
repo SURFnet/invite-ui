@@ -1,5 +1,5 @@
 # invite-ui
-[![Build Status](https://github.com/SURFnet/invite-ui/actions/workflows/maven.yml/badge.svg)](https://github.com/SURFnet/invite-ui/actions/workflows/maven.yml/badge.svg)
+[![CI Github](https://github.com/SURFnet/invite-ui/actions/workflows/yarn.yml/badge.svg)](https://github.com/SURFnet/invite-ui/actions/workflows/yarn.yml)
 
 Guest application UI
 
