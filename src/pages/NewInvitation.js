@@ -84,7 +84,7 @@ const NewInvitation = ({user}) => {
                 invitation: invitationWithRoles
             }
             createInvitation(invitationRequest).then(() => {
-                navigate(`/institutions/${institutionId}/users`);
+                navigate(`/institution-detail/${institutionId}/users`);
                 setFlash(I18n.t("invitations.flash.send"))
             });
         }
