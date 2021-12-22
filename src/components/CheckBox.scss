@@ -37,8 +37,8 @@ div.checkbox {
     }
 
     input[type="checkbox"]:disabled + label span {
-        border: 1px solid darken($primary-grey, 5%);
-        background-color: $light-grey;
+        border: 1px solid darken($tertiary-grey, 5%);
+        background-color: $primary-grey;
         cursor: not-allowed;
     }
 
@@ -66,21 +66,4 @@ div.checkbox {
         }
     }
 
-    svg.fa-info-circle {
-        color: $tertiary-grey;
-        margin-left: 8px;
-        font-size: 16px;
-        cursor: pointer;
-
-        &:hover {
-            color: darken($primary-blue, 20%);
-        }
-
-    }
-
-    em {
-        svg {
-            font-style: normal;
-        }
-    }
 }

@@ -1,46 +1,7 @@
-@import "../styles/vars.scss";
+@import "../styles/vars";
 @import "../styles/forms";
 
-.mod-new-invitation {
-    max-width: $width-app;
-    width: 100%;
-    margin: 0 auto;
-
-    h1 {
-        margin: 15px 0;
-        font-size: 28px;
-        line-height: 32px;
-        font-weight: bold;
-        color: $primary-orange;
-    }
-
-    .new-collaboration-invitation {
-        margin-bottom: 25px;
-
-        .info-msg {
-            color: $inactive-grey;
-            display: block;
-            font-size: 14px;
-        }
-
-
-        td.invitation-link {
-            padding: 12px;
-            text-align: center;
-        }
-
-    }
-
-    .invitation-form {
-        width: 80%;
-
-        @media (max-width: $mobile) {
-            width: 100%;
-        }
-
-    }
-
-    .preview-mail {
-        padding-top: 20px;
-    }
+.invitation-form {
+  padding: 0 25px 25px 25px;
+  width: 75%;
 }

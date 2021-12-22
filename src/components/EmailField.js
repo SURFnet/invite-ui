@@ -1,32 +1,26 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ReactTooltip from "react-tooltip";
 import "./EmailField.scss";
 import {isEmpty, stopEvent} from "../utils/forms";
-import I18n from "i18n-js";
+import Tooltip from "./Tooltip";
 
 const EmailField = ({
-                                       onChange,
-                                       name,
-                                       value,
-                                       emails,
-                                       addEmail,
-                                       removeMail,
-                                       isAdmin = false,
-                                       pinnedEmails = [],
-                                       error = false
-                                   }) => {
+                        onChange,
+                        name,
+                        value,
+                        emails,
+                        addEmail,
+                        removeMail,
+                        tooltip,
+                        placeHolder,
+                        pinnedEmails = [],
+                        error = false
+                    }) => {
 
     return (
         <div className={`email-field ${error ? "error" : ""}`}>
-            <label htmlFor={name}>{name} <span className="tool-tip-section">
-                <span data-tip data-for={name}><FontAwesomeIcon icon="info-circle"/></span>
-                <ReactTooltip id={name} type="light" effect="solid" data-html={true}>
-                    <p dangerouslySetInnerHTML={{
-                        __html: I18n.t("invitation.inviteesMessagesTooltip")
-                    }}/>
-                </ReactTooltip>
-            </span>
+            <label htmlFor={name}>{name}
+                {tooltip && <Tooltip tooltip={tooltip} name={name}/>}
             </label>
             <div className={`inner-email-field ${error ? "error" : ""}`}>
                 {emails.map(mail =>
@@ -54,7 +48,7 @@ const EmailField = ({
                                   addEmail(e);
                               }
                           }}
-                          placeholder={emails.length === 0 ? I18n.t("invitation.inviteesPlaceholder") : ""} cols={3}/>
+                          placeholder={emails.length === 0 ? placeHolder : ""} cols={3}/>
             </div>
         </div>
     );

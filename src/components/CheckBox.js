@@ -1,14 +1,13 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./CheckBox.scss";
-import ReactTooltip from "react-tooltip";
+import Tooltip from "./Tooltip";
 
-const CheckBox = ({name, value, info, tooltip, className = "checkbox", readOnly = false}) => {
+const CheckBox = ({name, value, info, onChange, tooltip, className = "checkbox", readOnly = false}) => {
 
     const innerOnChange = e => {
         e.cancelBubble = true;
         e.stopPropagation();
-        const {onChange} = this.props;
         onChange && onChange(e);
         return false;
     }
@@ -24,10 +23,7 @@ const CheckBox = ({name, value, info, tooltip, className = "checkbox", readOnly 
                 {info && <span>
                     <label htmlFor={name} className={`info ${readOnly ? "disabled" : ""}`}
                            dangerouslySetInnerHTML={{__html: info}}/>
-                    {tooltip && <span data-tip data-for={name}><FontAwesomeIcon icon="info-circle"/></span>}
-                    {tooltip && <ReactTooltip id={name} type="info" effect="solid">
-                        <p dangerouslySetInnerHTML={{__html: tooltip}}/>
-                    </ReactTooltip>}
+                    {tooltip && <Tooltip tooltip={tooltip} name={name}/>}
                 </span>}
             </div>
         )

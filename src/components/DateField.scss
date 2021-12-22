@@ -14,17 +14,6 @@
         font-weight: bold;
     }
 
-    span.tool-tip-section {
-        font-size: 14px;
-        color: $tertiary-grey;
-        cursor: pointer;
-        padding: 0 4px;
-
-        &:hover {
-            color: darken($primary-blue, 20%);
-        }
-    }
-
     label.date-picker-container {
         display: flex;
         width: 240px;
@@ -33,7 +22,7 @@
 
         &:focus {
             outline: none;
-            box-shadow: 3px 3px 3px $hover-blue, -3px -3px 1px $hover-blue;
+            box-shadow: 3px 3px 3px $light-blue, -3px -3px 1px $light-blue;
         }
 
         svg.fa-calendar-alt {
@@ -65,7 +54,7 @@
 
             &:focus {
                 outline: none;
-                box-shadow: 3px 3px 3px $hover-blue, -3px -3px 1px $hover-blue;
+                box-shadow: 3px 3px 3px $light-blue, -3px -3px 1px $light-blue;
             }
 
             &[disabled] {

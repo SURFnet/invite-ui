@@ -1,82 +1,99 @@
-import React, {useState} from "react";
-import moment from "moment";
+import React, {useEffect, useState} from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
-
-import {createInvitation} from "../api/api";
+import {allRolesByInstitution, createInvitation, institutionById} from "../api/api";
 import I18n from "i18n-js";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
-import {isEmpty, stopEvent} from "../utils/Utils";
-import ConfirmationDialog from "../components/ConfirmationDialog";
-import {setFlash} from "../utils/Flash";
+import {isEmpty, stopEvent} from "../utils/forms";
+import {setFlash} from "../flash/events";
 import {validEmailRegExp} from "../validations/regExps";
 
 import "./NewInvitation.scss"
 import DateField from "../components/DateField";
 import SelectField from "../components/SelectField";
-import UnitHeader from "../components/UnitHeader";
 import Spinner from "../components/Spinner";
 import EmailField from "../components/EmailField";
 import ErrorIndicator from "../components/ErrorIndicator";
-import {AUTHORITIES} from "../utils/authority";
+import {AUTHORITIES, isAllowed} from "../utils/authority";
 import {useNavigate, useParams} from "react-router-dom";
+import {BreadCrumb} from "../components/BreadCrumb";
 import {futureDate} from "../utils/date";
+import CheckBox from "../components/CheckBox";
 
-const NewInvitation = ({institution}) => {
+const NewInvitation = ({user}) => {
 
-    const intendedRolesOptions = Object.keys(AUTHORITIES).map(authority => ({
+    const intendedRolesOptions = Object.values(AUTHORITIES).map(authority => ({
         value: authority.name,
         label: I18n.t(`users.authorities.${authority.name}`)
     }));
-    const {applicationId = null} = useParams();
+
     const navigate = useNavigate();
     const cancel = () => navigate(-1);
-
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
-    const [invitation, setInvitation] = useState({});
+    const [invitation, setInvitation] = useState({
+        expiryDate: futureDate(14),
+        intendedRole: AUTHORITIES.GUEST.name
+    });
     const [email, setEmail] = useState("");
-    const [administrators, setAdministrators] = useState([]);
-    const [applications, setApplications] = useState([]);
+    const [invites, setInvites] = useState([]);
+    const [roles, setRoles] = useState([]);
+    const [roleExpiryDate, setRoleExpiryDate] = useState(null);
+    const [roleOptions, setRoleOptions] = useState([]);
+    const [institution, setInstitution] = useState([]);
+    const {institutionId} = useParams();
+
+    useEffect(() => {
+        if (!isAllowed(AUTHORITIES.INVITER, user)) {
+            navigate("/404");
+        } else {
+            Promise.all([institutionById(institutionId), allRolesByInstitution(institutionId)]).then(res => {
+                setInstitution(res[0]);
+                const allRoleOptions = res[1].map(role => ({
+                    value: role.id,
+                    label: `${role.name} (${role.applicationName})`
+                }));
+                setRoleOptions(allRoleOptions);
+                setLoading(false);
+            });
+        }
+    }, [user, institutionId, navigate])
+
 
     const isValid = () => {
-        return !isEmpty(administrators) && !isEmpty(intendedRole);
+        return !isEmpty(invites) && !isEmpty(roles);
     };
 
-    const doSubmit = () => {
-        if (isValid()) {
-            setLoading(true);
-            createInvitation({
-                administrators: administrators,
-                message,
-                membership_expiry_date: membership_expiry_date ? membership_expiry_date.getTime() / 1000 : null,
-                intended_role: intended_role,
-                collaboration_id: collaboration.id,
-                groups: selectedGroup.map(ag => ag.value),
-                expiry_date: expiry_date.getTime() / 1000
-            }).then(res => {
-                this.props.history.push(`/institutions/${institution.id}/users`);
-                setFlash(I18n.t("invitations.flash.send"))
-            });
-        } else {
-            window.scrollTo(0, 0);
-        }
-    };
+    const setState = (attr, value) => {
+        const newInvitation = {...invitation, [attr]: value};
+        setInvitation(newInvitation);
+    }
 
     const submit = () => {
-        const {initial} = this.state;
-        if (initial) {
-            this.setState({initial: false}, doSubmit)
-        } else {
-            doSubmit();
+        setInitial(false);
+        if (isValid()) {
+            setLoading(true);
+            const invitationWithRoles = {
+                ...invitation,
+                institution: {id: institutionId},
+                roles: roles.map(r => ({role: {id: r.value}}))
+            }
+            const invitationRequest = {
+                invites: invites,
+                invitation: invitationWithRoles
+            }
+            createInvitation(invitationRequest).then(() => {
+                navigate(`/institutions/${institutionId}/users`);
+                setFlash(I18n.t("invitations.flash.send"))
+            });
         }
     };
 
     const removeMail = email => e => {
         stopEvent(e);
-        const newAdministrators = administrators.filter(currentMail => currentMail !== email);
-        setAdministrators(newAdministrators);
+        const newInvites = invites.filter(currentMail => currentMail !== email);
+        setInvites(newInvites);
     };
 
     const addEmail = e => {
@@ -92,101 +109,110 @@ const NewInvitation = ({institution}) => {
         if (isEmpty(emails)) {
             setEmail("");
         } else {
-            const uniqueEmails = [...new Set(administrators.concat(emails))];
-            setAdministrators(uniqueEmails);
+            const uniqueEmails = [...new Set(invites.concat(emails))];
+            setInvites(uniqueEmails);
             setEmail("");
         }
         return true;
     };
 
-    const applicationsChanged = selectedOptions => {
+    const rolesChanged = selectedOptions => {
         if (selectedOptions === null) {
-            setApplications([]);
+            setRoles([]);
         } else {
             const newSelectedOptions = Array.isArray(selectedOptions) ? [...selectedOptions] : [selectedOptions];
-            setApplications(newSelectedOptions);
+            setRoles(newSelectedOptions);
         }
     }
 
     const invitationForm = (disabledSubmit) => (
-        <div className={"invitation-form"}>
+        <>
 
             <EmailField value={email}
-                        onChange={e => setEmail(e.target.value))}
+                        onChange={e => setEmail(e.target.value)}
                         addEmail={addEmail}
                         removeMail={removeMail}
                         name={I18n.t("invitations.invitees")}
-                        emails={administrators}
-                        error={!initial && isEmpty(administrators)}/>
-            {(!initial && isEmpty(administrators)) &&
+                        tooltip={I18n.t("invitations.inviteesTooltip")}
+                        placeHolder={I18n.t("invitations.inviteesPlaceholder")}
+                        emails={invites}
+                        error={!initial && isEmpty(invites)}/>
+            {(!initial && isEmpty(invites)) &&
             <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}
 
-            <SelectField value={intendedRolesOptions.find(option => option.value === intendedRole)}
-                         options={intendedRolesOptions}
-                         name={I18n.t("invitations.intendedRole")}
-                         small={true}
-                         clearable={false}
-                         toolTip={I18n.t("invitations.intendedRoleTooltip")}
-                         onChange={selectedOption => setIntendedRole(selectedOption ? selectedOption.value : null)}/>
+            <SelectField
+                value={intendedRolesOptions.find(option => option.value === invitation.intendedRole)}
+                options={intendedRolesOptions}
+                name={I18n.t("invitations.intendedRole")}
+                small={true}
+                clearable={false}
+                toolTip={I18n.t("invitations.intendedRoleTooltip")}
+                onChange={selectedOption => setState("intendedRole", selectedOption ? selectedOption.value : null)}/>
 
-            <SelectField value={applications}
-                         options={allApplications
-                             .filter(app => !applications.find(selectedGroup => selectedGroup.value === group.value))}
-                         name={I18n.t("invitations.applications")}
-                         toolTip={I18n.t("invitations.applicationsTooltip")}
+            <CheckBox name={I18n.t("invitations.enforceEmailEquality")}
+                      value={invitation.enforceEmailEquality}
+                      info={I18n.t("invitations.enforceEmailEquality")}
+                      onChange={() => setState("enforceEmailEquality", !invitation.enforceEmailEquality)}
+                      tooltip={I18n.t("invitations.enforceEmailEqualityTooltip")}/>
+
+            <DateField value={invitation.expiryDate}
+                       onChange={e => setState("expiryDate", e)}
+                       allowNull={false}
+                       showYearDropdown={true}
+                       maxDate={futureDate(30)}
+                       name={I18n.t("invitations.expiryDate")}
+                       tooltip={I18n.t("invitations.expiryDateTooltip")}/>
+
+            <SelectField value={roles}
+                         options={roleOptions.filter(role => !roles.find(r => r.value === role.value))}
+                         name={I18n.t("invitations.roles")}
+                         toolTip={I18n.t("invitations.rolesTooltip")}
                          isMulti={true}
-                         placeholder={I18n.t("invitations.applicationsPlaceHolder")}
-                         onChange={applicationsChanged}/>
+                         error={!initial && isEmpty(roles)}
+                         searchable={true}
+                         placeholder={I18n.t("invitations.rolesPlaceHolder")}
+                         onChange={rolesChanged}/>
+            {(!initial && isEmpty(roles)) &&
+            <ErrorIndicator msg={I18n.t("invitations.requiredRole")}/>}
 
-            <DateField value={expiryDate}
-                       onChange={e => this.setState({membership_expiry_date: e})}
+            <DateField value={roleExpiryDate}
+                       onChange={e => setRoleExpiryDate(e)}
                        allowNull={true}
                        showYearDropdown={true}
-                       name={I18n.t("invitation.membershipExpiryDate")}
-                       toolTip={I18n.t("invitation.membershipExpiryDateTooltip")}/>
+                       name={I18n.t("invitations.expiryDateRole")}
+                       tooltip={I18n.t("invitations.expiryDateRoleTooltip")}/>
 
-            <InputField value={message} onChange={e => this.setState({message: e.target.value})}
-                        placeholder={I18n.t("invitation.inviteesMessagePlaceholder")}
-                        name={I18n.t("collaboration.message")}
+            <InputField value={invitation.message}
+                        onChange={e => setState("message", e.target.value)}
+                        placeholder={I18n.t("invitations.messagePlaceholder")}
+                        name={I18n.t("invitations.message")}
                         large={true}
-                        toolTip={I18n.t("invitation.inviteesTooltip")}
                         multiline={true}/>
 
-            <DateField value={expiry_date}
-                       onChange={e => this.setState({expiry_date: e})}
-                       maxDate={moment().add(31, "day").toDate()}
-                       name={I18n.t("invitation.expiryDate")}
-                       toolTip={I18n.t("invitation.expiryDateTooltip")}/>
+            <section className="actions">
+                <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
+                <Button disabled={disabledSubmit} txt={I18n.t("invitations.invite")} onClick={submit}/>
+            </section>
 
-
-            {renderActions(disabledSubmit)}
-        </div>);
-
-    const renderActions = (disabledSubmit) => (
-        <section className="actions">
-            <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={this.cancel}/>
-            <Button disabled={disabledSubmit} txt={I18n.t("invitation.invite")} onClick={this.submit}/>
-        </section>
-    );
+        </>);
 
     if (loading) {
         return <Spinner/>
     }
-    const disabledSubmit = (!initial && !this.isValid());
+    const disabledSubmit = (!initial && !isValid());
     return (
-        <div className="new-invitation">
-            <UnitHeader>
-
-            </UnitHeader>
-
-                <h1>{I18n.t("invitations.title")}</h1>
-                <div className="new-invitation-form">
-                    {this.invitationForm(email, fileInputKey, fileName, fileTypeError, fileEmails, initial,
-                        administrators, intended_role, message, expiry_date, disabledSubmit, groups,
-                        selectedGroup, membership_expiry_date)}
-                </div>
-            </div>
-        )
+        <div className="invitation-form">
+            <BreadCrumb
+                paths={[
+                    {path: "/", value: I18n.t("breadcrumbs.home")},
+                    {path: `/institution-detail/${institutionId}`, value: institution.displayName},
+                    {value: I18n.t("invitations.new")}
+                ]}
+                inForm={true}/>
+            <h2>{I18n.t("invitations.new")}</h2>
+            {invitationForm(disabledSubmit)}
+        </div>
+    )
 };
 
 

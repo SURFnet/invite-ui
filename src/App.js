@@ -13,6 +13,7 @@ import Flash from "./flash/Flash";
 import InstitutionDetail from "./pages/InstitutionDetail";
 import ApplicationForm from "./pages/ApplicationForm";
 import RoleForm from "./pages/RoleForm";
+import NewInvitation from "./pages/NewInvitation";
 
 addIcons();
 
@@ -85,6 +86,7 @@ const App = () => {
                         <Route path="" element={<ApplicationDetail user={user}/>}/>
                     </Route>
                     <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
+                    <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

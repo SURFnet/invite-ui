@@ -1,73 +1,81 @@
 @import "../styles/vars.scss";
 
 .select-field {
-    display: flex;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  label {
+    display: inline-block;
+    margin: 12px 0 6px 0;
+    min-width: 210px;
+    color: black;
     position: relative;
-    flex-direction: column;
+    font-weight: bold;
+  }
 
-    label {
-        display: inline-block;
-        margin: 12px 0 6px 0;
-        min-width: 210px;
-        color: black;
-        position: relative;
-        font-weight: bold;
+  .input-select-inner {
+    display: block;
+    width: 100%;
+
+    &.small {
+      width: 240px;
     }
 
-    span.tool-tip-section {
-        font-size: 14px;
-        color: $tertiary-grey;
-        cursor: pointer;
-        padding: 0 4px;
+    border: 1px solid $secondary-grey;
+    border-radius: $br;
+    font-size: 16px;
+    height: 48px;
 
-        &:hover {
-            color: darken($hover-blue, 20%);
-        }
+    .select-inner__control {
+      height: 100%;
+      padding-left: 8px;
+      border: none;
+      border-radius: $br;
     }
 
-    .input-select-inner {
-        display: block;
-        width: 100%;
+    .select-inner__control--is-focused {
+      outline: none;
+      box-shadow: 3px 3px 3px $light-blue, -3px -3px 1px $light-blue;
+      border: 1px solid $secondary-grey !important;
+    }
 
-        &.small {
-            width: 240px;
-        }
+    &.error {
+      background-color: $secondary-red;
+      border: 1px solid $primary-red;
 
-        border: 1px solid $secondary-grey;
+      .select-inner__control {
+        height: 100%;
+        background-color: $secondary-red;
+        border: none;
         border-radius: $br;
-        font-size: 16px;
-        height: 48px;
+      }
 
-        .select-inner__control {
-            height: 100%;
-            padding-left: 8px;
-            border: none;
-            border-radius: $br;
-        }
-
-        .select-inner__control--is-focused {
-            outline: none;
-            box-shadow: 3px 3px 3px $hover-blue, -3px -3px 1px $hover-blue;
-            border: 1px solid $secondary-grey !important;
-        }
-
-        &[disabled] {
-            background-color: $background;
-            cursor: not-allowed;
-        }
-
+      .select-inner__control--is-focused {
+        outline: none;
+        box-shadow: none;
+        border: none!important;
+      }
     }
 
-    .select-inner__single-value--is-disabled {
-        color: black;
+
+    &[disabled] {
+      background-color: $background;
+      cursor: not-allowed;
     }
 
-    .select-inner--is-disabled {
-        cursor: not-allowed;
-    }
+  }
 
-    .select-inner__control--is-disabled {
-        background-color: $background;
-        border-radius: 6px;
-    }
+  .select-inner__single-value--is-disabled {
+    color: black;
+  }
+
+  .select-inner--is-disabled {
+    cursor: not-allowed;
+  }
+
+  .select-inner__control--is-disabled {
+    background-color: $background;
+    border-radius: 6px;
+  }
 }

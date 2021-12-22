@@ -14,17 +14,6 @@ div.email-field {
         font-weight: bold;
     }
 
-    span.tool-tip-section {
-        font-size: 14px;
-        color: $tertiary-grey;
-        cursor: pointer;
-        padding: 0 4px;
-
-        &:hover {
-            color: darken($hover-blue, 20%);
-        }
-    }
-
     .inner-email-field {
         display: flex;
         flex-wrap: wrap;
@@ -32,10 +21,11 @@ div.email-field {
         border: 1px solid $secondary-grey;
         border-radius: $br;
         font-size: 16px;
+        background-color: white;
 
         &:focus-within {
             outline: none;
-            box-shadow: 3px 3px 3px $hover-blue, -3px -3px 1px $hover-blue;
+            box-shadow: 3px 3px 3px $light-blue, -3px -3px 1px $light-blue;
         }
 
         &.error {

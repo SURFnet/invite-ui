@@ -1,7 +1,6 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ReactTooltip from "react-tooltip";
 import "./InputField.scss";
+import Tooltip from "./Tooltip";
 
 
 export default function InputField({
@@ -26,13 +25,8 @@ export default function InputField({
     }
     return (
         <div className="input-field">
-            {(name && displayLabel) && <label htmlFor={name}>{name} {toolTip &&
-            <span className="tool-tip-section">
-                <span data-tip data-for={name}><FontAwesomeIcon icon="info-circle"/></span>
-                <ReactTooltip id={name} type="light" effect="solid" data-html={true}>
-                    <p dangerouslySetInnerHTML={{__html: toolTip}}/>
-                </ReactTooltip>
-            </span>}
+            {(name && displayLabel) && <label htmlFor={name}>{name}
+                {toolTip && <Tooltip tooltip={toolTip} name={name}/>}
             </label>}
             <div className="inner-input-field">
                 {!multiline &&

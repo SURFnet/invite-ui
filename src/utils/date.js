@@ -1,7 +1,7 @@
 export const futureDate = daysAhead => {
     const today = new Date();
-    today.setDate(today.getDate + daysAhead);
-    return today;
+    const time = today.getTime() + (1000 * 60 * 60 * 24 * daysAhead);
+    return new Date(time);
 }
 
 export const formatDate = epoch => {

@@ -1,18 +1,20 @@
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {
-    faMobileAlt,
-    faUniversity,
-    faChevronRight,
-    faSearch,
-    faTrash,
-    faCaretUp,
+    faCalendarAlt,
     faCaretDown,
-    faInfoCircle,
+    faCaretUp,
+    faCheck,
+    faChevronRight,
     faExclamationCircle,
+    faHatCowboy,
+    faInfoCircle,
+    faMobileAlt,
+    faPlus,
+    faSearch,
     faTimes,
-    faUser,
-    faHatCowboy
-
+    faTrash,
+    faUniversity,
+    faUser
 } from '@fortawesome/free-solid-svg-icons'
 
 export function addIcons() {
@@ -28,6 +30,9 @@ export function addIcons() {
         faExclamationCircle,
         faTimes,
         faUser,
-        faHatCowboy
+        faHatCowboy,
+        faCalendarAlt,
+        faPlus,
+        faCheck
     );
 }

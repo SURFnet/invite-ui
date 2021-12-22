@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useRef} from "react";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import ReactTooltip from "react-tooltip";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateField.scss"
+import Tooltip from "./Tooltip";
 
 const DateField = ({
                        name,
@@ -13,26 +13,24 @@ const DateField = ({
                        onChange,
                        allowNull,
                        showYearDropdown,
-                       tooltip
+                       tooltip,
+                       maxDate,
+                       disabled = false
                    }) => {
     const today = new Date();
+    const refContainer = useRef(null);
+
     return (
         <div className="date-field">
             {name && <label className="date-field-label" htmlFor={name}>{name}
-                {tooltip &&
-                <span className="tool-tip-section">
-                        <span data-tip data-for={name}><FontAwesomeIcon icon="info-circle"/></span>
-                        <ReactTooltip id={name} type="light" effect="solid" data-html={true}>
-                            <p dangerouslySetInnerHTML={{__html: toolTip}}/>
-                        </ReactTooltip>
-                    </span>}
+                {tooltip && <Tooltip tooltip={tooltip} name={name}/>}
             </label>}
             <label className={"date-picker-container"} htmlFor={name}>
                 <DatePicker
-                    ref={ref => this.component = ref}
+                    ref={refContainer}
                     name={name}
                     id={name}
-                    selected={value || (allowNull ? null : moment().add(16, "days").toDate())}
+                    selected={value}
                     preventOpenOnFocus
                     dateFormat={"dd/MM/yyyy"}
                     onChange={onChange}
@@ -43,11 +41,12 @@ const DateField = ({
                     disabled={disabled}
                     todayButton={null}
                     minDate={today}
+                    maxDate={maxDate}
                 />
-                <FontAwesomeIcon onClick={this.toggle} icon="calendar-alt"/>
+                <FontAwesomeIcon onClick={() => refContainer.current.setOpen(true)} icon="calendar-alt"/>
             </label>
         </div>
     );
 
 }
-export default DateField
+export default DateField;

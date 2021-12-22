@@ -179,7 +179,11 @@ export function invitationByHash(hash) {
     return fetchJson(`/guests/api/invitations/${hash}`, {}, {}, false);
 }
 
-export function createInvitation(invitation) {
+export function createInvitation(invitationRequest) {
+    return postPutJson("/guests/api/invitations", invitationRequest, "put");
+}
+
+export function acceptInvitation(invitation) {
     return postPutJson("/guests/api/invitations", invitation, "post");
 }
 

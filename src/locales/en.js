@@ -116,11 +116,26 @@ I18n.translations.en = {
         nameTooltip: "The name of the {{object}} is part of the group membership URN that is send to services. Therefore it may not contain spaces or other non-asci characters."
     },
     invitations: {
+        new: "New invite",
+        invitees: "Invitees",
         inviteesPlaceholder: "Invitee email addresses",
-        inviteesMessagesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
+        inviteesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
         requiredEmail: "At least one email is required",
+        requiredRole: "At least one role is required",
         intendedRole: "Authority",
-        intendedRoleTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation"
+        intendedRoleTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation",
+        roles: "Roles",
+        rolesTooltip: "All the roles that the invitee will be granted after accepting the invitation",
+        rolesPlaceHolder: "Choose one or more roles",
+        expiryDate: "Expiry date invitation",
+        expiryDateTooltip: "The date on which this invitation expires",
+        expiryDateRole: "Expiry date role",
+        expiryDateRoleTooltip: "The end date of this role. After this date the role is removed from the user.",
+        message:"Message",
+        messagePlaceholder:"Message included in the invite",
+        invite: "Invite",
+        enforceEmailEquality: "Enforce email equality",
+        enforceEmailEqualityTooltip: "When checked the invitee must accpet the invitation with the email where the invitation was send to",
     }
 
 

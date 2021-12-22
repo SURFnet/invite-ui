@@ -32,22 +32,23 @@ input::placeholder {
 
 }
 
+
 .__react_component_tooltip {
   text-align: center;
   opacity: 1;
-  border-radius: $br;
+  border-radius: 24px;
   border: 1px solid #e0e0df;
-  background-color: #fbfbfb;
-  color: #737373;
   max-width: 280px;
   word-break: break-word;
 }
 
 .__react_component_tooltip.place-top:after {
-  border-top-color: #e0e0df!important;
+  border-top-color: #f5f5f5 !important;
 }
 
 .__react_component_tooltip.show {
-  opacity: .98;
+  background-color: white !important;
+  color: #4b4343;
+  opacity: 1;
 }
 

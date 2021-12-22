@@ -86,7 +86,7 @@ const Users = ({institution, application = null}) => {
                       hideTitle={true}
                       rowLinkMapper={() => openUser}
                       showNew={true}
-                      newEntityPath={"/user/new"}
+                      newEntityPath={`/new-invitation/${institution.id}`}
                       loading={loading}/>
         </div>
     )
