@@ -19,9 +19,18 @@
     margin-left: 25px;
   }
 
-  a.logout {
+  div.logout {
+    display: flex;
+    align-items: center;
     margin: 0 25px 0 auto;
   }
+
+  a.profile-link {
+    font-size: 24px;
+    color: #fefd0d;
+    margin: 0 25px 0 auto;
+  }
+
 
 }
 

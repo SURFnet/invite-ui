@@ -1,0 +1,21 @@
+@import "../styles/vars";
+@import "../styles/forms";
+
+.profile-container {
+  .profile {
+    padding: 0 25px 25px 25px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+
+    p.attribute {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    h2.section-divider {
+      margin-top: 25px;
+      font-size: 20px;
+    }
+  }
+}

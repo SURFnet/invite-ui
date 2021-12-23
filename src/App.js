@@ -14,6 +14,8 @@ import InstitutionDetail from "./pages/InstitutionDetail";
 import ApplicationForm from "./pages/ApplicationForm";
 import RoleForm from "./pages/RoleForm";
 import NewInvitation from "./pages/NewInvitation";
+import Profile from "./pages/Profile";
+import Invitation from "./pages/Invitation";
 
 addIcons();
 
@@ -42,16 +44,17 @@ const App = () => {
                 sessionStorage.setItem("clientId", optionsDict.clientId);
                 sessionStorage.setItem("tokenUrl", optionsDict.tokenUrl);
                 sessionStorage.removeItem("options");
+                const path = sessionStorage.getItem("path");
                 me()
                     .then(user => {
                         sessionStorage.setItem("user", JSON.stringify(user));
-                        navigate(sessionStorage.getItem("path"), {replace: true});
+                        navigate(path, {replace: true});
                         setLoading(false);
                     })
                     .catch(() => {
                         //Unknown user who has received an invitation
                         sessionStorage.removeItem("user");
-                        navigate(sessionStorage.getItem("path"), {replace: true});
+                        navigate(path, {replace: true});
                         setLoading(false);
                     });
             });
@@ -75,6 +78,8 @@ const App = () => {
                         <Route path=":tab" element={<Home user={user}/>}/>
                         <Route path="" element={<Home user={user}/>}/>
                     </Route>
+                    <Route path="profile" element={<Profile user={user}/>}/>
+                    <Route path="invitations" element={<Invitation/>}/>
                     <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
                     <Route path="institution-detail/:institutionId">
                         <Route path=":tab" element={<InstitutionDetail user={user}/>}/>
@@ -90,7 +95,7 @@ const App = () => {
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>
-                    <Route path="invitation/:hash" element={<ApplicationDetail/>}/>
+                    <Route path="invitations" element={<Invitation/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
             </div>

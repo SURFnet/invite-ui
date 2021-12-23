@@ -131,12 +131,32 @@ I18n.translations.en = {
         expiryDateTooltip: "The date on which this invitation expires",
         expiryDateRole: "Expiry date role",
         expiryDateRoleTooltip: "The end date of this role. After this date the role is removed from the user.",
-        message:"Message",
-        messagePlaceholder:"Message included in the invite",
+        message: "Message",
+        messagePlaceholder: "Message included in the invite",
         invite: "Invite",
         enforceEmailEquality: "Enforce email equality",
-        enforceEmailEqualityTooltip: "When checked the invitee must accpet the invitation with the email where the invitation was send to",
-    }
+        enforceEmailEqualityTooltip: "When checked the invitee must accept the invitation with the email where the invitation was send to",
+    },
+    profile: {
+        header: "Hi {{name}}",
+        title: "Profile",
+        eppn: "Eppn",
+        created: "Account created",
+        institution: "Institution",
+        endDate: "End date",
+        roles: "Roles"
 
+    },
+    aup: {
+        hi: "Hi {{name}},",
+        info: "We are ready to create your profile.",
+        name: "Display name.",
+        email: "Email address",
+        title: "Acceptable use policy",
+        disclaimer: "By logging on the Invite app, you become a user and agree to the <a href=\"{{url}}\" target=\"_blank\">term and conditions of our AUP.</a>",
+        agreeWithTerms: "I hereby certify that I have read the AUP and that I accept them",
+        onward: "Proceed",
+        agreedFlash: "Your agreement with {{name}} has been saved.",
+    }
 
 }

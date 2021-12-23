@@ -150,7 +150,7 @@ const InstitutionForm = ({user}) => {
                                                      confirm={confirmation.action}
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
-            <h2 className="section-separator">
+            <h2>
                 {I18n.t(`forms.${isNew ? "new" : "editObject"}`, {
                     object: I18n.t("institutions.object"),
                     name: originalName
