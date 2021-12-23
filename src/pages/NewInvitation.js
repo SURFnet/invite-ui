@@ -142,7 +142,7 @@ const NewInvitation = ({user}) => {
 
             <SelectField
                 value={intendedRolesOptions.find(option => option.value === invitation.intendedRole)}
-                options={intendedRolesOptions}
+                options={intendedRolesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
                 name={I18n.t("invitations.intendedRole")}
                 small={true}
                 clearable={false}
