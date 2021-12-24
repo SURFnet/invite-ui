@@ -12,7 +12,7 @@ import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
 
-const Users = ({institution, application = null}) => {
+const Users = ({institutionId, application = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
@@ -20,7 +20,7 @@ const Users = ({institution, application = null}) => {
 
     useEffect(() => {
         const promises = application ? [allUsersByApplication(application.id), allInvitationsByApplication(application.id)] :
-            [allUsersByInstitution(institution.id), allInvitationsByInstitution(institution.id)];
+            [allUsersByInstitution(institutionId), allInvitationsByInstitution(institutionId)];
         Promise.all(promises).then(res => {
             const allUsers = res[0];
             const allInvitations = res[1];
@@ -30,7 +30,7 @@ const Users = ({institution, application = null}) => {
             setUsers(allUsers.concat(allInvitations));
             setLoading(false);
         })
-    }, [institution, application]);
+    }, [institutionId, application]);
 
     const openUser = user => e => {
         stopEvent(e);
@@ -86,7 +86,7 @@ const Users = ({institution, application = null}) => {
                       hideTitle={true}
                       rowLinkMapper={() => openUser}
                       showNew={true}
-                      newEntityPath={`/new-invitation/${institution.id}`}
+                      newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>
         </div>
     )

@@ -131,7 +131,7 @@ const RoleForm = ({user}) => {
                 },
                 {
                     path: `/application-detail/${institutionId}/${application.id}`,
-                    value: application.displayName
+                    value: application.name
                 },
                 {
                     value: isNew ? I18n.t("forms.new", {object: I18n.t("roles.object")}) :
@@ -176,7 +176,7 @@ const RoleForm = ({user}) => {
                         placeholder={I18n.t("roles.displayNamePlaceholder")}
                         name={I18n.t("roles.displayName")}/>
 
-            <InputField value={application.displayName}
+            <InputField value={application.name}
                         disabled={true}
                         name={I18n.t("roles.application")}/>
 

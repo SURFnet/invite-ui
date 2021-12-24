@@ -61,7 +61,7 @@ const ApplicationDetail = ({user}) => {
             <BreadCrumb paths={[
                 {path: "/", value: I18n.t("breadcrumbs.home")},
                 {path: `/institution-detail/${institutionId}`, value: application.institutionName},
-                {value: application.displayName}
+                {value: application.name}
             ]}/>
 
             <UnitHeader>

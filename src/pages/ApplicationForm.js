@@ -71,7 +71,7 @@ const ApplicationForm = ({user}) => {
                 }
                 setApplication(res);
                 setLoading(false);
-                setOriginalName(res.displayName);
+                setOriginalName(res.name);
             });
         }
     }, [applicationId, institutionId, user, navigate]);
@@ -165,7 +165,7 @@ const ApplicationForm = ({user}) => {
                 },
                 {
                     value: isNew ? I18n.t("forms.new", {object: I18n.t("applications.object")}) :
-                        application.displayName
+                        application.name
                 }
             ]}/>
 
