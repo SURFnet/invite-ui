@@ -66,7 +66,9 @@ const ApplicationDetail = ({user}) => {
 
             <UnitHeader>
                 <div className="info">
-                    <h2>{`${I18n.t("applications.object")} ${application.displayName}`}</h2>
+                    <h2>{`${I18n.t("applications.object")} ${application.name}`}</h2>
+                    <p className="attribute">{I18n.t("applications.displayName")}</p>
+                    <p>{application.displayName}</p>
                     <p className="attribute">{I18n.t("applications.entityId")}</p>
                     <p>{application.entityId}</p>
                     {application.landingPage && <p className="attribute">{I18n.t("applications.landingPage")}</p>}

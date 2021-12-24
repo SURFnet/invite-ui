@@ -62,7 +62,7 @@ const Users = ({institution, application = null}) => {
         {
             key: "authority",
             header: I18n.t("users.authority"),
-            mapper: user => I18n.t(`users.authorities.${user.isInvitation ? user.intendedRole : user.authority}`),
+            mapper: user => I18n.t(`users.authorities.${user.isInvitation ? user.intendedAuthority : user.authority}`),
         },
         {
             key: "status",

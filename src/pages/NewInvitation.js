@@ -23,7 +23,7 @@ import CheckBox from "../components/CheckBox";
 
 const NewInvitation = ({user}) => {
 
-    const intendedRolesOptions = Object.values(AUTHORITIES).map(authority => ({
+    const intendedAuthoritysOptions = Object.values(AUTHORITIES).map(authority => ({
         value: authority.name,
         label: I18n.t(`users.authorities.${authority.name}`)
     }));
@@ -34,7 +34,7 @@ const NewInvitation = ({user}) => {
     const [initial, setInitial] = useState(true);
     const [invitation, setInvitation] = useState({
         expiryDate: futureDate(14),
-        intendedRole: AUTHORITIES.GUEST.name
+        intendedAuthority: AUTHORITIES.GUEST.name
     });
     const [email, setEmail] = useState("");
     const [invites, setInvites] = useState([]);
@@ -141,13 +141,13 @@ const NewInvitation = ({user}) => {
             <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}
 
             <SelectField
-                value={intendedRolesOptions.find(option => option.value === invitation.intendedRole)}
-                options={intendedRolesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
-                name={I18n.t("invitations.intendedRole")}
+                value={intendedAuthoritysOptions.find(option => option.value === invitation.intendedAuthority)}
+                options={intendedAuthoritysOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
+                name={I18n.t("invitations.intendedAuthority")}
                 small={true}
                 clearable={false}
-                toolTip={I18n.t("invitations.intendedRoleTooltip")}
-                onChange={selectedOption => setState("intendedRole", selectedOption ? selectedOption.value : null)}/>
+                toolTip={I18n.t("invitations.intendedAuthorityTooltip")}
+                onChange={selectedOption => setState("intendedAuthority", selectedOption ? selectedOption.value : null)}/>
 
             <CheckBox name={I18n.t("invitations.enforceEmailEquality")}
                       value={invitation.enforceEmailEquality}

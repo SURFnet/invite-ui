@@ -31,6 +31,11 @@ const Applications = ({user, institution}) => {
     }
     const columns = [
         {
+            key: "name",
+            header: I18n.t("applications.name"),
+            mapper: application => application.name,
+        },
+        {
             key: "displayName",
             header: I18n.t("applications.displayName"),
             mapper: application => application.displayName,

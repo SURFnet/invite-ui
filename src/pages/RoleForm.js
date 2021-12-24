@@ -42,6 +42,7 @@ const RoleForm = ({user}) => {
                 setIsNew(true);
                 setRole({
                     name: "",
+                    displayName: "",
                     application: {
                         id: applicationId
                     }
@@ -170,6 +171,10 @@ const RoleForm = ({user}) => {
             <ErrorIndicator
                 msg={I18n.t("roles.alreadyExists", {value: role.name, application: application.displayName})}/>}
 
+            <InputField value={role.displayName}
+                        onChange={e => setState("displayName", e.target.value)}
+                        placeholder={I18n.t("roles.displayNamePlaceholder")}
+                        name={I18n.t("roles.displayName")}/>
 
             <InputField value={application.displayName}
                         disabled={true}

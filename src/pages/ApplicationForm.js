@@ -28,7 +28,7 @@ const ApplicationForm = ({user}) => {
 
     const cancel = () => navigate(-1);
 
-    const required = ["displayName", "entityId"];
+    const required = ["name", "entityId"];
     const [application, setApplication] = useState({});
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
@@ -50,6 +50,7 @@ const ApplicationForm = ({user}) => {
                 setIsNew(true);
                 setInstitution(res);
                 setApplication({
+                    name: "",
                     displayName: "",
                     entityId: "",
                     landingPage: "",
@@ -181,19 +182,25 @@ const ApplicationForm = ({user}) => {
                 })}
             </h2>
 
-            <InputField value={application.displayName}
+            <InputField value={application.name}
                         onChange={e => {
                             setAlreadyExists({...alreadyExists, name: false});
-                            setState("displayName", nameUrnCompatibilityCheck(e.target.value))
+                            setState("name", nameUrnCompatibilityCheck(e.target.value))
                         }}
                         placeholder={I18n.t("applications.namePlaceholder")}
-                        error={!initial && isEmpty(application.displayName)}
+                        error={!initial && isEmpty(application.name)}
                         toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("applications.object")})}
-                        name={I18n.t("applications.displayName")}/>
-            {(!initial && isEmpty(application.displayName)) &&
+                        name={I18n.t("applications.name")}/>
+            {(!initial && isEmpty(application.name)) &&
             <ErrorIndicator msg={I18n.t("forms.required", {
-                attribute: I18n.t("applications.displayName")
+                attribute: I18n.t("applications.name")
             })}/>}
+
+            <InputField value={application.displayName}
+                        onChange={e => setState("displayName", e.target.value)}
+                        placeholder={I18n.t("applications.displayNamePlaceholder")}
+                        error={!initial && isEmpty(application.displayName)}
+                        name={I18n.t("applications.displayName")}/>
 
             <InputField value={application.entityId}
                         onChange={e => {

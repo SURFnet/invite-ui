@@ -5,8 +5,12 @@ div.mod-applications {
 
     thead {
       th {
+        &.name {
+          width: 15%;
+        }
+
         &.displayName {
-          width: 20%;
+          width: 15%;
         }
 
         &.entityId {
@@ -14,11 +18,11 @@ div.mod-applications {
         }
 
         &.landingPage {
-          width: 30%;
+          width: 25%;
         }
 
         &.provisioning {
-          width: 30%;
+          width: 25%;
         }
       }
     }

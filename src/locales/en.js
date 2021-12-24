@@ -18,7 +18,8 @@ I18n.translations.en = {
     },
     institutions: {
         title: "Institutions",
-        displayName: "Name",
+        name: "Name",
+        displayName: "Description",
         object: "Institution",
         entityId: "Entity ID",
         entityIdPlaceholder: "Entity ID of the institution",
@@ -55,8 +56,10 @@ I18n.translations.en = {
     },
     applications: {
         title: "Applications",
-        displayName: "Name",
+        name: "Name",
         namePlaceholder: "Name of the application",
+        displayName: "Description",
+        displayNamePlaceholder: "Description of the application",
         object: "Application",
         entityId: "Entity ID",
         entityIdPlaceholder: "Entity ID of the application",
@@ -79,6 +82,9 @@ I18n.translations.en = {
     },
     roles: {
         name: "Name",
+        namePlaceholder: "Name of the role",
+        displayName: "Description",
+        displayNamePlaceholder: "Description of the role",
         applicationName: "Application",
         new: "New role",
         searchPlaceHolder: "Search roles",
@@ -86,7 +92,6 @@ I18n.translations.en = {
         alreadyExists: "A Role with name {{value}} already exists for application {{application}}.",
         object: "Role",
         application: "Application",
-        namePlaceholder: "Name of the role"
     },
     confirmationDialog: {
         title: "Please confirm",
@@ -122,8 +127,8 @@ I18n.translations.en = {
         inviteesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
         requiredEmail: "At least one email is required",
         requiredRole: "At least one role is required",
-        intendedRole: "Authority",
-        intendedRoleTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation",
+        intendedAuthority: "Authority",
+        intendedAuthorityTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation",
         roles: "Roles",
         rolesTooltip: "All the roles that the invitee will be granted after accepting the invitation",
         rolesPlaceHolder: "Choose one or more roles",

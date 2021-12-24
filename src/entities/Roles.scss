@@ -5,21 +5,22 @@ div.institutions {
 
     thead {
       th {
+        &.name {
+          width: 20%;
+        }
+
         &.displayName {
+          width: 30%;
+        }
+
+        &.applicationName {
           width: 25%;
         }
 
-        &.entityId {
+        &.auditable_createdAt {
           width: 25%;
         }
 
-        &.homeInstitution {
-          width: 15%;
-        }
-
-        &.aupUrl {
-          width: 35%;
-        }
       }
     }
 
