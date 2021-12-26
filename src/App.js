@@ -34,7 +34,7 @@ const App = () => {
             oauth().then(r => {
                 sessionStorage.setItem("options", JSON.stringify(r));
                 window.location.href = r.authorizationUrl;
-            })
+            });
         } else if (inAuthRedirect && options) {
             const optionsDict = JSON.parse(options);
             optionsDict.code = urlSearchParams.get("code")
@@ -44,7 +44,7 @@ const App = () => {
                 sessionStorage.setItem("clientId", optionsDict.clientId);
                 sessionStorage.setItem("tokenUrl", optionsDict.tokenUrl);
                 sessionStorage.removeItem("options");
-                const path = sessionStorage.getItem("path");
+                const path = sessionStorage.getItem("path") || "/";
                 me()
                     .then(user => {
                         sessionStorage.setItem("user", JSON.stringify(user));

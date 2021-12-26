@@ -12,8 +12,16 @@ import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
 import Button from "../components/Button";
 import {BreadCrumb} from "../components/BreadCrumb";
+import SelectField from "../components/SelectField";
 
 const RoleForm = ({user}) => {
+
+    const authoritiesOptions = Object.values(AUTHORITIES)
+        .filter(val => val.name !== AUTHORITIES.GUEST.name)
+        .map(authority => ({
+            value: authority.name,
+            label: I18n.t(`users.authorities.${authority.name}`)
+        }));
 
     const navigate = useNavigate();
 
@@ -43,6 +51,7 @@ const RoleForm = ({user}) => {
                 setRole({
                     name: "",
                     displayName: "",
+                    authority: AUTHORITIES.INVITER.name,
                     application: {
                         id: applicationId
                     }
@@ -160,7 +169,7 @@ const RoleForm = ({user}) => {
                         }}
                         placeholder={I18n.t("roles.namePlaceholder")}
                         onBlur={validateName}
-                        toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("institutions.object")})}
+                        toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("roles.object")})}
                         error={alreadyExists.name || (!initial && isEmpty(role.name))}
                         name={I18n.t("roles.name")}/>
             {(!initial && isEmpty(role.name)) &&
@@ -175,6 +184,15 @@ const RoleForm = ({user}) => {
                         onChange={e => setState("displayName", e.target.value)}
                         placeholder={I18n.t("roles.displayNamePlaceholder")}
                         name={I18n.t("roles.displayName")}/>
+
+            <SelectField
+                value={authoritiesOptions.find(option => option.value === role.authority)}
+                options={authoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
+                name={I18n.t("roles.authority")}
+                small={true}
+                clearable={false}
+                toolTip={I18n.t("roles.authorityTooltip")}
+                onChange={selectedOption => setState("authority", selectedOption ? selectedOption.value : null)}/>
 
             <InputField value={application.name}
                         disabled={true}

@@ -32,7 +32,7 @@ const Institutions = ({user}) => {
     const columns = [
         {
             key: "displayName",
-            header: I18n.t("institutions.displayName"),
+            header: I18n.t("institutions.name"),
             mapper: institution => institution.displayName,
         },
         {

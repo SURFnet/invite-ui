@@ -160,7 +160,7 @@ const InstitutionForm = ({user}) => {
                         onChange={e => setState("displayName", e.target.value)}
                         placeholder={I18n.t("institutions.namePlaceholder")}
                         error={!initial && isEmpty(institution.displayName)}
-                        name={I18n.t("institutions.displayName")}/>
+                        name={I18n.t("institutions.name")}/>
             {(!initial && isEmpty(institution.displayName)) &&
             <ErrorIndicator msg={I18n.t("forms.required", {
                 attribute: I18n.t("institutions.displayName")

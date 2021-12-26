@@ -47,7 +47,7 @@ const InstitutionDetail = ({user}) => {
                        name="users"
                        label={I18n.t("home.tabs.users")}
                        icon={<FontAwesomeIcon icon="user"/>}>
-            <Users institution={institution}/>
+            <Users institutionId={institution.id}/>
         </div>)
     }
     if (false && isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {

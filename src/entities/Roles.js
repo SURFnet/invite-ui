@@ -42,6 +42,11 @@ const Roles = ({institutionId, application = null}) => {
             mapper: role => role.displayName,
         },
         {
+            key: "authority",
+            header: I18n.t("roles.authority"),
+            mapper: role => I18n.t(`users.authorities.${role.authority}`),
+        },
+        {
             key: "applicationName",
             header: I18n.t("roles.applicationName"),
             mapper: role => role.applicationName,

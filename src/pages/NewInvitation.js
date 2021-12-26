@@ -23,7 +23,7 @@ import CheckBox from "../components/CheckBox";
 
 const NewInvitation = ({user}) => {
 
-    const intendedAuthoritysOptions = Object.values(AUTHORITIES).map(authority => ({
+    const intendedAuthoritiesOptions = Object.values(AUTHORITIES).map(authority => ({
         value: authority.name,
         label: I18n.t(`users.authorities.${authority.name}`)
     }));
@@ -141,8 +141,8 @@ const NewInvitation = ({user}) => {
             <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}
 
             <SelectField
-                value={intendedAuthoritysOptions.find(option => option.value === invitation.intendedAuthority)}
-                options={intendedAuthoritysOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
+                value={intendedAuthoritiesOptions.find(option => option.value === invitation.intendedAuthority)}
+                options={intendedAuthoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
                 name={I18n.t("invitations.intendedAuthority")}
                 small={true}
                 clearable={false}

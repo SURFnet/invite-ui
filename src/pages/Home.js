@@ -12,22 +12,24 @@ const Home = ({user}) => {
     const navigate = useNavigate();
     const {tab = "institutions"} = useParams();
     const [currentTab, setCurrentTab] = useState(tab);
-    const [tabs, setTabs] = useState([]);
+    let tabs = [];
+
+    if (isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
+        tabs = [
+            <div key="institutions"
+                 name="institutions"
+                 label={I18n.t("home.tabs.institutions")}
+                 icon={<FontAwesomeIcon icon="university"/>}>
+                <Institutions user={user}/>
+            </div>
+        ];
+    }
 
     useEffect(() => {
-        if (isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
-            setTabs([
-                <div key="institutions"
-                     name="institutions"
-                     label={I18n.t("home.tabs.institutions")}
-                     icon={<FontAwesomeIcon icon="university"/>}>
-                    <Institutions user={user}/>
-                </div>
-            ]);
-        } else {
-            navigate(`/institution-detail/${user.institution.id}`)
+        if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
+            navigate(`/institution-detail/${user.institution.id}`);
         }
-    }, [user, tabs, navigate]);
+    }, [user, navigate]);
 
     const tabChanged = name => {
         setCurrentTab(name);

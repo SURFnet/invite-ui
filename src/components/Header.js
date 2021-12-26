@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {stopEvent} from "../utils/forms";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
+import {oauth} from "../api/api";
 
 const Header = ({user}) => {
 
@@ -14,6 +15,14 @@ const Header = ({user}) => {
     const goto = href => e => {
         stopEvent(e);
         navigate(href);
+    }
+
+    const logout = () => {
+        sessionStorage.clear();
+        oauth().then(r => {
+            sessionStorage.setItem("options", JSON.stringify(r));
+            window.location.href = r.authorizationUrl;
+        });
     }
 
     return (
@@ -26,7 +35,7 @@ const Header = ({user}) => {
                 {user && <a href="/profile" className="profile-link" onClick={goto("/profile")}>
                     <FontAwesomeIcon icon="user-circle"/>
                 </a>}
-                {user && <Button txt={"Logout"} cancelButton={true}/>}
+                {user && <Button txt={"Logout"} cancelButton={true} onClick={logout}/>}
             </div>
         </div>
     );

@@ -19,18 +19,18 @@ I18n.translations.en = {
     institutions: {
         title: "Institutions",
         name: "Name",
+        namePlaceholder: "Unique name of the institution, e.g. Univiersity Foo",
         displayName: "Description",
         object: "Institution",
         entityId: "Entity ID",
-        entityIdPlaceholder: "Entity ID of the institution",
+        entityIdPlaceholder: "Unique entityID, e.g. https://foo.nl",
         homeInstitution: "Schac home",
-        homeInstitutionPlaceholder: "Schac home of the institution",
+        homeInstitutionPlaceholder: "Unique schac home, e.g. foo.nl",
         aupUrl: "AUP Url",
-        aupUrlPlaceholder: "AUP Url of the institution",
+        aupUrlPlaceholder: "User Acceptance URL, e.g. https://foo.nl/aup",
         searchPlaceHolder: "Search institutions",
         new: "New institution",
         noEntities: "There are no institutions...",
-        namePlaceholder: "Name of the institution"
     },
     users: {
         title: "Users",
@@ -92,6 +92,8 @@ I18n.translations.en = {
         alreadyExists: "A Role with name {{value}} already exists for application {{application}}.",
         object: "Role",
         application: "Application",
+        authority: "Authority",
+        authorityTooltip: "The authority determines which users can invite people for this role",
     },
     confirmationDialog: {
         title: "Please confirm",
