@@ -78,9 +78,10 @@ const InstitutionDetail = ({user}) => {
                     <p className="attribute">{I18n.t("institutions.homeInstitution")}</p>
                     <p>{institution.homeInstitution}</p>
                 </div>
+                {isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user) &&
                 <div className="actions">
                     <Button txt={I18n.t("forms.edit")} onClick={() => navigate(`/institution/${institution.id}`)}/>
-                </div>
+                </div>}
             </UnitHeader>
             <Tabs activeTab={currentTab} tabChanged={tabChanged}>
                 {tabs}

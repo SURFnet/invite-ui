@@ -143,6 +143,9 @@ I18n.translations.en = {
         invite: "Invite",
         enforceEmailEquality: "Enforce email equality",
         enforceEmailEqualityTooltip: "When checked the invitee must accept the invitation with the email where the invitation was send to",
+        flash: {
+            send: "Invitation was send"
+        }
     },
     profile: {
         header: "Hi {{name}}",
