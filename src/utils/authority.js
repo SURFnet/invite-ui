@@ -8,3 +8,7 @@ export const AUTHORITIES = {
 export const isAllowed = (requiredAuthority, user) => {
     return AUTHORITIES[user.authority].weight >= requiredAuthority.weight;
 }
+
+export const isAllowedForInviter = (requiredAuthority, user) => {
+    return AUTHORITIES[user.authority].weight > requiredAuthority.weight;
+}
