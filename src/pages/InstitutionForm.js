@@ -39,7 +39,7 @@ const InstitutionForm = ({user}) => {
 
 
     useEffect(() => {
-        if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
+        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
             navigate("/404");
             return;
         }
@@ -171,6 +171,7 @@ const InstitutionForm = ({user}) => {
                             setState("entityId", e.target.value);
                             setAlreadyExists({...alreadyExists, entityId: false});
                         }}
+                        disabled={!isAllowed(AUTHORITIES.SUPER_ADMIN, user)}
                         placeholder={I18n.t("institutions.entityIdPlaceholder")}
                         onBlur={validateEntityId}
                         error={alreadyExists.entityId || (!initial && isEmpty(institution.entityId))}
@@ -192,6 +193,7 @@ const InstitutionForm = ({user}) => {
                             setState("homeInstitution", nameUrnCompatibilityCheck(e.target.value));
                             setAlreadyExists({...alreadyExists, homeInstitution: false});
                         }}
+                        disabled={!isAllowed(AUTHORITIES.SUPER_ADMIN, user)}
                         placeholder={I18n.t("institutions.homeInstitutionPlaceholder")}
                         onBlur={validateSchacHome}
                         toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("institutions.object")})}

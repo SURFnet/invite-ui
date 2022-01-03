@@ -1,4 +1,6 @@
-div.institutions {
+@import "../styles/vars";
+
+div.users {
   background-color: white;
 
   table.users {
@@ -28,7 +30,12 @@ div.institutions {
     }
 
     tbody {
-      td {
+      tr {
+        td {
+          span.open-invitation {
+            color: $primary-green;
+          }
+        }
       }
     }
   }

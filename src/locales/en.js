@@ -2,7 +2,9 @@ import I18n from "i18n-js";
 
 I18n.translations.en = {
     header: {
-        title: "Invites"
+        title: "Invites",
+        afterLogout: "You must close your browser to complete the logout",
+        confirmationHeader: "Close your browser"
     },
     home: {
         tabs: {
@@ -154,8 +156,11 @@ I18n.translations.en = {
         created: "Account created",
         institution: "Institution",
         endDate: "End date",
-        roles: "Roles"
-
+        roles: "Roles",
+        confirmation: {
+            delete: "Are you sure you want to delete your account? This can not be undone and you'll have to be invited again to re-create an account.",
+            afterDelete: "You can close this tab as there is nothing here anymore for you."
+        }
     },
     aup: {
         hi: "Hi {{name}},",
@@ -167,6 +172,13 @@ I18n.translations.en = {
         agreeWithTerms: "I hereby certify that I have read the AUP and that I accept them",
         onward: "Proceed",
         agreedFlash: "Your agreement with {{name}} has been saved.",
+    },
+    user: {
+        confirmation: {
+            delete: "Are you sure you want to {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
+        },
+        flash: {
+            deleted: "User {{name}} has been deleted."
+        }
     }
-
 }

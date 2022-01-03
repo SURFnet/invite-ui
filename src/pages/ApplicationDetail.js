@@ -43,7 +43,7 @@ const ApplicationDetail = ({user}) => {
                  name="users"
                  label={I18n.t("home.tabs.users")}
                  icon={<FontAwesomeIcon icon="user"/>}>
-                <Users application={application} institutionId={institutionId}/>
+                <Users application={application} institutionId={institutionId} user={user}/>
             </div>)
     }
 

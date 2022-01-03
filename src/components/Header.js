@@ -5,12 +5,15 @@ import I18n from "i18n-js";
 import {useNavigate} from "react-router-dom";
 import {stopEvent} from "../utils/forms";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from "react";
-import {oauth} from "../api/api";
+import React, {useState} from "react";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const Header = ({user}) => {
 
     const navigate = useNavigate();
+
+    const [confirmation, setConfirmation] = useState({});
+    const [confirmationOpen, setConfirmationOpen] = useState(false);
 
     const goto = href => e => {
         stopEvent(e);
@@ -19,14 +22,22 @@ const Header = ({user}) => {
 
     const logout = () => {
         sessionStorage.clear();
-        oauth().then(r => {
-            sessionStorage.setItem("options", JSON.stringify(r));
-            window.location.href = r.authorizationUrl;
+        setConfirmation({
+            question: I18n.t("header.afterLogout"),
+            confirmationHeader: I18n.t("header.confirmationHeader")
         });
+        setConfirmationOpen(true);
     }
 
     return (
         <div className="header">
+
+            {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
+                                                     cancel={null}
+                                                     confirmationHeader={confirmation.confirmationHeader}
+                                                     confirm={null}
+                                                     question={confirmation.question}/>}
+
             <a href="/" onClick={goto("/")}>
                 <Logo/>
             </a>

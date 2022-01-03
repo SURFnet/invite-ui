@@ -112,7 +112,7 @@ const RoleForm = ({user}) => {
             setLoading(true);
             saveRole(role).then(res => {
                 navigate(`/application-detail/${institutionId}/${applicationId}`);
-                setFlash(I18n.t("forms.flash.created",
+                setFlash(I18n.t(`forms.flash.${isNew ? "created" : "updated"}`,
                     {
                         object: I18n.t("roles.object").toLowerCase(),
                         name: role.name

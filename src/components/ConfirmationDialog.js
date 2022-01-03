@@ -34,9 +34,9 @@ export default function ConfirmationDialog({
                 {cancel && <Button cancelButton={true}
                                    txt={I18n.t("confirmationDialog.cancel")}
                                    onClick={cancel}/>}
-                <Button txt={confirmationTxt}
-                        onClick={() => !disabledConfirm && confirm()}
-                        className={`className ${cancel ? "" : "orphan"}`} disabled={disabledConfirm}/>
+                {confirm && <Button txt={confirmationTxt}
+                                    onClick={() => !disabledConfirm && confirm()}
+                                    className={`className ${cancel ? "" : "orphan"}`} disabled={disabledConfirm}/>}
             </section>
         </Modal>
     );

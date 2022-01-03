@@ -11,8 +11,9 @@ import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
+import {AUTHORITIES, isAllowed} from "../utils/authority";
 
-const Users = ({institutionId, application = null}) => {
+const Users = ({user, institutionId, application = null}) => {
 
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]);
@@ -32,19 +33,30 @@ const Users = ({institutionId, application = null}) => {
         })
     }, [institutionId, application]);
 
-    const openUser = user => e => {
+    const openUser = entity => e => {
         stopEvent(e);
-        navigate(`/user-detail/${user.id}`);
+        if (entity.isInvitation) {
+            navigate(`/invitation-detail/${entity.id}`);
+        } else {
+            navigate(`/user-detail/${entity.id}`);
+        }
+
     };
 
     if (loading) {
         return <Spinner/>
     }
 
-    const getRoles = user => {
+    const getRoles = entity => {
         return <ul>
-            {user.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.applicationName})`}</li>)}
+            {entity.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.applicationName})`}</li>)}
         </ul>
+    }
+
+    const rowLinkMapper = entity => {
+        const allowed = entity.isInvitation ? (isAllowed(AUTHORITIES.INVITER, user) && isAllowed(AUTHORITIES[entity.intendedAuthority], user)) :
+            (isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user) && isAllowed(AUTHORITIES[entity.authority], user));
+        return allowed ? e => openUser(e) : null;
     }
 
     const columns = [
@@ -52,30 +64,32 @@ const Users = ({institutionId, application = null}) => {
             key: "name",
             sortable: false,
             header: I18n.t("users.name"),
-            mapper: user => user.isInvitation ? "-" : `${user.givenName} ${user.familyName}`,
+            mapper: entity => entity.isInvitation ? "-" : `${entity.givenName} ${entity.familyName}`,
         },
         {
             key: "email",
             header: I18n.t("users.email"),
-            mapper: user => user.email,
+            mapper: entity => entity.email,
         },
         {
             key: "authority",
             header: I18n.t("users.authority"),
-            mapper: user => I18n.t(`users.authorities.${user.isInvitation ? user.intendedAuthority : user.authority}`),
+            mapper: entity => I18n.t(`users.authorities.${entity.isInvitation ? entity.intendedAuthority : entity.authority}`),
         },
         {
             key: "status",
             header: I18n.t("users.status"),
-            mapper: user => user.isInvitation ? I18n.t(`users.statuses.open`) : "",
+            mapper: entity => entity.isInvitation ?
+                <span className={"open-invitation"}>{I18n.t(`users.statuses.open`)}</span> : "",
         },
         {
             key: "roles",
             sortable: false,
             header: I18n.t("users.roles"),
-            mapper: user => user.isInvitation ? "" : getRoles(user),
+            mapper: entity => getRoles(entity),
         },
     ]
+
     return (
         <div className="users">
             <Entities entities={users}
@@ -84,7 +98,7 @@ const Users = ({institutionId, application = null}) => {
                       defaultSort="email"
                       columns={columns}
                       hideTitle={true}
-                      rowLinkMapper={() => openUser}
+                      rowLinkMapper={rowLinkMapper}
                       showNew={true}
                       newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>

@@ -1,16 +1,38 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./Profile.scss";
 import I18n from "i18n-js";
 import {BreadCrumb} from "../components/BreadCrumb";
-import {deleteMe} from "../api/api";
+import {deleteOther, other} from "../api/api";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import Button from "../components/Button";
+import {useNavigate, useParams} from "react-router-dom";
+import {setFlash} from "../flash/events";
+import {AUTHORITIES, isAllowed} from "../utils/authority";
+import Spinner from "../components/Spinner";
 import UserAttributes from "../components/UserAttributes";
 
-const Profile = ({user}) => {
+const User = ({user}) => {
 
+    const {userId} = useParams();
+
+    const navigate = useNavigate();
+
+    const [otherUser, setOtherUser] = useState({});
     const [confirmation, setConfirmation] = useState({});
+    const [loading, setLoading] = useState(true);
     const [confirmationOpen, setConfirmationOpen] = useState(false);
+
+    useEffect(() => {
+        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+            navigate("/404");
+            return;
+        }
+        other(userId).then(res => {
+            setOtherUser(res);
+            setLoading(false);
+        });
+    }, [userId, user, navigate]);
+
 
     const doDelete = showConfirmation => {
         if (showConfirmation) {
@@ -18,29 +40,36 @@ const Profile = ({user}) => {
                 cancel: () => setConfirmationOpen(false),
                 action: () => doDelete(false),
                 warning: true,
-                question: I18n.t("profile.confirmation.delete")
+                question: I18n.t("user.confirmation.delete", {name: otherUser.name})
             });
             setConfirmationOpen(true);
         } else {
-            deleteMe().then(() => {
-                sessionStorage.clear();
-                setConfirmation({
-                    cancel: null,
-                    action: null,
-                    warning: false,
-                    question: I18n.t("profile.confirmation.afterDelete")
-                });
+            deleteOther(otherUser).then(() => {
+                setFlash(I18n.t("user.flash.deleted", {name: otherUser.name}));
+                navigate(`/institution-detail/${user.institution.id}/users`);
             })
         }
     };
+    if (loading) {
+        return <Spinner/>
+    }
 
     return (
         <div className={"profile-container"}>
-            <BreadCrumb paths={[
+            <BreadCrumb inForm={false} paths={[
                 {path: "/", value: I18n.t("breadcrumbs.home")},
                 {
-                    value: I18n.t("home.tabs.profile")
+                    path: `/institution-detail/${user.institution.id}`,
+                    value: user.institution.displayName
+                },
+                {
+                    path: `/institution-detail/${user.institution.id}/users`,
+                    value: I18n.t("home.tabs.users")
+                },
+                {
+                    value: otherUser.name
                 }
+
             ]}/>
 
             {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
@@ -50,10 +79,7 @@ const Profile = ({user}) => {
                                                      question={confirmation.question}/>}
 
             <div className={"profile"}>
-                <h2>
-                    {I18n.t("profile.header", {name: `${user.givenName}`})}
-                </h2>
-                <UserAttributes user={user}/>
+                <UserAttributes user={otherUser}/>
                 <section className="actions">
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
                             onClick={() => doDelete(true)}/>
@@ -63,4 +89,4 @@ const Profile = ({user}) => {
         </div>
     )
 }
-export default Profile
+export default User

@@ -1,6 +1,7 @@
 //Internal API
 import {refreshTokens} from "./frontChannelTokenRequest";
 import {config} from "../conf/server";
+import {isEmpty} from "../utils/forms";
 
 //Internal API
 const serverUrl = config.serverUrl;
@@ -74,12 +75,24 @@ export function me() {
     return fetchJson("/guests/api/users/me", {}, {}, false);
 }
 
+export function other(userId) {
+    return fetchJson(`/guests/api/users/${userId}`);
+}
+
 export function allUsersByInstitution(institutionId) {
     return fetchJson(`/guests/api/users/institution/${institutionId}`);
 }
 
 export function allUsersByApplication(applicationId) {
     return fetchJson(`/guests/api/users/application/${applicationId}`);
+}
+
+export function deleteMe() {
+    return fetchDelete(`/guests/api/users`);
+}
+
+export function deleteOther(otherUser) {
+    return fetchDelete(`/guests/api/users/${otherUser.id}`);
 }
 
 //Institutions
@@ -106,7 +119,7 @@ export function institutionSchacHomeExists(schacHome, isExisting) {
 }
 
 export function saveInstitution(institution) {
-    return postPutJson("/guests/api/institutions", institution, "post");
+    return postPutJson("/guests/api/institutions", institution, isEmpty(institution.id) ? "post" : "put");
 }
 
 

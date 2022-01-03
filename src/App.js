@@ -16,6 +16,7 @@ import RoleForm from "./pages/RoleForm";
 import NewInvitation from "./pages/NewInvitation";
 import Profile from "./pages/Profile";
 import Invitation from "./pages/Invitation";
+import User from "./pages/User";
 
 addIcons();
 
@@ -92,6 +93,7 @@ const App = () => {
                     </Route>
                     <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
                     <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
+                    <Route path="user-detail/:userId" element={<User user={user}/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>
