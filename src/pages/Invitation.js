@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import {acceptInvitation, invitationByHash, me} from "../api/api";
 import CheckBox from "../components/CheckBox";
 import Spinner from "../components/Spinner";
+import {isEmpty} from "../utils/forms";
 
 
 const Invitation = ({user}) => {
@@ -13,6 +14,7 @@ const Invitation = ({user}) => {
     const navigate = useNavigate();
 
     const [agreed, setAgreed] = useState(false);
+    const [showAup, setShowAup] = useState(true);
     const [invitation, setInvitation] = useState({});
     const [loading, setLoading] = useState(true);
     const [emailEqualityConflict, setEmailEqualityConflict] = useState(false);
@@ -23,10 +25,15 @@ const Invitation = ({user}) => {
         invitationByHash(h).then(res => {
             setInvitation({...res, hash: h, status: "ACCEPTED"});
             setEmailEqualityConflict(res.emailEqualityConflict);
-            debugger;
+            if (!isEmpty(user)) {
+                const aup = user.aups.find(aup => aup.version === res.institution.aupVersion);
+                debugger;
+                setShowAup(isEmpty(aup));
+                setAgreed(!isEmpty(aup))
+            }
             setLoading(false);
         }).catch(() => navigate("/404"));
-    }, [navigate]);
+    }, [navigate, user]);
 
     const proceed = () => {
         acceptInvitation(invitation).then(() => {
@@ -42,6 +49,16 @@ const Invitation = ({user}) => {
         });
     }
 
+    const roleInformation = () => {
+        return invitation.roles
+            .map(role => `<strong>${role.role.name}</strong> (application <strong>${role.role.applicationName}</strong>)`)
+            .join(", ");
+    }
+
+    const roleCardinality = () => {
+        return I18n.t(`aup.${invitation.roles.length > 1 ? "multipleRoles" : "singleRole"}`)
+    }
+
     if (loading) {
         return <Spinner/>;
     }
@@ -50,10 +67,18 @@ const Invitation = ({user}) => {
         <div className="invitation-container">
             <div className="invitation">
                 <h2>{I18n.t("aup.hi", {name: invitation.email})}</h2>
-                {!emailEqualityConflict && <div className="disclaimer">
+                {!emailEqualityConflict && <div className="invitation-info">
+                    <p dangerouslySetInnerHTML={{
+                        __html: I18n.t("aup.role", {
+                            cardinality: roleCardinality(),
+                            roles: roleInformation()
+                        })
+                    }}/>
+                </div>}
+                {(!emailEqualityConflict && isEmpty(user)) && <div className="disclaimer">
                     <p dangerouslySetInnerHTML={{__html: I18n.t("aup.info")}}/>
                 </div>}
-                {(invitation.institution.aupUrl && !emailEqualityConflict) &&
+                {(invitation.institution.aupUrl && !emailEqualityConflict && showAup) &&
                 <div>
                     <h2 dangerouslySetInnerHTML={{__html: I18n.t("aup.title")}}/>
                     <p className=""
