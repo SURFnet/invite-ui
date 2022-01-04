@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import Roles from "../entities/Roles";
 import Users from "../entities/Users";
 import {BreadCrumb} from "../components/BreadCrumb";
+import Invitations from "../entities/Invitations";
 
 const ApplicationDetail = ({user}) => {
 
@@ -44,6 +45,13 @@ const ApplicationDetail = ({user}) => {
                  label={I18n.t("home.tabs.users")}
                  icon={<FontAwesomeIcon icon="user"/>}>
                 <Users application={application} institutionId={institutionId} user={user}/>
+            </div>)
+        tabs.push(
+            <div key="invitations"
+                 name="invitations"
+                 label={I18n.t("home.tabs.invitations")}
+                 icon={<FontAwesomeIcon icon="user-circle"/>}>
+                <Invitations application={application} institutionId={institutionId} user={user}/>
             </div>)
     }
 

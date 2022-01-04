@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import I18n from "i18n-js";
-import {allUsersByApplication, allUsersByInstitution} from "../api/api";
+import {allInvitationsByApplication, allInvitationsByInstitution} from "../api/api";
 import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
@@ -8,23 +8,23 @@ import Entities from "../components/Entities";
 import "./Users.scss";
 import {AUTHORITIES, isAllowed} from "../utils/authority";
 
-const Users = ({user, institutionId, application = null}) => {
+const Invitations = ({user, institutionId, application = null}) => {
 
     const [loading, setLoading] = useState(true);
-    const [users, setUsers] = useState([]);
+    const [invitations, setInvitations] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const promise = application ? allUsersByApplication(application.id) : allUsersByInstitution(institutionId);
+        const promise = application ? allInvitationsByApplication(application.id) : allInvitationsByInstitution(institutionId);
         promise.then(res => {
-            setUsers(res);
+            setInvitations(res);
             setLoading(false);
         })
     }, [institutionId, application]);
 
     const openUser = entity => e => {
         stopEvent(e);
-        navigate(`/user-detail/${entity.id}`);
+        navigate(`/invitation-detail/${entity.id}`);
     };
 
     if (loading) {
@@ -38,17 +38,11 @@ const Users = ({user, institutionId, application = null}) => {
     }
 
     const rowLinkMapper = entity => {
-        const allowed = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user) && isAllowed(AUTHORITIES[entity.authority], user);
+        const allowed = isAllowed(AUTHORITIES.INVITER, user) && isAllowed(AUTHORITIES[entity.intendedAuthority], user);
         return allowed ? e => openUser(e) : null;
     }
 
     const columns = [
-        {
-            key: "name",
-            sortable: false,
-            header: I18n.t("users.name"),
-            mapper: entity => entity.name
-        },
         {
             key: "email",
             header: I18n.t("users.email"),
@@ -56,8 +50,13 @@ const Users = ({user, institutionId, application = null}) => {
         },
         {
             key: "authority",
-            header: I18n.t("users.authority"),
-            mapper: entity => I18n.t(`users.authorities.${entity.authority}`),
+            header: I18n.t("users.intendedAuthority"),
+            mapper: entity => I18n.t(`users.authorities.${entity.intendedAuthority}`),
+        },
+        {
+            key: "status",
+            header: I18n.t("users.status"),
+            mapper: entity => <span className={"open-invitation"}>{I18n.t(`users.statuses.open`)}</span>,
         },
         {
             key: "roles",
@@ -68,18 +67,19 @@ const Users = ({user, institutionId, application = null}) => {
     ]
 
     return (
-        <div className="users">
-            <Entities entities={users}
-                      modelName="users"
-                      searchAttributes={["name", "email"]}
+        <div className="invitations">
+            <Entities entities={invitations}
+                      modelName="invitations"
+                      searchAttributes={["email"]}
                       defaultSort="email"
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={rowLinkMapper}
-                      showNew={false}
+                      showNew={true}
+                      newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>
         </div>
     )
 
 }
-export default Users;
+export default Invitations;

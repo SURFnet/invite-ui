@@ -41,6 +41,7 @@ I18n.translations.en = {
         email: "Email",
         roles: "Roles",
         authority: "Authority",
+        intendedAuthority: "Intended authority",
         authorities: {
             SUPER_ADMIN: "Super admin",
             INSTITUTION_ADMINISTRATOR: "Institution admin",

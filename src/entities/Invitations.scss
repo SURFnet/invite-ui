@@ -1,21 +1,21 @@
 @import "../styles/vars";
 
-div.users {
+div.invitations {
   background-color: white;
 
-  table.users {
+  table.invitations {
 
     thead {
       th {
-        &.name {
-          width: 20%;
-        }
-
         &.email {
           width: 25%;
         }
 
         &.authority {
+          width: 20%;
+        }
+
+        &.status {
           width: 20%;
         }
 
@@ -25,6 +25,15 @@ div.users {
       }
     }
 
+    tbody {
+      tr {
+        td {
+          span.open-invitation {
+            color: $primary-green;
+          }
+        }
+      }
+    }
   }
 }
 
