@@ -10,6 +10,7 @@
         margin: 0 auto;
         max-width: $mobile;
     }
+
     div.disclaimer {
         background-color: #fef595;
         padding: 25px;
@@ -22,5 +23,11 @@
         background-color: $background;
         padding: 15px;
     }
+
+    section.error {
+        margin: 40px 0;
+        color: $primary-red;
+    }
+
 
 }

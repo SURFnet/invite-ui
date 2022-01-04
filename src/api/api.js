@@ -197,7 +197,7 @@ export function createInvitation(invitationRequest) {
 }
 
 export function acceptInvitation(invitation) {
-    return postPutJson("/guests/api/invitations", invitation, "post");
+    return postPutJson("/guests/api/invitations", invitation, "post", false);
 }
 
 export function allInvitationsByInstitution(institutionId) {

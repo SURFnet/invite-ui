@@ -172,6 +172,7 @@ I18n.translations.en = {
         agreeWithTerms: "I hereby certify that I have read the AUP and that I accept them",
         onward: "Proceed",
         agreedFlash: "Your agreement with {{name}} has been saved.",
+        emailEqualityConflict: "This invitation requires you to authenticate with the same email where the invitation was send to. Please close your browser and use the invitation link to login with that email."
     },
     user: {
         confirmation: {

@@ -80,7 +80,7 @@ const App = () => {
                         <Route path="" element={<Home user={user}/>}/>
                     </Route>
                     <Route path="profile" element={<Profile user={user}/>}/>
-                    <Route path="invitations" element={<Invitation/>}/>
+                    <Route path="invitations" element={<Invitation user={user}/>}/>
                     <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
                     <Route path="institution-detail/:institutionId">
                         <Route path=":tab" element={<InstitutionDetail user={user}/>}/>
