@@ -79,7 +79,8 @@ const Users = ({user, institutionId, application = null}) => {
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={rowLinkMapper}
-                      showNew={false}
+                      showNew={true}
+                      newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>
         </div>
     )

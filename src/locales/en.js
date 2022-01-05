@@ -92,7 +92,7 @@ I18n.translations.en = {
         applicationName: "Application",
         new: "New role",
         searchPlaceHolder: "Search roles",
-        noEntities: "No roles found...",
+        noEntities: "There are no roles...",
         alreadyExists: "A Role with name {{value}} already exists for application {{application}}.",
         object: "Role",
         application: "Application",
@@ -149,7 +149,9 @@ I18n.translations.en = {
         enforceEmailEqualityTooltip: "When checked the invitee must accept the invitation with the email where the invitation was send to",
         flash: {
             send: "Invitation was send"
-        }
+        },
+        noEntities: "No outstanding invitations...",
+        searchPlaceHolder: "Search invitations",
     },
     profile: {
         header: "Hi {{name}}",
