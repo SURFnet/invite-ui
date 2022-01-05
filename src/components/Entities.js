@@ -69,14 +69,13 @@ const Entities = ({
 
 
                 <div className={`search ${showNew ? "" : "standalone"}`}>
-                    {(!isEmpty(searchAttributes) || customSearch) && <div>
-
+                    {(!isEmpty(searchAttributes) || customSearch) && <>
                         <input type="text"
                                onChange={queryChanged}
                                value={query}
                                placeholder={I18n.t(`${modelName}.searchPlaceHolder`)}/>
                         <FontAwesomeIcon icon="search"/>
-                    </div>}
+                    </>}
 
                 </div>
             </section>
@@ -140,8 +139,9 @@ const Entities = ({
                     {entities.map((entity, index) =>
                         <tr key={index}
                             className={`${(typeof rowLinkMapper === "function" && rowLinkMapper(entity)) ? "clickable" : ""}`}>
-                            {columns.map(column =>
+                            {columns.map((column, i) =>
                                 <td key={column.key}
+                                    data-label={columns[i].header}
                                     onClick={column.key !== "check" && column.key !== "role" && !column.ignoreRowClick ? onRowClick(rowLinkMapper, entity) : undefined}
                                     className={`${column.key} ${column.nonSortable ? "" : "sortable"} ${column.className ? column.className : ""}`}>
                                     {getEntityValue(entity, column)}

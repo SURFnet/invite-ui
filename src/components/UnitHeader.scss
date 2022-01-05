@@ -6,6 +6,11 @@
   width: 100%;
   background-color: $background;
 
+  @media (max-width: $mobile) {
+    flex-direction: column;
+  }
+
+
   div.info {
     display: flex;
     flex-direction: column;

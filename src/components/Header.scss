@@ -17,6 +17,13 @@
   h1 {
     color: white;
     margin-left: 25px;
+
+    @media (max-width: $mobile) {
+      display: none;
+
+    }
+
+
   }
 
   div.logout {

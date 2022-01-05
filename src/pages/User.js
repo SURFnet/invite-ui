@@ -80,7 +80,7 @@ const User = () => {
                                                      question={confirmation.question}/>}
 
             <div className={"profile"}>
-                <UserAttributes user={otherUser} membership={membership}/>
+                <UserAttributes user={otherUser} />
                 <section className="actions">
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
                             onClick={() => doDelete(true)}/>

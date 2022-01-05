@@ -159,6 +159,7 @@ I18n.translations.en = {
         eppn: "Eppn",
         created: "Account created",
         institution: "Institution",
+        institutions: "Institutions",
         endDate: "End date",
         roles: "Roles",
         confirmation: {

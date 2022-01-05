@@ -30,6 +30,10 @@
 
       &.standalone {
         margin-left: auto;
+
+        @media (max-width: $mobile) {
+          margin-left: 0;
+        }
       }
 
       @media (max-width: $mobile) {

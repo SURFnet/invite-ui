@@ -10,6 +10,10 @@
   position: relative;
   border-bottom: 3px solid $inactive-grey;
 
+  @media (max-width: $mobile) {
+    margin: 0;
+  }
+
 
   &:first-child {
     margin-left: 0;

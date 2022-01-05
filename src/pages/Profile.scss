@@ -3,14 +3,25 @@
 
 .profile-container {
   .profile {
-    padding: 0 25px 25px 25px;
-    width: 75%;
+    @include form;
+
     display: flex;
     flex-direction: column;
 
     .attributes {
       display: grid;
       grid-template-columns: 50% 50%;
+
+      @media (max-width: $mobile) {
+        grid-template-columns: 100%;
+      }
+
+
+      &.border-top {
+        border-top: 1px solid $primary-grey;
+        margin-top: 15px;
+      }
+
     }
 
     p.attribute {
@@ -19,7 +30,7 @@
     }
 
     h2.section-divider {
-      margin-top: 25px;
+      margin: 25px 0 0 0;
       font-size: 20px;
     }
   }
