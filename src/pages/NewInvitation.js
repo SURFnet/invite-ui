@@ -81,7 +81,8 @@ const NewInvitation = ({user}) => {
             }
             const invitationRequest = {
                 invites: invites,
-                invitation: invitationWithRoles
+                invitation: invitationWithRoles,
+                institutionId: institutionId
             }
             createInvitation(invitationRequest).then(() => {
                 navigate(`/institution-detail/${institutionId}/users`);
