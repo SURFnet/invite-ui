@@ -45,7 +45,7 @@ const NewInvitation = ({user}) => {
     const {institutionId} = useParams();
 
     useEffect(() => {
-        if (!isAllowed(AUTHORITIES.INVITER, user)) {
+        if (!isAllowed(AUTHORITIES.INVITER, user, institutionId)) {
             navigate("/404");
         } else {
             Promise.all([institutionById(institutionId), allRolesByInstitution(institutionId)]).then(res => {
@@ -142,8 +142,8 @@ const NewInvitation = ({user}) => {
 
             <SelectField
                 value={intendedAuthoritiesOptions.find(option => option.value === invitation.intendedAuthority)}
-                options={intendedAuthoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user) &&
-                    isAllowedForInviter(AUTHORITIES[option.value], user))}
+                options={intendedAuthoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user, institutionId) &&
+                    isAllowedForInviter(AUTHORITIES[option.value], user, institutionId))}
                 name={I18n.t("invitations.intendedAuthority")}
                 small={true}
                 clearable={false}

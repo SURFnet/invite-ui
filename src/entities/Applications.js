@@ -66,7 +66,7 @@ const Applications = ({user, institution}) => {
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={() => openApplication}
-                      showNew={isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)}
+                      showNew={isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institution.id)}
                       newEntityPath={`/application/${institution.id}/new`}
                       loading={loading}/>
         </div>

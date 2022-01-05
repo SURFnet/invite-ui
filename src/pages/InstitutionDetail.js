@@ -12,6 +12,7 @@ import Button from "../components/Button";
 import Users from "../entities/Users";
 import Roles from "../entities/Roles";
 import {BreadCrumb} from "../components/BreadCrumb";
+import Invitations from "../entities/Invitations";
 
 const InstitutionDetail = ({user}) => {
 
@@ -33,7 +34,7 @@ const InstitutionDetail = ({user}) => {
         return <Spinner/>
     }
 
-    if (isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+    if (isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
         tabs.push(
             <div key="applications"
                  name="applications"
@@ -42,22 +43,30 @@ const InstitutionDetail = ({user}) => {
                 <Applications user={user} institution={institution}/>
             </div>)
     }
-    if (isAllowed(AUTHORITIES.INVITER, user)) {
+    if (isAllowed(AUTHORITIES.INVITER, user, institutionId)) {
         tabs.push(<div key="users"
-                       name="users"
-                       label={I18n.t("home.tabs.users")}
-                       icon={<FontAwesomeIcon icon="user"/>}>
+                          name="users"
+                          label={I18n.t("home.tabs.users")}
+                          icon={<FontAwesomeIcon icon="user"/>}>
             <Users institutionId={institution.id}  user={user}/>
         </div>)
+        tabs.push(
+            <div key="invitations"
+                 name="invitations"
+                 label={I18n.t("home.tabs.invitations")}
+                 icon={<FontAwesomeIcon icon="user-circle"/>}>
+                <Invitations institutionId={institutionId} user={user}/>
+            </div>)
     }
-    if (false && isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+    if (false && isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
         tabs.push(<div key="roles"
-                       name="roles"
-                       label={I18n.t("home.tabs.roles")}
-                       icon={<FontAwesomeIcon icon="hat-cowboy"/>}>
+                          name="roles"
+                          label={I18n.t("home.tabs.roles")}
+                          icon={<FontAwesomeIcon icon="hat-cowboy"/>}>
             <Roles institutionId={institutionId}/>
         </div>)
     }
+
 
     const tabChanged = name => {
         setCurrentTab(name);
@@ -78,7 +87,7 @@ const InstitutionDetail = ({user}) => {
                     <p className="attribute">{I18n.t("institutions.homeInstitution")}</p>
                     <p>{institution.homeInstitution}</p>
                 </div>
-                {isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user) &&
+                {isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) &&
                 <div className="actions">
                     <Button txt={I18n.t("forms.edit")} onClick={() => navigate(`/institution/${institution.id}`)}/>
                 </div>}

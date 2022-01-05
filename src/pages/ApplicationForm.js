@@ -41,7 +41,7 @@ const ApplicationForm = ({user}) => {
     const [originalName, setOriginalName] = useState("");
 
     useEffect(() => {
-        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
             navigate("/404");
             return;
         }
@@ -77,7 +77,7 @@ const ApplicationForm = ({user}) => {
     }, [applicationId, institutionId, user, navigate]);
 
     const validateEntityId = e =>
-        applicationEntityIdExists(e.target.value, !isNew).then(json => {
+        applicationEntityIdExists(e.target.value, !isNew, institutionId).then(json => {
             setAlreadyExists({...alreadyExists, entityId: json.exists});
         });
 

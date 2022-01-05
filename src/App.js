@@ -93,7 +93,7 @@ const App = () => {
                     </Route>
                     <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
                     <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
-                    <Route path="user-detail/:userId" element={<User user={user}/>}/>
+                    <Route path="user-detail/:userId/:institutionId" element={<User />}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

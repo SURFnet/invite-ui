@@ -1,39 +1,49 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {AUTHORITIES, isAllowed} from "../utils/authority";
+import React, {useEffect, useState} from "react";
 import Tabs from "../components/Tabs";
 import I18n from "i18n-js";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Institutions from "../entities/Institutions";
 import {BreadCrumb} from "../components/BreadCrumb";
+import Spinner from "../components/Spinner";
+import {allInstitutions, mineInstitutions} from "../api/api";
+import {isSuperAdmin} from "../utils/authority";
 
 const Home = ({user}) => {
 
     const navigate = useNavigate();
     const {tab = "institutions"} = useParams();
     const [currentTab, setCurrentTab] = useState(tab);
-    let tabs = [];
-
-    if (isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
-        tabs = [
-            <div key="institutions"
-                 name="institutions"
-                 label={I18n.t("home.tabs.institutions")}
-                 icon={<FontAwesomeIcon icon="university"/>}>
-                <Institutions user={user}/>
-            </div>
-        ];
-    }
+    const [loading, setLoading] = useState(false);
+    const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
-        if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user)) {
-            navigate(`/institution-detail/${user.institution.id}`);
-        }
+        const promise = isSuperAdmin(user) ? allInstitutions() : mineInstitutions();
+        promise.then(res => {
+            if (res.length === 1 && !isSuperAdmin(user)) {
+                navigate(`/institution-detail/${res[0].id}`);
+            } else {
+                setTabs([
+                    <div key="institutions"
+                         name="institutions"
+                         label={I18n.t("home.tabs.institutions")}
+                         icon={<FontAwesomeIcon icon="university"/>}>
+                        <Institutions user={user} institutions={res}/>
+                    </div>
+                ]);
+            }
+            setLoading(false);
+        })
     }, [user, navigate]);
+
 
     const tabChanged = name => {
         setCurrentTab(name);
         navigate(`/home/${name}`, {replace: true});
+    }
+
+    if (loading) {
+        return <Spinner/>
     }
 
     return (

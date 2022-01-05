@@ -1,34 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import I18n from "i18n-js";
-import {allInstitutions} from "../api/api";
-import Spinner from "../components/Spinner";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import {AUTHORITIES} from "../utils/authority";
 import "./Institutions.scss";
 
-const Institutions = ({user}) => {
+const Institutions = ({user, institutions}) => {
 
-    const [loading, setLoading] = useState(true);
-    const [institutions, setInstitutions] = useState([]);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        allInstitutions().then(res => {
-            setInstitutions(res);
-            setLoading(false);
-        })
-    }, []);
 
     const openInstitution = institution => e => {
         stopEvent(e);
         navigate(`/institution-detail/${institution.id}`);
     };
 
-    if (loading) {
-        return <Spinner/>
-    }
     const columns = [
         {
             key: "displayName",
@@ -49,7 +35,8 @@ const Institutions = ({user}) => {
             key: "aupUrl",
             header: I18n.t("institutions.aupUrl"),
             ignoreRowClick: true,
-            mapper: institution => <a href={institution.aupUrl} target="_blank" rel="noreferrer">{institution.aupUrl}</a> ,
+            mapper: institution => <a href={institution.aupUrl} target="_blank"
+                                      rel="noreferrer">{institution.aupUrl}</a>,
         },
 
     ]
@@ -64,7 +51,7 @@ const Institutions = ({user}) => {
                       rowLinkMapper={() => openInstitution}
                       showNew={user.authority === AUTHORITIES.SUPER_ADMIN.name}
                       newEntityPath={"/institution/new"}
-                      loading={loading}/>
+                      loading={false}/>
         </div>
     )
 

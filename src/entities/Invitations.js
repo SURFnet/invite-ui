@@ -38,7 +38,7 @@ const Invitations = ({user, institutionId, application = null}) => {
     }
 
     const rowLinkMapper = entity => {
-        const allowed = isAllowed(AUTHORITIES.INVITER, user) && isAllowed(AUTHORITIES[entity.intendedAuthority], user);
+        const allowed = isAllowed(AUTHORITIES.INVITER, user, institutionId) && isAllowed(AUTHORITIES[entity.intendedAuthority], user, institutionId);
         return allowed ? e => openUser(e) : null;
     }
 

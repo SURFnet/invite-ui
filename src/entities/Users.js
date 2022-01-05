@@ -24,7 +24,7 @@ const Users = ({user, institutionId, application = null}) => {
 
     const openUser = entity => e => {
         stopEvent(e);
-        navigate(`/user-detail/${entity.id}`);
+        navigate(`/user-detail/${entity.id}/${institutionId}`);
     };
 
     if (loading) {
@@ -38,7 +38,7 @@ const Users = ({user, institutionId, application = null}) => {
     }
 
     const rowLinkMapper = entity => {
-        const allowed = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user) && isAllowed(AUTHORITIES[entity.authority], user);
+        const allowed = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) && isAllowed(AUTHORITIES[entity.authority], user, institutionId);
         return allowed ? e => openUser(e) : null;
     }
 
@@ -57,7 +57,10 @@ const Users = ({user, institutionId, application = null}) => {
         {
             key: "authority",
             header: I18n.t("users.authority"),
-            mapper: entity => I18n.t(`users.authorities.${entity.authority}`),
+            mapper: entity => {
+                const membership = entity.institutionMemberships.find(membership => membership.institution.id === institutionId);
+                return I18n.t(`users.authorities.${membership.authority}`);
+            },
         },
         {
             key: "roles",

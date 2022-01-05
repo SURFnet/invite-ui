@@ -76,7 +76,7 @@ export function me() {
 }
 
 export function other(userId) {
-    return fetchJson(`/guests/api/users/${userId}`);
+    return fetchJson(`/guests/api/users/${userId}`, {}, {}, false);
 }
 
 export function allUsersByInstitution(institutionId) {
@@ -98,6 +98,10 @@ export function deleteOther(otherUser) {
 //Institutions
 export function allInstitutions() {
     return fetchJson("/guests/api/institutions");
+}
+
+export function mineInstitutions() {
+    return fetchJson("/guests/api/institutions/mine");
 }
 
 export function institutionById(id) {
@@ -122,7 +126,6 @@ export function saveInstitution(institution) {
     return postPutJson("/guests/api/institutions", institution, isEmpty(institution.id) ? "post" : "put");
 }
 
-
 export function deleteInstitution(institution) {
     return fetchDelete(`/guests/api/institutions/${institution.id}`);
 }
@@ -136,10 +139,11 @@ export function applicationById(id) {
     return fetchJson(`/guests/api/applications/${id}`);
 }
 
-export function applicationEntityIdExists(entityId, isExisting) {
+export function applicationEntityIdExists(entityId, isExisting, institutionId) {
     return postPutJson("/guests/api/applications/entity-id-exists", {
         existingObject: isExisting,
-        uniqueAttribute: entityId
+        uniqueAttribute: entityId,
+        institutionId: institutionId,
     }, "post");
 }
 

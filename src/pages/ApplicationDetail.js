@@ -31,7 +31,7 @@ const ApplicationDetail = ({user}) => {
     }, [applicationId]);
 
 
-    if (isAllowed(AUTHORITIES.INVITER, user)) {
+    if (isAllowed(AUTHORITIES.INVITER, user, institutionId)) {
         tabs.push(
             <div key="roles"
                  name="roles"

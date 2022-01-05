@@ -12,7 +12,8 @@ I18n.translations.en = {
             applications: "Applications",
             roles: "Roles",
             profile: "Profile",
-            users: "Users"
+            users: "Users",
+            invitations: "Invitations"
         }
     },
     breadcrumbs: {

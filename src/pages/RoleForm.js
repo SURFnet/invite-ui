@@ -40,7 +40,7 @@ const RoleForm = ({user}) => {
     const [originalName, setOriginalName] = useState("");
 
     useEffect(() => {
-        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user)) {
+        if (!isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
             navigate("/404");
             return;
         }
@@ -64,7 +64,7 @@ const RoleForm = ({user}) => {
             }
             setLoading(false);
         });
-    }, [roleId, applicationId, user, navigate]);
+    }, [roleId, applicationId, institutionId, user, navigate]);
 
     if (loading) {
         return <Spinner/>
@@ -187,7 +187,7 @@ const RoleForm = ({user}) => {
 
             <SelectField
                 value={authoritiesOptions.find(option => option.value === role.authority)}
-                options={authoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user))}
+                options={authoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user, institutionId))}
                 name={I18n.t("roles.authority")}
                 small={true}
                 clearable={false}
