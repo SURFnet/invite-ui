@@ -3,7 +3,7 @@ import I18n from "i18n-js";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
-import {AUTHORITIES} from "../utils/authority";
+import {AUTHORITIES, isSuperAdmin} from "../utils/authority";
 import "./Institutions.scss";
 
 const Institutions = ({user, institutions}) => {
@@ -49,7 +49,7 @@ const Institutions = ({user, institutions}) => {
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={() => openInstitution}
-                      showNew={user.authority === AUTHORITIES.SUPER_ADMIN.name}
+                      showNew={isSuperAdmin(user)}
                       newEntityPath={"/institution/new"}
                       loading={false}/>
         </div>
