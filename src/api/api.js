@@ -1,9 +1,9 @@
 //Internal API
 import {refreshTokens} from "./frontChannelTokenRequest";
-import {config} from "../conf/server";
 import {isEmpty} from "../utils/forms";
 
 //Internal API
+const config = window.config;
 const serverUrl = config.serverUrl;
 
 function validateResponse(showErrorDialog) {
