@@ -122,6 +122,10 @@ export function institutionSchacHomeExists(schacHome, isExisting) {
     }, "post");
 }
 
+export function incrementAup(institution) {
+    return postPutJson(`/guests/api/institutions/increment-aup/${institution.id}`, {}, "put");
+}
+
 export function saveInstitution(institution) {
     return postPutJson("/guests/api/institutions", institution, isEmpty(institution.id) ? "post" : "put");
 }

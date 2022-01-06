@@ -34,6 +34,11 @@ I18n.translations.en = {
         searchPlaceHolder: "Search institutions",
         new: "New institution",
         noEntities: "There are no institutions...",
+        aup: {
+            increment: "new AUP",
+            confirmation: "Are you sure you want to increment the version of the AUP? All users will be prompted to confirm acceptance of the new AUP when they login.",
+            flash: "AUP version is incremented"
+        }
     },
     users: {
         title: "Users",
