@@ -9,6 +9,7 @@
   align-items: center;
   position: relative;
   border-bottom: 3px solid $inactive-grey;
+  background-color: $background!important;
 
   @media (max-width: $mobile) {
     margin: 0;

@@ -33,7 +33,6 @@ const InstitutionDetail = ({user}) => {
     if (loading) {
         return <Spinner/>
     }
-
     if (isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
         tabs.push(
             <div key="applications"

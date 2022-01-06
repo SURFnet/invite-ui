@@ -38,8 +38,8 @@ const Users = ({user, institutionId, application = null}) => {
     }
 
     const rowLinkMapper = entity => {
-        const allowed = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) && isAllowed(AUTHORITIES[entity.authority], user, institutionId);
-        return allowed ? e => openUser(e) : null;
+        const allowedForInstitutionAdmin = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId);
+        return allowedForInstitutionAdmin ? e => openUser(e) : null;
     }
 
     const columns = [
@@ -58,7 +58,8 @@ const Users = ({user, institutionId, application = null}) => {
             key: "authority",
             header: I18n.t("users.authority"),
             mapper: entity => {
-                const membership = entity.institutionMemberships.find(membership => membership.institution.id === institutionId);
+                const institutionIdentifier = parseInt(institutionId, 10);
+                const membership = entity.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
                 return I18n.t(`users.authorities.${membership.authority}`);
             },
         },

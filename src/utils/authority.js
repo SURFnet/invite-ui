@@ -15,7 +15,8 @@ export const isAllowed = (requiredAuthority, user, institutionId) => {
     if (isSuperAdmin(user)) {
         return true;
     }
-    const membership = user.institutionMemberships.find(membership => membership.institution.id === institutionId);
+    const institutionIdentifier = parseInt(institutionId, 10);
+    const membership = user.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
     return membership && AUTHORITIES[membership.authority].weight >= requiredAuthority.weight;
 }
 
@@ -23,7 +24,8 @@ export const isAllowedForInviter = (requiredAuthority, user, institutionId) => {
     if (isSuperAdmin(user)) {
         return true;
     }
-    const membership = user.institutionMemberships.find(membership => membership.institution.id === institutionId);
+    const institutionIdentifier = parseInt(institutionId, 10);
+    const membership = user.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
     if (isEmpty(membership)) {
         return false;
     }

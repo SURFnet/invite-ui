@@ -3,7 +3,7 @@ import I18n from "i18n-js";
 import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
-import {AUTHORITIES, isSuperAdmin} from "../utils/authority";
+import {isSuperAdmin} from "../utils/authority";
 import "./Institutions.scss";
 
 const Institutions = ({user, institutions}) => {
