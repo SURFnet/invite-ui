@@ -148,10 +148,19 @@ I18n.translations.en = {
         enforceEmailEquality: "Enforce email equality",
         enforceEmailEqualityTooltip: "When checked the invitee must accept the invitation with the email where the invitation was send to",
         flash: {
-            send: "Invitation was send"
+            send: "Invitation was send",
+            deleted: "Invitation has been deleted.",
+            resend: "Invitation has been resend."
         },
         noEntities: "No outstanding invitations...",
         searchPlaceHolder: "Search invitations",
+        invitations: "Invitations",
+        existing: "Invitation",
+        resend: "Resend",
+        confirmation: {
+            delete: "Are you sure you want to delete this invitation? This can not be undone.",
+            resend: "Are you sure you want to resend this invitation?",
+        },
     },
     profile: {
         header: "Hi {{name}}",
@@ -184,7 +193,7 @@ I18n.translations.en = {
     },
     user: {
         confirmation: {
-            delete: "Are you sure you want to {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
+            delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
         },
         flash: {
             deleted: "User {{name}} has been deleted."

@@ -51,6 +51,7 @@ const User = () => {
             })
         }
     };
+
     if (loading) {
         return <Spinner/>
     }
@@ -78,7 +79,6 @@ const User = () => {
                                                      confirm={confirmation.action}
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
-
             <div className={"profile"}>
                 <UserAttributes user={otherUser} />
                 <section className="actions">

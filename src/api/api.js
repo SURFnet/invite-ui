@@ -196,12 +196,24 @@ export function invitationByHash(hash) {
     return fetchJson(`/guests/api/invitations/${hash}`, {}, {}, false);
 }
 
+export function invitationById(invitationId) {
+    return fetchJson(`/guests/api/invitations/id/${invitationId}`, {}, {}, false);
+}
+
 export function createInvitation(invitationRequest) {
     return postPutJson("/guests/api/invitations", invitationRequest, "put");
 }
 
 export function acceptInvitation(invitation) {
     return postPutJson("/guests/api/invitations", invitation, "post", false);
+}
+
+export function resendInvitation(invitation) {
+    return postPutJson("/guests/api/invitations/resend", invitation, "put");
+}
+
+export function deleteInvitation(invitationId) {
+    return fetchDelete(`/guests/api/invitations/${invitationId}`);
 }
 
 export function allInvitationsByInstitution(institutionId) {

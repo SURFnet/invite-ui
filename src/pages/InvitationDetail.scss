@@ -1,0 +1,6 @@
+@import "../styles/vars";
+@import "../styles/forms";
+
+.invitation-detail-form {
+  @include form;
+}
