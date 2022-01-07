@@ -6,7 +6,7 @@ import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
-import {AUTHORITIES, isAllowed} from "../utils/authority";
+import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
 
 const Invitations = ({user, institutionId, application = null}) => {
 
@@ -37,8 +37,14 @@ const Invitations = ({user, institutionId, application = null}) => {
         </ul>
     }
 
+    const isAllowedForUser = entity => {
+        const allowed = isAllowed(AUTHORITIES.INVITER, user, institutionId) && isAllowed(AUTHORITIES[entity.intendedAuthority], user, institutionId)
+            && isAllowedForInviter(AUTHORITIES[entity.intendedAuthority], user, institutionId);
+        return allowed;
+    }
+
     const rowLinkMapper = entity => {
-        const allowed = isAllowed(AUTHORITIES.INVITER, user, institutionId) && isAllowed(AUTHORITIES[entity.intendedAuthority], user, institutionId);
+        const allowed = isAllowedForUser(entity);
         return allowed ? e => openUser(e) : null;
     }
 
@@ -75,6 +81,7 @@ const Invitations = ({user, institutionId, application = null}) => {
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={rowLinkMapper}
+                      isAllowedForUser={isAllowedForUser}
                       showNew={true}
                       newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>

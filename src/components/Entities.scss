@@ -143,6 +143,11 @@
             background-color: $tertiary-grey;
           }
         }
+
+        &.forbidden {
+          cursor: not-allowed;
+        }
+
       }
 
       td {

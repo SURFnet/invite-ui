@@ -37,6 +37,10 @@ const Users = ({user, institutionId, application = null}) => {
         </ul>
     }
 
+    const isAllowedForUser = () => {
+        return isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId);
+    }
+
     const rowLinkMapper = entity => {
         const allowedForInstitutionAdmin = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId);
         return allowedForInstitutionAdmin ? e => openUser(e) : null;
@@ -80,6 +84,7 @@ const Users = ({user, institutionId, application = null}) => {
                       columns={columns}
                       hideTitle={true}
                       rowLinkMapper={rowLinkMapper}
+                      isAllowedForUser={isAllowedForUser}
                       showNew={true}
                       newEntityPath={`/new-invitation/${institutionId}`}
                       loading={loading}/>

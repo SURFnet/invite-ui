@@ -22,6 +22,7 @@ const Entities = ({
                       newEntityPath,
                       newEntityFunc,
                       rowLinkMapper,
+                      isAllowedForUser,
                       searchCallback,
                       customSearch,
                       showNew,
@@ -138,7 +139,7 @@ const Entities = ({
                     <tbody>
                     {entities.map((entity, index) =>
                         <tr key={index}
-                            className={`${(typeof rowLinkMapper === "function" && rowLinkMapper(entity)) ? "clickable" : ""}`}>
+                            className={`${(typeof rowLinkMapper === "function" && rowLinkMapper(entity)) ? "clickable" : ""}${(typeof isAllowedForUser === "function" && !isAllowedForUser(entity)) ? "forbidden" : ""}`}>
                             {columns.map((column, i) =>
                                 <td key={column.key}
                                     data-label={columns[i].header}
