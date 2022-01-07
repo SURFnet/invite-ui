@@ -8,7 +8,7 @@ const userTemplate = {
     ],
     institutionMemberships: [
         {
-            institution: {id: 1, aupUrl: "https://aup", aupVersion: "1"}
+            institution: {id: 1, aupUrl: "https://aup", aupVersion: 1}
         }
     ]
 }
@@ -23,7 +23,7 @@ test("user needs aup confirmation because version diff", () => {
     const user = {
         ...userTemplate, institutionMemberships: [
             {
-                institution: {id: 1, aupUrl: "https://aup", aupVersion: "2"}
+                institution: {id: 1, aupUrl: "https://aup", aupVersion: 2}
             }
         ]
     };

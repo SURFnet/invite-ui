@@ -50,7 +50,7 @@ const InstitutionForm = ({user}) => {
                 homeInstitution: "",
                 displayName: "",
                 aupUrl: "",
-                aupVersion: "1"
+                aupVersion: 1
             });
             setLoading(false);
         } else {
