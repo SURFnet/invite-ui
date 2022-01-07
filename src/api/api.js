@@ -227,3 +227,9 @@ export function allInvitationsByInstitution(institutionId) {
 export function allInvitationsByApplication(applicationId) {
     return fetchJson(`/guests/api/invitations/application/${applicationId}`);
 }
+
+//Aup
+export function acceptAups(membershipsWithoutAup) {
+    const institutionIdentifiers = membershipsWithoutAup.map(membership => membership.institution.id)
+    return postPutJson("/guests/api/aups", institutionIdentifiers, "put");
+}

@@ -62,7 +62,7 @@ const NewInvitation = ({user}) => {
 
 
     const isValid = () => {
-        return !isEmpty(invites) && !isEmpty(roles);
+        return !isEmpty(invites) && (!isEmpty(roles) || invitation.intendedAuthority !== AUTHORITIES.GUEST.name);
     };
 
     const setState = (attr, value) => {
@@ -170,11 +170,11 @@ const NewInvitation = ({user}) => {
                          name={I18n.t("invitations.roles")}
                          toolTip={I18n.t("invitations.rolesTooltip")}
                          isMulti={true}
-                         error={!initial && isEmpty(roles)}
+                         error={!initial && isEmpty(roles) && invitation.intendedAuthority === AUTHORITIES.GUEST.name}
                          searchable={true}
                          placeholder={I18n.t("invitations.rolesPlaceHolder")}
                          onChange={rolesChanged}/>
-            {(!initial && isEmpty(roles)) &&
+            {(!initial && isEmpty(roles) && invitation.intendedAuthority === AUTHORITIES.GUEST.name) &&
             <ErrorIndicator msg={I18n.t("invitations.requiredRole")}/>}
 
             <DateField value={roleExpiryDate}

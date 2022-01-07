@@ -18,6 +18,9 @@ import Profile from "./pages/Profile";
 import Invitation from "./pages/Invitation";
 import User from "./pages/User";
 import InvitationDetail from "./pages/InvitationDetail";
+import {institutionMembershipsWithNoAup} from "./utils/aup";
+import Aup from "./pages/Aup";
+import {isEmpty} from "./utils/forms";
 
 addIcons();
 
@@ -50,7 +53,9 @@ const App = () => {
                 me()
                     .then(user => {
                         sessionStorage.setItem("user", JSON.stringify(user));
-                        navigate(path, {replace: true});
+                        const membershipsWithoutAup = institutionMembershipsWithNoAup(user);
+                        const navigationPath = isEmpty(membershipsWithoutAup) ? path : "/aup";
+                        navigate(navigationPath, {replace: true});
                         setLoading(false);
                     })
                     .catch(() => {
@@ -81,6 +86,7 @@ const App = () => {
                         <Route path="" element={<Home user={user}/>}/>
                     </Route>
                     <Route path="profile" element={<Profile user={user}/>}/>
+                    <Route path="aup" element={<Aup user={user}/>}/>
                     <Route path="invitations" element={<Invitation user={user}/>}/>
                     <Route path="institution/:institutionId" element={<InstitutionForm user={user}/>}/>
                     <Route path="institution-detail/:institutionId">
@@ -94,8 +100,8 @@ const App = () => {
                     </Route>
                     <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
                     <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
-                    <Route path="user-detail/:userId/:institutionId" element={<User />}/>
-                    <Route path="invitation-detail/:invitationId" element={<InvitationDetail />}/>
+                    <Route path="user-detail/:userId/:institutionId" element={<User/>}/>
+                    <Route path="invitation-detail/:invitationId" element={<InvitationDetail/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

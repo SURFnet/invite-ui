@@ -1,0 +1,20 @@
+@import "../styles/vars.scss";
+@import "../styles/forms.scss";
+
+.aup-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .aup {
+    margin: 0 auto;
+    max-width: $mobile;
+  }
+
+  div.terms {
+    margin: 25px 0;
+    background-color: $light-blue;
+    padding: 5px 15px 30px 15px;
+  }
+
+}

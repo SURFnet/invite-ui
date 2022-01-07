@@ -26,8 +26,7 @@ const Invitation = ({user}) => {
             setInvitation({...res, hash: h, status: "ACCEPTED"});
             setEmailEqualityConflict(res.emailEqualityConflict);
             if (!isEmpty(user)) {
-                const aup = user.aups.find(aup => aup.version === res.institution.aupVersion);
-                debugger;
+                const aup = user.aups.find(aup => aup.version === res.institution.aupVersion && aup.institutionId === res.institution.id);
                 setShowAup(isEmpty(aup));
                 setAgreed(!isEmpty(aup))
             }
@@ -67,11 +66,19 @@ const Invitation = ({user}) => {
         <div className="invitation-container">
             <div className="invitation">
                 <h2>{I18n.t("aup.hi", {name: invitation.email})}</h2>
-                {!emailEqualityConflict && <div className="invitation-info">
+                {(!emailEqualityConflict && invitation.roles.length > 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
                         __html: I18n.t("aup.role", {
                             cardinality: roleCardinality(),
-                            roles: roleInformation()
+                            roles: roleInformation(),
+                            name: invitation.institution.displayName
+                        })
+                    }}/>
+                </div>}
+                {(!emailEqualityConflict && invitation.roles.length === 0) && <div className="invitation-info">
+                    <p dangerouslySetInnerHTML={{
+                        __html: I18n.t("aup.noRoles", {
+                            name: invitation.institution.displayName
                         })
                     }}/>
                 </div>}
