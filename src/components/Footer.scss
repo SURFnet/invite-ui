@@ -1,0 +1,27 @@
+@import "../styles/vars.scss";
+
+div.footer {
+    padding: 15px;
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+
+    div.footer-inner {
+        max-width: $width-app;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        section.info {
+            display: flex;
+            flex-direction: column;
+
+            &.right {
+                text-align: right;
+            }
+        }
+
+
+    }
+}

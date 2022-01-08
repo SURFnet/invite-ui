@@ -1,6 +1,7 @@
 import I18n from "i18n-js";
 
 I18n.translations.nl = {
+
     header: {
         title: "Uitnodiging",
         afterLogout: "Sluit je browser om uit te loggen",
@@ -205,5 +206,14 @@ I18n.translations.nl = {
         flash: {
             deleted: "Gebruiker {{name}} is verwijderd."
         }
-    }
+    },
+    footer: {
+        tips: "Tips of help nodig?",
+        help: "Help & FAQ",
+        product: "eduID invitation is een dienst van",
+        productLink: "https://edu.nl/vw3jx",
+        surf: "SURF",
+        surfLink: "https://surf.nl"
+    },
+
 };

@@ -21,6 +21,7 @@ import InvitationDetail from "./pages/InvitationDetail";
 import {institutionMembershipsWithNoAup} from "./utils/aup";
 import Aup from "./pages/Aup";
 import {isEmpty} from "./utils/forms";
+import Footer from "./components/Footer";
 
 addIcons();
 
@@ -109,6 +110,7 @@ const App = () => {
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
             </div>
+            <Footer/>
         </div>
     );
 }

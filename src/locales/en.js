@@ -1,6 +1,7 @@
 import I18n from "i18n-js";
 
 I18n.translations.en = {
+
     header: {
         title: "Invites",
         afterLogout: "You must close your browser to complete the logout",
@@ -205,5 +206,14 @@ I18n.translations.en = {
         flash: {
             deleted: "User {{name}} has been deleted."
         }
-    }
+    },
+    footer: {
+        tips: "Need tips or info?",
+        help: "Help & FAQ",
+        product: "eduID invitation is a service by",
+        productLink: "https://edu.nl/vw3jx",
+        surf: "SURF",
+        surfLink: "https://surf.nl"
+    },
+
 };
