@@ -71,13 +71,13 @@ I18n.translations.en = {
         displayNamePlaceholder: "Description of the application",
         object: "Application",
         entityId: "Entity ID",
-        entityIdPlaceholder: "Entity ID of the application",
+        entityIdPlaceholder: "Entity ID of the application, as known in SURFconext",
         provisioning: "Provisioning",
         noProvisioning: "None",
         landingPage: "Landing page URL",
         landingPagePlaceholder: "Landing page of the application",
         provisioningHookUrl: "Provisioning hook URL",
-        provisioningHookUrlPlaceholder: "Provisioning hook URL of the application",
+        provisioningHookUrlPlaceholder: "SCIM endpoint URL of the application",
         provisioningHookUsername: "Provisioning hook username",
         provisioningHookUsernamePlaceholder: "Provisioning hook username of the application",
         provisioningHookPassword: "Provisioning hook password",
@@ -102,7 +102,7 @@ I18n.translations.en = {
         object: "Role",
         application: "Application",
         authority: "Authority",
-        authorityTooltip: "The authority determines which users can invite people for this role",
+        authorityTooltip: "The authority determines which users can invite people for this role"
     },
     confirmationDialog: {
         title: "Please confirm",
@@ -127,7 +127,7 @@ I18n.translations.en = {
         flash: {
             created: "Created {{object}} {{name}}",
             updated: "Updated {{object}} {{name}}",
-            deleted: "Deleted {{object}} {{name}}",
+            deleted: "Deleted {{object}} {{name}}"
         },
         nameTooltip: "The name of the {{object}} is part of the group membership URN that is send to services. Therefore it may not contain spaces or other non-asci characters."
     },
@@ -164,8 +164,8 @@ I18n.translations.en = {
         resend: "Resend",
         confirmation: {
             delete: "Are you sure you want to delete this invitation? This can not be undone.",
-            resend: "Are you sure you want to resend this invitation?",
-        },
+            resend: "Are you sure you want to resend this invitation?"
+        }
     },
     profile: {
         header: "Hi {{name}}",
@@ -178,7 +178,7 @@ I18n.translations.en = {
         roles: "Roles",
         confirmation: {
             delete: "Are you sure you want to delete your account? This can not be undone and you'll have to be invited again to re-create an account.",
-            afterDelete: "You can close this tab as there is nothing here anymore for you."
+            afterDelete: "You can close this tab now."
         }
     },
     aup: {
@@ -200,10 +200,10 @@ I18n.translations.en = {
     },
     user: {
         confirmation: {
-            delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
+            delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account."
         },
         flash: {
             deleted: "User {{name}} has been deleted."
         }
     }
-}
+};
