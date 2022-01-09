@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
-import {allRolesByInstitution, createInvitation, institutionById} from "../api/api";
+import {allGuestEmailsByInstitution, allRolesByInstitution, createInvitation, institutionById} from "../api/api";
 import I18n from "i18n-js";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
@@ -42,6 +42,7 @@ const NewInvitation = ({user}) => {
     const [roleExpiryDate, setRoleExpiryDate] = useState(null);
     const [roleOptions, setRoleOptions] = useState([]);
     const [institution, setInstitution] = useState([]);
+    const [guestEmails, setGuestEmails] = useState([]);
     const {institutionId} = useParams();
 
     useEffect(() => {
@@ -50,7 +51,8 @@ const NewInvitation = ({user}) => {
         } else {
             Promise.all([
                 institutionById(institutionId),
-                allRolesByInstitution(institutionId)
+                allRolesByInstitution(institutionId),
+                allGuestEmailsByInstitution(institutionId)
             ]).then(res => {
                 setInstitution(res[0]);
                 const allRoleOptions = res[1].map(role => ({
@@ -58,6 +60,7 @@ const NewInvitation = ({user}) => {
                     label: `${role.name} (${role.applicationName})`
                 }));
                 setRoleOptions(allRoleOptions);
+                setGuestEmails(res[2]);
                 setLoading(false);
             });
         }
@@ -140,6 +143,7 @@ const NewInvitation = ({user}) => {
                         tooltip={I18n.t("invitations.inviteesTooltip")}
                         placeHolder={I18n.t("invitations.inviteesPlaceholder")}
                         emails={invites}
+                        autoCompleteEmails={guestEmails}
                         error={!initial && isEmpty(invites)}/>
             {(!initial && isEmpty(invites)) &&
             <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}

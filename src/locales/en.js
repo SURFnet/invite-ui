@@ -138,7 +138,7 @@ I18n.translations.en = {
         inviteesPlaceholder: "Invitee email addresses",
         inviteesTooltip: "Add email addresses separated by comma, space or semi-colon or one-by-one using the enter key. You can also copy & paste a csv file with line-separated email addresses.",
         requiredEmail: "At least one email is required",
-        requiredRole: "At least one role is required",
+        requiredRole: "At least one role is required for a guest invitation",
         intendedAuthority: "Authority",
         intendedAuthorityTooltip: "The authority determines the rights the invitee will be granted after accepting the invitation",
         roles: "Roles",

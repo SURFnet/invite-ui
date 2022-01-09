@@ -138,7 +138,7 @@ I18n.translations.nl = {
         inviteesPlaceholder: "Email adressen om uit te nodigen",
         inviteesTooltip: "Voeg email adressen toe, gescheiden door een komma, spatie, puntkomma of een voor een met een enter. Je kunt ook een csv bestand kopieren en plakken.",
         requiredEmail: "Gebruik minimaal één email adres",
-        requiredRole: "Gebruik minimaal één rol.",
+        requiredRole: "Gebruik minimaal één rol voor een.gast uitnodiging",
         intendedAuthority: "Autoriteit",
         intendedAuthorityTooltip: "De autoriteit bepaalt welke rechten de gebruiker krijgt voor deze rol na het accepteren van de uitnodiging.",
         roles: "Rollen",

@@ -1,5 +1,5 @@
 export function stopEvent(e) {
-    if (e !== undefined && e !== null) {
+    if (e !== undefined && e !== null && e.preventDefault) {
         e.preventDefault();
         e.stopPropagation();
     }

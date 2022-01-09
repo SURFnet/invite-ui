@@ -86,6 +86,10 @@ export function allUsersByInstitution(institutionId) {
     return fetchJson(`/guests/api/users/institution/${institutionId}`);
 }
 
+export function allGuestEmailsByInstitution(institutionId) {
+    return fetchJson(`/guests/api/users/emails/${institutionId}`);
+}
+
 export function allUsersByApplication(applicationId) {
     return fetchJson(`/guests/api/users/application/${applicationId}`);
 }
