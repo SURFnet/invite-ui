@@ -215,5 +215,9 @@ I18n.translations.nl = {
         surf: "SURF",
         surfLink: "https://surf.nl"
     },
+    landing: {
+        title: "Welkom op eduID invitation",
+        disclaimer: "De eduID invitation portaal is alleen beschikbaar op uitnodiging. Als je binnen wilt komen, maar nog geen toegang hebt, neem dan contact op met je beheerder bij jouw instelling."
+    }
 
 };

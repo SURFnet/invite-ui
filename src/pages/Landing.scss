@@ -1,0 +1,21 @@
+@import "../styles/vars.scss";
+@import "../styles/forms.scss";
+
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .landing {
+    margin: 0 auto;
+    max-width: $mobile;
+  }
+
+  div.disclaimer {
+    background-color: #fef595;
+    padding: 25px;
+    margin: 25px 0;
+    font-size: 16px;
+  }
+
+}

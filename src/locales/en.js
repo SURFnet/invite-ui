@@ -215,5 +215,9 @@ I18n.translations.en = {
         surf: "SURF",
         surfLink: "https://surf.nl"
     },
+    landing: {
+        title: "Welcome to eduID invitation",
+        disclaimer: "The eduID invitation portal is by invite only. If you want to enter, but don't have access, please contact your institution admin."
+    }
 
 };

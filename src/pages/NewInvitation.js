@@ -48,7 +48,10 @@ const NewInvitation = ({user}) => {
         if (!isAllowed(AUTHORITIES.INVITER, user, institutionId)) {
             navigate("/404");
         } else {
-            Promise.all([institutionById(institutionId), allRolesByInstitution(institutionId)]).then(res => {
+            Promise.all([
+                institutionById(institutionId),
+                allRolesByInstitution(institutionId)
+            ]).then(res => {
                 setInstitution(res[0]);
                 const allRoleOptions = res[1].map(role => ({
                     value: role.id,

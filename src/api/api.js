@@ -15,7 +15,10 @@ function validateResponse(showErrorDialog) {
                     sessionStorage.setItem("accessToken", json.access_token);
                     sessionStorage.setItem("refreshToken", json.refresh_token);
                     window.location.reload(true);
-                })
+                }).catch(() => {
+                   sessionStorage.clear();
+                   window.location.reload(true);
+                });
                 return;
             }
             if (res.type === "opaqueredirect") {
