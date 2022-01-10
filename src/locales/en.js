@@ -56,7 +56,7 @@ I18n.translations.en = {
             GUEST: "Guest"
         },
         searchPlaceHolder: "Search users",
-        new: "Invite people",
+        new: "New invite",
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
@@ -147,13 +147,13 @@ I18n.translations.en = {
         roles: "Roles",
         rolesTooltip: "All the roles that the invitee will be granted after accepting the invitation",
         rolesPlaceHolder: "Choose one or more roles",
-        expiryDate: "Expiry date invitation",
+        expiryDate: "Invitation expiry date",
         expiryDateTooltip: "The date on which this invitation expires",
-        expiryDateRole: "Expiry date role",
+        expiryDateRole: "Role expiry date",
         expiryDateRoleTooltip: "The end date of this role. After this date the role is removed from the user.",
         message: "Message",
         messagePlaceholder: "Message included in the invite",
-        invite: "Invite",
+        invite: "Send invite",
         enforceEmailEquality: "Enforce email equality",
         enforceEmailEqualityTooltip: "When checked the invitee must accept the invitation with the email where the invitation was send to",
         flash: {

@@ -56,7 +56,7 @@ I18n.translations.nl = {
             GUEST: "Gast"
         },
         searchPlaceHolder: "Zoek gebruikers",
-        new: "Uitnodigen",
+        new: "Nieuwe uitnodiging",
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
@@ -153,7 +153,7 @@ I18n.translations.nl = {
         expiryDateRoleTooltip: "De einddatum voor deze rol.Na deze datum wordt de rol verwijderd van de gebruiker.",
         message: "Bericht",
         messagePlaceholder: "Een bericht om toe te voegen aan de uitnodiging",
-        invite: "Uitnodiging",
+        invite: "Stuur Uitnodiging",
         enforceEmailEquality: "Vereis hetzelfde emailadres",
         enforceEmailEqualityTooltip: "Als deze optie aan staat, moet de gebruiker inloggen met een email-adres wat gelijk is aan het adres waaraan de uitnodiging is verstuurd.",
         flash: {
