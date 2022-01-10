@@ -117,7 +117,7 @@ const EmailField = ({
             </div>
             {(matched.length > 0 && !hideMatched) &&
             <div className="auto-complete"
-                 style={{top: Math.min(parentOffsetHeight, 90) + 'px'}}>
+                 style={{top: Math.max(parentOffsetHeight, 90) + 'px'}}>
                 {matched.map((match, index) =>
                     index < 11 ?
                         <span key={index}
