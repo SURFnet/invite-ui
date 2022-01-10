@@ -60,8 +60,8 @@ I18n.translations.nl = {
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
-            open: "Open uitnodiging",
-            expired: "Verlopen uitnodiging"
+            open: "Open",
+            expired: "Verlopen"
         }
     },
     applications: {

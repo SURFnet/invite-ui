@@ -60,8 +60,8 @@ I18n.translations.en = {
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
-            open: "Open invitation",
-            expired: "Expired invitation"
+            open: "Open",
+            expired: "Expired"
         }
     },
     applications: {
