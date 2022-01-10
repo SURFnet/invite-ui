@@ -211,12 +211,13 @@ I18n.translations.en = {
         tips: "Need tips or info?",
         help: "Help & FAQ",
         product: "eduID invitation is a service by",
-        productLink: "https://edu.nl/vw3jx",
+        productLink: "https://eduid.nl",
         surf: "SURF",
         surfLink: "https://surf.nl"
     },
     landing: {
         title: "Welcome to eduID invitation",
+        info: "You don't have any roles or invitations.",
         disclaimer: "The eduID invitation portal is by invite only. If you want to enter, but don't have access, please contact your institution admin."
     }
 

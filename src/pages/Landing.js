@@ -5,6 +5,7 @@ const Landing = () => (
     <div className={"landing-container"}>
         <div className={"landing"}>
             <h2>{I18n.t("landing.title")}</h2>
+            <p className={"info"}>{I18n.t("landing.info")}</p>
             <div className={"disclaimer"}>
                 <p>{I18n.t("landing.disclaimer")}</p>
             </div>
