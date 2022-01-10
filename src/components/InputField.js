@@ -17,7 +17,8 @@ export default function InputField({
                                        error = false,
                                        cols = 5,
                                        maxLength = 255,
-                                       displayLabel = true
+                                       displayLabel = true,
+                                       isNumeric = false
                                    }) {
     placeholder = disabled ? "" : placeholder;
     if (error) {
@@ -30,7 +31,7 @@ export default function InputField({
             </label>}
             <div className="inner-input-field">
                 {!multiline &&
-                <input type="text"
+                <input type={isNumeric ? "number" :"text"}
                        disabled={disabled}
                        value={value || ""}
                        onChange={onChange}

@@ -55,8 +55,13 @@ const UserAttributes = ({user}) => {
                         <div>
                             <p className="attribute">{I18n.t("profile.roles")}</p>
                             {rolesGroupedByInstitution[membership.institution.id].map(userRole =>
-                                <p
-                                    key={userRole.id}>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>)}
+                                <div className={"user-role"} key={userRole.id}>
+                                    <p>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>
+                                    {userRole.endDate &&
+                                    <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
+                                    {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}
+                                </div>
+                            )}
                             {rolesGroupedByInstitution[membership.institution.id].length === 0 && <span>-</span>}
                         </div>
                     </div>

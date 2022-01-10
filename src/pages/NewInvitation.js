@@ -21,6 +21,8 @@ import {BreadCrumb} from "../components/BreadCrumb";
 import {futureDate} from "../utils/date";
 import CheckBox from "../components/CheckBox";
 
+const daysAhead = 14;
+
 const NewInvitation = ({user}) => {
 
     const intendedAuthoritiesOptions = Object.values(AUTHORITIES).map(authority => ({
@@ -33,7 +35,7 @@ const NewInvitation = ({user}) => {
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
     const [invitation, setInvitation] = useState({
-        expiryDate: futureDate(14),
+        expiryDate: futureDate(daysAhead),
         intendedAuthority: AUTHORITIES.GUEST.name
     });
     const [email, setEmail] = useState("");
@@ -57,7 +59,8 @@ const NewInvitation = ({user}) => {
                 setInstitution(res[0]);
                 const allRoleOptions = res[1].map(role => ({
                     value: role.id,
-                    label: `${role.name} (${role.applicationName})`
+                    label: `${role.name} (${role.applicationName})`,
+                    defaultExpiryDays: role.defaultExpiryDays
                 }));
                 setRoleOptions(allRoleOptions);
                 setGuestEmails(res[2]);
@@ -83,7 +86,10 @@ const NewInvitation = ({user}) => {
             const invitationWithRoles = {
                 ...invitation,
                 institution: {id: institutionId},
-                roles: roles.map(r => ({role: {id: r.value}}))
+                roles: roles.map(r => ({
+                    role: {id: r.value},
+                    endDate: roleExpiryDate,
+                }))
             }
             const invitationRequest = {
                 invites: invites,
@@ -129,6 +135,13 @@ const NewInvitation = ({user}) => {
         } else {
             const newSelectedOptions = Array.isArray(selectedOptions) ? [...selectedOptions] : [selectedOptions];
             setRoles(newSelectedOptions);
+            const allDefaultExpiryDays = newSelectedOptions
+                .filter(option => option.defaultExpiryDays)
+                .map(option => option.defaultExpiryDays)
+                .sort();
+            if (!isEmpty(allDefaultExpiryDays) && !roleExpiryDate) {
+                setRoleExpiryDate(futureDate(allDefaultExpiryDays[0]));
+            }
         }
     }
 

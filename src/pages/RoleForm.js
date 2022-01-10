@@ -122,8 +122,8 @@ const RoleForm = ({user}) => {
         }
     }
 
-    const setState = (attr, value) => {
-        const newRole = {...role, [attr]: value};
+    const setState = (attr, value, optionalMaxLength = null) => {
+        const newRole = {...role, [attr]: optionalMaxLength ? value.substring(0, optionalMaxLength) : value};
         setRole(newRole);
     }
 
@@ -192,6 +192,13 @@ const RoleForm = ({user}) => {
             {/*    clearable={false}*/}
             {/*    toolTip={I18n.t("roles.authorityTooltip")}*/}
             {/*    onChange={selectedOption => setState("authority", selectedOption ? selectedOption.value : null)}/>*/}
+
+            <InputField value={role.defaultExpiryDays}
+                        onChange={e => setState("defaultExpiryDays", e.target.value, 3)}
+                        placeholder={I18n.t("roles.defaultExpiryDaysPlaceholder")}
+                        isNumeric={true}
+                        toolTip={I18n.t("roles.defaultExpiryDaysTooltip")}
+                        name={I18n.t("roles.defaultExpiryDays")}/>
 
             <InputField value={application.name}
                         disabled={true}

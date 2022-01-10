@@ -103,7 +103,10 @@ I18n.translations.nl = {
         object: "Rol",
         application: "Toepassing",
         authority: "Autoriteit",
-        authorityTooltip: "Welk nivo gebruikers kan uitnodigen voor deze rol"
+        authorityTooltip: "Welk nivo gebruikers kan uitnodigen voor deze rol",
+        defaultExpiryDays: "Default verloop dagen",
+        defaultExpiryDaysPlaceholder: "bijv. 14 dagen",
+        defaultExpiryDaysTooltip: "Een standaard geldigheidsduur van de rol (in dagen) bepaalt de einddatum van de uitnodiging voor deze rol, deze kan worden bewerkt bij het verzenden van de uitnodiging",
     },
     confirmationDialog: {
         title: "Graag bevestigen",
@@ -175,7 +178,8 @@ I18n.translations.nl = {
         created: "Account aangemaakt",
         institution: "Instelling",
         institutions: "Instellingen",
-        endDate: "einddatum",
+        endDate: "Einddatum: ",
+        noEndDate: "Geen einddatum",
         roles: "Rollen",
         confirmation: {
             delete: "Weet je zeker dat je jouw account wil verwijderen? Dit kan niet ondegaan gemaakt worden, en je moet opnieuw worden uitgenodigd om een nieuw account aan te maken.",

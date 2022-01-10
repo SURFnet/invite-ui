@@ -103,7 +103,10 @@ I18n.translations.en = {
         object: "Role",
         application: "Application",
         authority: "Authority",
-        authorityTooltip: "The authority determines which users can invite people for this role"
+        authorityTooltip: "The authority determines which users can invite people for this role",
+        defaultExpiryDays: "Default expiry days",
+        defaultExpiryDaysPlaceholder: "e.g. 14 days",
+        defaultExpiryDaysTooltip: "A default role validity time (in days) determines the date for expiry date role, this can be edited when sending the invite",
     },
     confirmationDialog: {
         title: "Please confirm",
@@ -175,7 +178,8 @@ I18n.translations.en = {
         created: "Account created",
         institution: "Institution",
         institutions: "Institutions",
-        endDate: "End date",
+        endDate: "End date: ",
+        noEndDate: "No end date",
         roles: "Roles",
         confirmation: {
             delete: "Are you sure you want to delete your account? This can not be undone and you'll have to be invited again to re-create an account.",
