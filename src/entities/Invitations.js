@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
 import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
-import {isExpired} from "../utils/date";
+import {formatDateShort, isExpired} from "../utils/date";
 
 const Invitations = ({user, institutionId, application = null}) => {
 
@@ -65,7 +65,9 @@ const Invitations = ({user, institutionId, application = null}) => {
             key: "status",
             header: I18n.t("users.status"),
             mapper: entity => <span className={"open-invitation"}>
-                {I18n.t(`users.statuses.${isExpired(entity.expiryDate) ? "expired" : "open"}`)}
+                {I18n.t(`users.statuses.${isExpired(entity.expiryDate) ? "expired" : "open"}`, {
+                    date: formatDateShort(entity.expiryDate)
+                })}
             </span>,
         },
         {

@@ -39,6 +39,7 @@ I18n.translations.nl = {
         noEntities: "Geen instellingen gevonden...",
         applications: "Applicaties",
         newRole: "Nieuw - ",
+        endDate: "Ends on ",
         aup: {
             increment: "Nieuwe AUP",
             confirmation: "Weet je zeker dat je het versienummer van de overeenkomst wilt ophogen. Alle gebruikers moeten opnieuw de AUP bevestigen bij het inloggen.",
@@ -53,6 +54,7 @@ I18n.translations.nl = {
         roles: "Rollen",
         authority: "Autoriteit",
         intendedAuthority: "Gewenste Autoriteit",
+        expires: " - verloopt {{date}}",
         authorities: {
             SUPER_ADMIN: "Super beheerder",
             INSTITUTION_ADMINISTRATOR: "Instellingsbeheerder",
@@ -64,8 +66,8 @@ I18n.translations.nl = {
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
-            open: "Open",
-            expired: "Verlopen"
+            open: "Open - verloopt op {{date}}",
+            expired: "Verlopen op {{date}}"
         }
     },
     applications: {

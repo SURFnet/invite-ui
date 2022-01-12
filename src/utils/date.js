@@ -1,3 +1,5 @@
+import I18n from "i18n-js";
+
 export const futureDate = daysAhead => {
     const today = new Date();
     const time = today.getTime() + (1000 * 60 * 60 * 24 * daysAhead);
@@ -6,8 +8,13 @@ export const futureDate = daysAhead => {
 
 export const formatDate = epoch => {
     const date = new Date(epoch * 1000);
-    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-    return date.toLocaleDateString("en-EN", options);
+    const options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
+    return date.toLocaleDateString(I18n.locale === "en" ? "en-EN" : "nl-NL", options);
+}
+
+export const formatDateShort = epoch => {
+    const date = new Date(epoch * 1000);
+    return date.toLocaleDateString(I18n.locale === "en" ? "en-EN" : "nl-NL");
 }
 
 export const isExpired = epoch => {

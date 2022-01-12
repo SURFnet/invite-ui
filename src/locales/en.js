@@ -39,6 +39,7 @@ I18n.translations.en = {
         noEntities: "There are no institutions...",
         applications: "Applications",
         newRole: "New - ",
+        endDate: "Ends on ",
         aup: {
             increment: "new AUP",
             confirmation: "Are you sure you want to increment the version of the AUP? All users will be prompted to confirm acceptance of the new AUP when they login.",
@@ -53,6 +54,7 @@ I18n.translations.en = {
         roles: "Roles",
         authority: "Authority",
         intendedAuthority: "Intended authority",
+        expires: " - expires {{date}}",
         authorities: {
             SUPER_ADMIN: "Super admin",
             INSTITUTION_ADMINISTRATOR: "Institution admin",
@@ -64,8 +66,8 @@ I18n.translations.en = {
         noEntities: "There are no users...",
         status: "Status",
         statuses: {
-            open: "Open",
-            expired: "Expired"
+            open: "Open - expires {{date}}",
+            expired: "Expired on {{date}}",
         }
     },
     applications: {

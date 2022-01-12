@@ -15,7 +15,7 @@ import {BreadCrumb} from "../components/BreadCrumb";
 import CheckBox from "../components/CheckBox";
 import {setFlash} from "../flash/events";
 import ConfirmationDialog from "../components/ConfirmationDialog";
-import {invitationRoleExpiryDate} from "../utils/date";
+import {futureDate, invitationRoleExpiryDate} from "../utils/date";
 
 const InvitationDetail = () => {
 
@@ -33,6 +33,7 @@ const InvitationDetail = () => {
                 value: role.id,
                 label: `${role.role.name} (${role.role.applicationName})`
             }));
+            res.expiryDate = new Date(res.expiryDate * 1000);
             setInvitation(res);
             setLoading(false);
         }).catch(() => navigate("/404"));
@@ -65,7 +66,11 @@ const InvitationDetail = () => {
             });
             setConfirmationOpen(true);
         } else {
-            resendInvitation(invitation).then(() => {
+            resendInvitation({
+                id: invitation.id,
+                expiryDate: invitation.expiryDate,
+                message: invitation.message,
+            }).then(() => {
                 setFlash(I18n.t("invitations.flash.resend"));
                 navigate(`/institution-detail/${invitation.institution.id}/invitations`);
             })
@@ -87,9 +92,11 @@ const InvitationDetail = () => {
                       info={I18n.t("invitations.enforceEmailEquality")}
                       readOnly={true}/>
 
-            <DateField value={new Date(invitation.expiryDate * 1000)}
+            <DateField value={invitation.expiryDate}
                        name={I18n.t("invitations.expiryDate")}
-                       disabled={true}/>
+                       showYearDropdown={true}
+                       maxDate={futureDate(30)}
+                       onChange={e => setInvitation({...invitation, expiryDate: e})}/>
 
             <SelectField value={invitation.roleValues}
                          options={invitation.roleValues}

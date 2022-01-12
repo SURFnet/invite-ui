@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
 import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
+import {formatDateShort} from "../utils/date";
 
 const Users = ({user, institutionId, application = null}) => {
 
@@ -33,7 +34,10 @@ const Users = ({user, institutionId, application = null}) => {
 
     const getRoles = entity => {
         return <ul>
-            {entity.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.applicationName})`}</li>)}
+            {entity.roles.map((role, i) =>
+                <li key={i}>
+                    {`${role.role.name} (${role.role.applicationName}) ${role.endDate ? I18n.t("users.expires", {date: formatDateShort(role.endDate)}) : ""}`}
+                </li>)}
         </ul>
     }
 

@@ -14,13 +14,17 @@
     }
 
     a {
-      margin-bottom: 2px;
 
       &.new-role {
         font-weight: bold;
       }
     }
 
+    em.end-date {
+      margin-bottom: 5px;
+      display: block;
+      font-size: 14px;
+    }
 
   }
 }

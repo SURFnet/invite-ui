@@ -6,6 +6,7 @@ import {mineInstitutions} from "../api/api";
 import Spinner from "../components/Spinner";
 import {BreadCrumb} from "../components/BreadCrumb";
 import {isEmpty} from "../utils/forms";
+import {formatDate} from "../utils/date";
 
 const InstitutionGuest = ({user}) => {
 
@@ -37,15 +38,19 @@ const InstitutionGuest = ({user}) => {
         return <div className={"guest-applications"}>
             <p className="attribute">{I18n.t("institutions.applications")}</p>
             {user.roles.filter(role => role.role.institutionId === institution.id).map((role, index) =>
-                <p key={index}>
-                    {role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
+                <div key={index}>
+                    <p>{role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
                     <a href={role.role.applicationLandingPage}
                        target="_blank"
                        className={role.newRole ? "new-role" : ""}
                        rel="noreferrer">
                         {`${role.role.applicationName} (${role.role.name})`}
                     </a>
-                </p>)}
+                    </p>
+                    {role.endDate ?
+                        <em className="end-date">{I18n.t("institutions.endDate")}{formatDate(role.endDate)}</em> :
+                        <em className="end-date">{I18n.t("profile.noEndDate")}</em>}
+                </div>)}
         </div>;
     }
 
