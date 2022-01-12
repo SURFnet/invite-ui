@@ -24,8 +24,9 @@ const RoleForm = ({user}) => {
 
     const navigate = useNavigate();
 
-    const cancel = () => navigate(-1);
     const {institutionId, applicationId, roleId} = useParams();
+
+    const cancel = () => navigate(`/application-detail/${institutionId}/${applicationId}`)
 
     const required = ["name"];
     const [role, setRole] = useState({});
@@ -94,7 +95,7 @@ const RoleForm = ({user}) => {
             setConfirmationOpen(true);
         } else {
             deleteRole(roleId).then(() => {
-                navigate(-1);
+                cancel();
                 setFlash(I18n.t("forms.flash.deleted", {
                     name: role.name,
                     object: I18n.t("roles.object").toLowerCase()

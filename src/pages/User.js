@@ -47,7 +47,7 @@ const User = () => {
         } else {
             deleteOther(otherUser).then(() => {
                 setFlash(I18n.t("user.flash.deleted", {name: otherUser.name}));
-                navigate(-1);
+                navigate(`/institution-detail/${institutionId}/users`);
             })
         }
     };
@@ -80,7 +80,7 @@ const User = () => {
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
             <div className={"profile"}>
-                <UserAttributes user={otherUser} />
+                <UserAttributes user={otherUser}/>
                 <section className="actions">
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
                             onClick={() => doDelete(true)}/>

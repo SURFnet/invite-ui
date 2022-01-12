@@ -26,7 +26,8 @@ const ApplicationForm = ({user}) => {
 
     const {institutionId, applicationId} = useParams();
 
-    const cancel = () => navigate(-1);
+    const cancel = () => navigate(applicationId === "new" ? `/institution-detail/${institutionId}` :
+        `/application-detail/${institutionId}/${applicationId}`);
 
     const required = ["name", "entityId", "landingPage"];
     const [application, setApplication] = useState({});

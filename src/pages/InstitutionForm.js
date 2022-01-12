@@ -22,8 +22,10 @@ import {BreadCrumb} from "../components/BreadCrumb";
 const InstitutionForm = ({user}) => {
 
     const navigate = useNavigate();
+    const {institutionId} = useParams();
 
-    const cancel = () => navigate(-1);
+    const cancel = () => navigate(institutionId === "new" ? `/home` :
+        `/institution-detail/${institutionId}`);
 
     const required = ["displayName", "entityId", "homeInstitution"];
     const [institution, setInstitution] = useState({});
@@ -35,7 +37,6 @@ const InstitutionForm = ({user}) => {
     const [alreadyExists, setAlreadyExists] = useState({});
     const [invalid, setInvalid] = useState({});
     const [originalName, setOriginalName] = useState("");
-    const {institutionId} = useParams();
 
 
     useEffect(() => {

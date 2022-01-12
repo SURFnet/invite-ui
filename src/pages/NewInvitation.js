@@ -31,7 +31,10 @@ const NewInvitation = ({user}) => {
     }));
 
     const navigate = useNavigate();
-    const cancel = () => navigate(-1);
+    const {institutionId} = useParams();
+
+    const cancel = () => navigate(`/institution-detail/${institutionId}/invitations`);
+
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
     const [invitation, setInvitation] = useState({
@@ -45,7 +48,6 @@ const NewInvitation = ({user}) => {
     const [roleOptions, setRoleOptions] = useState([]);
     const [institution, setInstitution] = useState([]);
     const [guestEmails, setGuestEmails] = useState([]);
-    const {institutionId} = useParams();
 
     useEffect(() => {
         if (!isAllowed(AUTHORITIES.INVITER, user, institutionId)) {
