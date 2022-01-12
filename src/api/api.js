@@ -256,5 +256,5 @@ export function deleteScimFailure(id, institutionId) {
 }
 
 export function resendScimFailure(id, institutionId) {
-    return postPutJson(`/guests/api/scim/id/${id}/${institutionId}`,{}, "put");
+    return postPutJson(`/guests/api/scim/id/${id}/${institutionId}`,{}, "put", false);
 }

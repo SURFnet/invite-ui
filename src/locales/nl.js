@@ -19,7 +19,8 @@ I18n.translations.nl = {
         }
     },
     breadcrumbs: {
-        home: "Start"
+        home: "Start",
+        mineApplications: "Mijn applicaties"
     },
     institutions: {
         title: "Instellingen",
@@ -136,7 +137,8 @@ I18n.translations.nl = {
         confirmation: {
             delete: "Weet je zeker dat je deze SCIM fout wil verwijdern? Dit is definitief.",
             resend: "Weet je zeker dat je deze SCIM fout opnieuw wilt aanbieden?"
-        }
+        },
+        error: "Het verwerken van de SCIM fout ging fout en de SCIM fout is niet verwijderd. Root cause: {{msg}}"
     },
     confirmationDialog: {
         title: "Graag bevestigen",

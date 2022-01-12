@@ -24,6 +24,7 @@ import {isEmpty} from "./utils/forms";
 import Footer from "./components/Footer";
 import Landing from "./pages/Landing";
 import SCIMFailureDetail from "./pages/SCIMFailureDetail";
+import InstitutionGuest from "./pages/InstitutionGuest";
 
 addIcons();
 
@@ -96,6 +97,7 @@ const App = () => {
                         <Route path=":tab" element={<InstitutionDetail user={user}/>}/>
                         <Route path="" element={<InstitutionDetail user={user}/>}/>
                     </Route>
+                    <Route path="institution-guest" element={<InstitutionGuest user={user}/>}/>
                     <Route path="application/:institutionId/:applicationId" element={<ApplicationForm user={user}/>}/>
                     <Route path="application-detail/:institutionId/:applicationId">
                         <Route path=":tab" element={<ApplicationDetail user={user}/>}/>
@@ -105,7 +107,7 @@ const App = () => {
                     <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
                     <Route path="user-detail/:userId/:institutionId" element={<User/>}/>
                     <Route path="invitation-detail/:invitationId" element={<InvitationDetail/>}/>
-                    <Route path="scim-failure-detail/:institutionId/:failureId" element={<SCIMFailureDetail/>}/>
+                    <Route path="scim-failure-detail/:institutionId/:failureId" element={<SCIMFailureDetail user={user}/>}/>
 
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}

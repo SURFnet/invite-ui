@@ -1,0 +1,26 @@
+@import "../styles/vars";
+
+.institution-guest {
+
+  div.guest-applications {
+    margin-bottom: 25px;
+
+    p.attribute {
+      margin-bottom: 6px;
+    }
+
+    span.new-role {
+      color: $primary-green;
+    }
+
+    a {
+      margin-bottom: 2px;
+
+      &.new-role {
+        font-weight: bold;
+      }
+    }
+
+
+  }
+}

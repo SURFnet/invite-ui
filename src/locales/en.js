@@ -19,7 +19,8 @@ I18n.translations.en = {
         }
     },
     breadcrumbs: {
-        home: "Home"
+        home: "Home",
+        mineApplications: "Mine applications"
     },
     institutions: {
         title: "Institutions",
@@ -136,7 +137,8 @@ I18n.translations.en = {
         confirmation: {
             delete: "Are you sure you want to delete this SCIM failure? This can not be undone.",
             resend: "Are you sure you want to resend this SCIM failure?"
-        }
+        },
+        error: "The resending failed and the SCIM failure is not deleted. Root cause: {{msg}}"
     },
     confirmationDialog: {
         title: "Please confirm",

@@ -1,9 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {AUTHORITIES, isAllowed, isGuest} from "../utils/authority";
+import {AUTHORITIES, isAllowed} from "../utils/authority";
 import Tabs from "../components/Tabs";
 import I18n from "i18n-js";
-import "./InstitutionDetail.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Applications from "../entities/Applications";
 import UnitHeader from "../components/UnitHeader";
@@ -37,16 +36,6 @@ const InstitutionDetail = ({user}) => {
         const scimFailuresAllowed = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId);
         if (scimFailuresAllowed) {
             promises.push(countSCIMFailuresByInstitution(institutionId));
-        }
-        const invitationRolesJSON = sessionStorage.getItem("invitationRoles");
-        if (!isEmpty(invitationRolesJSON)) {
-            const invitationRoles = JSON.parse(invitationRolesJSON);
-            user.roles.forEach(role => {
-                role.newRole = (invitationRoles.institutionId === parseInt(institutionId, 10) &&
-                    invitationRoles.newRoles.find(app => app.applicationName === role.role.applicationName &&
-                        app.roleName === role.role.name));
-            })
-            sessionStorage.removeItem("invitationRoles");
         }
         Promise.all(promises).then(res => {
             setInstitution(res[0]);
@@ -119,22 +108,6 @@ const InstitutionDetail = ({user}) => {
         navigate(`/institution-detail/${institutionId}/${name}`, {replace: true});
     }
 
-    const renderApplications = () => {
-        return <>
-            <p className="attribute">{I18n.t("institutions.applications")}</p>
-            {user.roles.filter(role => role.role.institutionId === parseInt(institutionId, 10)).map((role, index) =>
-                <p key={index}>
-                    {role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
-                    <a href={role.role.applicationLandingPage}
-                       target="_blank"
-                       className={role.newRole ? "new-role" : ""}
-                       rel="noreferrer">
-                        {`${role.role.applicationName} (${role.role.name})`}
-                    </a>
-                </p>)}
-        </>;
-    }
-
     return (
         <div className="institution-detail">
             <BreadCrumb paths={[
@@ -154,7 +127,6 @@ const InstitutionDetail = ({user}) => {
                     <p>{institution.entityId}</p>
                     <p className="attribute">{I18n.t("institutions.homeInstitution")}</p>
                     <p>{institution.homeInstitution}</p>
-                    {isGuest(user, institutionId) && renderApplications()}
                 </div>
                 {isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) &&
                 <div className="actions">

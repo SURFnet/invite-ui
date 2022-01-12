@@ -7,7 +7,7 @@ import Institutions from "../entities/Institutions";
 import {BreadCrumb} from "../components/BreadCrumb";
 import Spinner from "../components/Spinner";
 import {allInstitutions, mineInstitutions} from "../api/api";
-import {isSuperAdmin} from "../utils/authority";
+import {isOnlyGuest, isSuperAdmin} from "../utils/authority";
 
 const Home = ({user}) => {
 
@@ -18,22 +18,26 @@ const Home = ({user}) => {
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
-        const promise = isSuperAdmin(user) ? allInstitutions() : mineInstitutions();
-        promise.then(res => {
-            if (res.length === 1 && !isSuperAdmin(user)) {
-                navigate(`/institution-detail/${res[0].id}`);
-            } else {
-                setTabs([
-                    <div key="institutions"
-                         name="institutions"
-                         label={I18n.t("home.tabs.institutions")}
-                         icon={<FontAwesomeIcon icon="university"/>}>
-                        <Institutions user={user} institutions={res}/>
-                    </div>
-                ]);
-            }
-            setLoading(false);
-        })
+        if (isOnlyGuest(user)) {
+            navigate("/institution-guest");
+        } else {
+            const promise = isSuperAdmin(user) ? allInstitutions() : mineInstitutions();
+            promise.then(res => {
+                if (res.length === 1 && !isSuperAdmin(user)) {
+                    navigate(`/institution-detail/${res[0].id}`);
+                } else {
+                    setTabs([
+                        <div key="institutions"
+                             name="institutions"
+                             label={I18n.t("home.tabs.institutions")}
+                             icon={<FontAwesomeIcon icon="university"/>}>
+                            <Institutions user={user} institutions={res}/>
+                        </div>
+                    ]);
+                }
+                setLoading(false);
+            })
+        }
     }, [user, navigate]);
 
 
