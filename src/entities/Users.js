@@ -6,7 +6,7 @@ import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
-import {AUTHORITIES, isAllowed, isSuperAdmin} from "../utils/authority";
+import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
 
 const Users = ({user, institutionId, application = null}) => {
 
@@ -38,14 +38,14 @@ const Users = ({user, institutionId, application = null}) => {
     }
 
     const isAllowedForUser = entity => {
-        return isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) &&
-            !isSuperAdmin(entity);
+        const authorities = entity.institutionMemberships.map(institutionMembership => institutionMembership.authority);
+        return isAllowed(AUTHORITIES.INVITER, user, institutionId) &&
+            authorities.every(authority => isAllowedForInviter(AUTHORITIES[authority], user, institutionId));
     }
 
     const rowLinkMapper = entity => {
-        const allowedForInstitutionAdmin = isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId) &&
-         !isSuperAdmin(entity);
-        return allowedForInstitutionAdmin ? e => openUser(e) : null;
+        const allowedFor = isAllowedForUser(entity);
+        return allowedFor ? e => openUser(e) : null;
     }
 
     const columns = [

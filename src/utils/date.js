@@ -14,3 +14,8 @@ export const isExpired = epoch => {
     const now = new Date().getTime() / 1000;
     return now > epoch;
 }
+
+export const invitationRoleExpiryDate = invitation => {
+    const roleWithEndDate = invitation.roles.find(role => role.endDate);
+    return roleWithEndDate ? new Date(roleWithEndDate.endDate * 1000) : null;
+}

@@ -15,6 +15,7 @@ import {BreadCrumb} from "../components/BreadCrumb";
 import CheckBox from "../components/CheckBox";
 import {setFlash} from "../flash/events";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import {invitationRoleExpiryDate} from "../utils/date";
 
 const InvitationDetail = () => {
 
@@ -86,7 +87,7 @@ const InvitationDetail = () => {
                       info={I18n.t("invitations.enforceEmailEquality")}
                       readOnly={true}/>
 
-            <DateField value={invitation.expiryDate}
+            <DateField value={new Date(invitation.expiryDate * 1000)}
                        name={I18n.t("invitations.expiryDate")}
                        disabled={true}/>
 
@@ -96,7 +97,7 @@ const InvitationDetail = () => {
                          isMulti={true}
                          disabled={true}/>
 
-            <DateField value={invitation.roleExpiryDate}
+            <DateField value={invitationRoleExpiryDate(invitation)}
                        name={I18n.t("invitations.expiryDateRole")}
                        disabled={true}/>
 

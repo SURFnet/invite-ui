@@ -39,7 +39,15 @@ const Invitation = ({user}) => {
             me()
                 .then(user => {
                     sessionStorage.setItem("user", JSON.stringify(user));
-                    navigate("/home", {replace: true});
+                    const newRoles = invitation.roles.map(role => ({
+                        applicationName: role.role.applicationName,
+                        roleName: role.role.name
+                    }));
+                    if (!isEmpty(newRoles)) {
+                        const invitationRoles = {institutionId: invitation.roles[0].role.institutionId, newRoles: newRoles}
+                        sessionStorage.setItem("invitationRoles", JSON.stringify(invitationRoles));
+                    }
+                    navigate(`/home`, {replace: true});
                 })
         }).catch(e => {
             if (e.response && e.response.status === 409) {

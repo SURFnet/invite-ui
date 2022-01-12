@@ -1,0 +1,11 @@
+@import "../styles/vars";
+
+.institution-detail {
+  span.new-role {
+    color: $primary-green;
+  }
+
+  a.new-role {
+    font-weight: bold;
+  }
+}

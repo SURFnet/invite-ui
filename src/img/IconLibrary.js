@@ -15,7 +15,8 @@ import {
     faTrash,
     faUniversity,
     faUser,
-    faUserCircle
+    faUserCircle,
+    faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons'
 
 export function addIcons() {
@@ -35,6 +36,7 @@ export function addIcons() {
         faCalendarAlt,
         faPlus,
         faCheck,
-        faUserCircle
+        faUserCircle,
+        faExclamationTriangle
     );
 }

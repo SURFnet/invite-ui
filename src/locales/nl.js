@@ -14,7 +14,8 @@ I18n.translations.nl = {
             roles: "Rollen",
             profile: "Profiel",
             users: "Gebruikers",
-            invitations: "Uitnodigingen"
+            invitations: "Uitnodigingen",
+            scimFailures: "SCIM"
         }
     },
     breadcrumbs: {
@@ -35,6 +36,8 @@ I18n.translations.nl = {
         searchPlaceHolder: "Zoek instellingen",
         new: "Nieuwe instelling",
         noEntities: "Geen instellingen gevonden...",
+        applications: "Applicaties",
+        newRole: "Nieuw - ",
         aup: {
             increment: "Nieuwe AUP",
             confirmation: "Weet je zeker dat je het versienummer van de overeenkomst wilt ophogen. Alle gebruikers moeten opnieuw de AUP bevestigen bij het inloggen.",
@@ -108,6 +111,33 @@ I18n.translations.nl = {
         defaultExpiryDaysPlaceholder: "bijv. 14 dagen",
         defaultExpiryDaysTooltip: "Een standaard geldigheidsduur van de rol (in dagen) bepaalt de einddatum van de uitnodiging voor deze rol, deze kan worden bewerkt bij het verzenden van de uitnodiging",
     },
+    scimFailures: {
+        title: "Alle SCIM fouten",
+        message: "Bericht",
+        httpMethod: "HTTP",
+        api: {
+            name: "API",
+            users: "Gebruikers",
+            groups: "Groepen"
+        },
+        createdAt: "Datum",
+        application: "Applicatie",
+        uri: "URI",
+        searchPlaceHolder: "Zoek fouten",
+        serviceProviderId: "Externe referentie ID",
+        noEntities: "Er zijn gelukkig geen SCIM fouten...",
+        details: "SCIM fout details",
+        path: "SCIM fouten",
+        failure: "Fout",
+        flash: {
+            deleted: "SCIM fout is verwijderd.",
+            resend: "SCIM fout is opnieuw aangeboden."
+        },
+        confirmation: {
+            delete: "Weet je zeker dat je deze SCIM fout wil verwijdern? Dit is definitief.",
+            resend: "Weet je zeker dat je deze SCIM fout opnieuw wilt aanbieden?"
+        }
+    },
     confirmationDialog: {
         title: "Graag bevestigen",
         confirm: "Bevestig",
@@ -168,7 +198,7 @@ I18n.translations.nl = {
         resend: "Opniew versturen",
         confirmation: {
             delete: "Weet je zeker dat je deze uitnodiging wil verwijdern? Dit is definitief.",
-            resend: "Weet je zeker dat je de uitnodiging wil verwijderen?"
+            resend: "Weet je zeker dat je de uitnodiging opnieuw wilt versturen?"
         }
     },
     profile: {

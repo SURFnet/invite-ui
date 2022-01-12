@@ -1,0 +1,34 @@
+@import "../styles/vars";
+
+div.scimFailures {
+  background-color: white;
+
+  table.scimFailures {
+
+    thead {
+      th {
+        &.message {
+          width: 10%;
+        }
+
+        &.httpMethod {
+          width: 10%;
+        }
+
+        &.uri {
+          width: 40%;
+        }
+
+        &.application {
+          width: 15%;
+        }
+
+        &.createdAt {
+          width: 25%;
+        }
+      }
+    }
+
+  }
+}
+

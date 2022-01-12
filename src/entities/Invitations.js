@@ -39,9 +39,10 @@ const Invitations = ({user, institutionId, application = null}) => {
     }
 
     const isAllowedForUser = entity => {
-        const allowed = isAllowed(AUTHORITIES.INVITER, user, institutionId) && isAllowed(AUTHORITIES[entity.intendedAuthority], user, institutionId)
-            && isAllowedForInviter(AUTHORITIES[entity.intendedAuthority], user, institutionId);
-        return allowed;
+        const authorityAllowed = isAllowed(AUTHORITIES.INVITER, user, institutionId);
+        const invitationAllowed = isAllowed(AUTHORITIES[entity.intendedAuthority], user, institutionId);
+        const inviterAllowed = isAllowedForInviter(AUTHORITIES[entity.intendedAuthority], user, institutionId);
+        return authorityAllowed && invitationAllowed && inviterAllowed;
     }
 
     const rowLinkMapper = entity => {

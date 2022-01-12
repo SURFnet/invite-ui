@@ -14,7 +14,8 @@ I18n.translations.en = {
             roles: "Roles",
             profile: "Profile",
             users: "Users",
-            invitations: "Invitations"
+            invitations: "Invitations",
+            scimFailures: "SCIM"
         }
     },
     breadcrumbs: {
@@ -35,6 +36,8 @@ I18n.translations.en = {
         searchPlaceHolder: "Search institutions",
         new: "New institution",
         noEntities: "There are no institutions...",
+        applications: "Applications",
+        newRole: "New - ",
         aup: {
             increment: "new AUP",
             confirmation: "Are you sure you want to increment the version of the AUP? All users will be prompted to confirm acceptance of the new AUP when they login.",
@@ -107,6 +110,33 @@ I18n.translations.en = {
         defaultExpiryDays: "Default expiry days",
         defaultExpiryDaysPlaceholder: "e.g. 14 days",
         defaultExpiryDaysTooltip: "A default role validity time (in days) determines the date for expiry date role, this can be edited when sending the invite",
+    },
+    scimFailures: {
+        title: "All SCIM failures",
+        message: "Message",
+        httpMethod: "HTTP",
+        api: {
+            name: "API",
+            users: "Users",
+            groups: "Groups"
+        },
+        createdAt: "Date",
+        application: "Application",
+        uri: "URI",
+        searchPlaceHolder: "Search failures",
+        serviceProviderId: "External reference ID",
+        noEntities: "Fortunately there are no SCIM failures...",
+        details: "SCIM failure details",
+        path: "SCIM failures",
+        failure: "Failure",
+        flash: {
+            deleted: "SCIM failure has been deleted.",
+            resend: "SCIM failure has been resend."
+        },
+        confirmation: {
+            delete: "Are you sure you want to delete this SCIM failure? This can not be undone.",
+            resend: "Are you sure you want to resend this SCIM failure?"
+        }
     },
     confirmationDialog: {
         title: "Please confirm",

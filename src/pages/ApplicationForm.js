@@ -28,7 +28,7 @@ const ApplicationForm = ({user}) => {
 
     const cancel = () => navigate(-1);
 
-    const required = ["name", "entityId"];
+    const required = ["name", "entityId", "landingPage"];
     const [application, setApplication] = useState({});
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
@@ -119,7 +119,7 @@ const ApplicationForm = ({user}) => {
             deleteApplication(application).then(() => {
                 navigate("/home");
                 setFlash(I18n.t("forms.flash.deleted", {
-                    name: application.displayName,
+                    name: application.name,
                     object: I18n.t("applications.object").toLowerCase()
                 }));
             })
@@ -199,7 +199,6 @@ const ApplicationForm = ({user}) => {
             <InputField value={application.displayName}
                         onChange={e => setState("displayName", e.target.value)}
                         placeholder={I18n.t("applications.displayNamePlaceholder")}
-                        error={!initial && isEmpty(application.displayName)}
                         name={I18n.t("applications.displayName")}/>
 
             <InputField value={application.entityId}
@@ -230,13 +229,18 @@ const ApplicationForm = ({user}) => {
                         }}
                         placeholder={I18n.t("applications.landingPagePlaceholder")}
                         onBlur={validateLandingPage}
-                        error={invalid.landingPage}
+                        error={invalid.landingPage || (!initial && isEmpty(application.landingPage))}
                         name={I18n.t("applications.landingPage")}/>
             {invalid.landingPage &&
             <ErrorIndicator msg={I18n.t("forms.invalid", {
                 attribute: I18n.t("applications.landingPage").toLowerCase(),
                 value: application.landingPage
             })}/>}
+            {(!initial && isEmpty(application.landingPage)) &&
+            <ErrorIndicator msg={I18n.t("forms.required", {
+                attribute: I18n.t("applications.landingPage")
+            })}/>}
+
 
             <InputField value={application.provisioningHookUrl}
                         onChange={e => {

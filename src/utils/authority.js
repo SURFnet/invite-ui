@@ -11,6 +11,12 @@ export const isSuperAdmin = user => {
     return user.institutionMemberships.some(membership => membership.authority === AUTHORITIES.SUPER_ADMIN.name);
 }
 
+export const isGuest = (user, institutionId) => {
+    const institutionIdentifier = parseInt(institutionId, 10);
+    const membership = user.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
+    return membership && membership.authority === AUTHORITIES.GUEST.name;
+}
+
 export const isAllowed = (requiredAuthority, user, institutionId) => {
     if (isSuperAdmin(user)) {
         return true;

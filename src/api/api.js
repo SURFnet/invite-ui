@@ -15,10 +15,7 @@ function validateResponse(showErrorDialog) {
                     sessionStorage.setItem("accessToken", json.access_token);
                     sessionStorage.setItem("refreshToken", json.refresh_token);
                     window.location.reload(true);
-                }).catch(() => {
-                   sessionStorage.clear();
-                   window.location.reload(true);
-                });
+                })
                 return;
             }
             if (res.type === "opaqueredirect") {
@@ -239,4 +236,25 @@ export function allInvitationsByApplication(applicationId) {
 export function acceptAups(membershipsWithoutAup) {
     const institutionIdentifiers = membershipsWithoutAup.map(membership => membership.institution.id)
     return postPutJson("/guests/api/aups", institutionIdentifiers, "put");
+}
+
+//SCIM
+export function allSCIMFailuresByInstitution(institutionId) {
+    return fetchJson(`/guests/api/scim/institution/${institutionId}`);
+}
+
+export function countSCIMFailuresByInstitution(institutionId) {
+    return fetchJson(`/guests/api/scim/institution/${institutionId}/count`);
+}
+
+export function scimFailureById(id, institutionId) {
+    return fetchJson(`/guests/api/scim/id/${id}/${institutionId}`);
+}
+
+export function deleteScimFailure(id, institutionId) {
+    return fetchDelete(`/guests/api/scim/id/${id}/${institutionId}`);
+}
+
+export function resendScimFailure(id, institutionId) {
+    return postPutJson(`/guests/api/scim/id/${id}/${institutionId}`,{}, "put");
 }

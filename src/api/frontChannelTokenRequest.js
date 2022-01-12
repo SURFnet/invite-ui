@@ -8,7 +8,14 @@ const fetchTokens = (body, url) => {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         }
     };
-    return fetch(url, fetchOptions).then(res => res.json());
+    return fetch(url, fetchOptions).then(res => {
+        if (!res.ok) {
+            sessionStorage.clear();
+            window.location.reload(true);
+        } else {
+            return res.json();
+        }
+    });
 }
 
 export function getTokensFrontChannel(options) {

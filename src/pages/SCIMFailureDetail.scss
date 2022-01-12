@@ -1,0 +1,13 @@
+@import "../styles/vars";
+@import "../styles/forms";
+
+.scim-failure-detail-form {
+  @include form;
+
+  div.input-field {
+    textarea.json {
+      font-family: "Courier New", Courier, monospace!important;
+    }
+  }
+
+}
