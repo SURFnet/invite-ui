@@ -155,6 +155,7 @@ I18n.translations.nl = {
         delete: "Verwijder",
         submit: "Verstuur",
         save: "Opslaan",
+        update: "Bijwerken",
         edit: "Bewerk",
         createdAt: "Aangemaakt",
         new: "Nieuwe {{object}}",
@@ -193,7 +194,8 @@ I18n.translations.nl = {
         flash: {
             send: "De uitnodiging is verzonden",
             deleted: "De uitnodiging is verwijderd.",
-            resend: "De uitnodiging is opnieuw verzonden."
+            resend: "De uitnodiging is opnieuw verzonden.",
+            updated: "De uitnodiging is bijgewerkt."
         },
         noEntities: "Geen open Uitnodigingen...",
         searchPlaceHolder: "Zoek uitnodigingen",

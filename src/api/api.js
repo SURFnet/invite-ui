@@ -220,6 +220,10 @@ export function resendInvitation(invitation) {
     return postPutJson("/guests/api/invitations/resend", invitation, "put");
 }
 
+export function updateInvitation(invitation) {
+    return postPutJson("/guests/api/invitations/update-expiry-date", invitation, "put");
+}
+
 export function deleteInvitation(invitationId) {
     return fetchDelete(`/guests/api/invitations/${invitationId}`);
 }

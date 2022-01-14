@@ -94,7 +94,7 @@ const RoleForm = ({user}) => {
             });
             setConfirmationOpen(true);
         } else {
-            deleteRole(roleId).then(() => {
+            deleteRole(role).then(() => {
                 cancel();
                 setFlash(I18n.t("forms.flash.deleted", {
                     name: role.name,

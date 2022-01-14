@@ -155,6 +155,7 @@ I18n.translations.en = {
         delete: "Delete",
         submit: "Submit",
         save: "Save",
+        update: "Update",
         edit: "Edit",
         createdAt: "Created",
         new: "New {{object}}",
@@ -193,7 +194,8 @@ I18n.translations.en = {
         flash: {
             send: "Invitation was send",
             deleted: "Invitation has been deleted.",
-            resend: "Invitation has been resend."
+            resend: "Invitation has been resend.",
+            updated: "Invitation has been updated."
         },
         noEntities: "No outstanding invitations...",
         searchPlaceHolder: "Search invitations",

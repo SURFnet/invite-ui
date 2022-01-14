@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import "react-datepicker/dist/react-datepicker.css";
-import {deleteInvitation, invitationById, resendInvitation} from "../api/api";
+import {deleteInvitation, invitationById, resendInvitation, updateInvitation} from "../api/api";
 import I18n from "i18n-js";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
@@ -77,6 +77,16 @@ const InvitationDetail = () => {
         }
     };
 
+    const doUpdate = () => {
+        updateInvitation({
+            id: invitation.id,
+            expiryDate: invitation.expiryDate
+        }).then(() => {
+            setFlash(I18n.t("invitations.flash.updated"));
+            navigate(`/institution-detail/${invitation.institution.id}/invitations`);
+        })
+    };
+
     const invitationForm = () => (
         <>
             <InputField value={invitation.email}
@@ -117,6 +127,7 @@ const InvitationDetail = () => {
             <section className="actions">
                 <Button warningButton={true} txt={I18n.t("forms.delete")}
                         onClick={() => doDelete(true)}/>
+                <Button txt={I18n.t("forms.save")} onClick={() => doUpdate()}/>
                 <Button txt={I18n.t("invitations.resend")} onClick={() => doResend(true)}/>
             </section>
 
