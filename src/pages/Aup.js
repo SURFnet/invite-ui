@@ -33,7 +33,7 @@ const Aup = ({user}) => {
                     sessionStorage.setItem("user", JSON.stringify(user));
                     const path = sessionStorage.getItem("path") || "/";
                     navigate(path, {replace: true});
-                })
+                });
         });
     }
 

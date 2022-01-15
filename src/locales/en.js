@@ -242,10 +242,12 @@ I18n.translations.en = {
     },
     user: {
         confirmation: {
-            delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account."
+            delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
+            deleteUserRole: "Are you sure you want to delete the role {{userRole}} of {{name}}? This can not be undone."
         },
         flash: {
-            deleted: "User {{name}} has been deleted."
+            deleted: "User {{name}} has been deleted.",
+            deleteUserRole: "Role {{userRole}} has been deleted."
         }
     },
     footer: {

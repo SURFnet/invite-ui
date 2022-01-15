@@ -242,10 +242,12 @@ I18n.translations.nl = {
     },
     user: {
         confirmation: {
-            delete: "Weet je zeker dat je {{name}} wil verwijseren? Dit kan niet ongedaan gemaakt worden, en {{name}} moet opnieuw worden uitgenodig."
+            delete: "Weet je zeker dat je {{name}} wil verwijderen? Dit kan niet ongedaan gemaakt worden, en {{name}} moet opnieuw worden uitgenodig.",
+            deleteUserRole: "Weet je zeker dat je de rol {{userRole}} van {{name}} wilt verwijseren? Dit kan niet ongedaan gemaakt worden."
         },
         flash: {
-            deleted: "Gebruiker {{name}} is verwijderd."
+            deleted: "Gebruiker {{name}} is verwijderd.",
+            deleteUserRole: "Rol {{userRole}} is verwijderd."
         }
     },
     footer: {

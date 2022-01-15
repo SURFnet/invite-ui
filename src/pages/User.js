@@ -10,7 +10,7 @@ import {setFlash} from "../flash/events";
 import Spinner from "../components/Spinner";
 import UserAttributes from "../components/UserAttributes";
 
-const User = () => {
+const User = ({user}) => {
 
     const {userId, institutionId} = useParams();
 
@@ -80,7 +80,7 @@ const User = () => {
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
             <div className={"profile"}>
-                <UserAttributes user={otherUser}/>
+                <UserAttributes user={otherUser} isMe={otherUser.id === user.id}/>
                 <section className="actions">
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
                             onClick={() => doDelete(true)}/>

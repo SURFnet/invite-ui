@@ -1,9 +1,18 @@
 import "./Header.scss";
 import I18n from "i18n-js";
-import React from "react";
+import React, {useState} from "react";
 import {formatDate} from "../utils/date";
+import ConfirmationDialog from "./ConfirmationDialog";
+import {deleteUserRole, me} from "../api/api";
+import Button from "./Button";
+import {useNavigate} from "react-router-dom";
 
-const UserAttributes = ({user}) => {
+const UserAttributes = ({user, isMe}) => {
+
+    const navigate = useNavigate();
+
+    const [confirmation, setConfirmation] = useState({});
+    const [confirmationOpen, setConfirmationOpen] = useState(false);
 
     const getRoles = institutionId => {
         return user.roles.filter(role => role.role.institutionId === institutionId);
@@ -14,8 +23,41 @@ const UserAttributes = ({user}) => {
         return acc;
     }, {})
 
+    const doDeleteUserRole = (showConfirmation, userRole) => {
+        if (showConfirmation) {
+            setConfirmation({
+                cancel: () => setConfirmationOpen(false),
+                action: () => doDeleteUserRole(false, userRole),
+                warning: true,
+                question: I18n.t("user.confirmation.deleteUserRole", {userRole: userRole.role.name, name: user.name})
+            });
+            setConfirmationOpen(true);
+        } else {
+            deleteUserRole(user, userRole).then(() => {
+                if (isMe) {
+                    me()
+                        .then(res => {
+                            sessionStorage.setItem("user", JSON.stringify(res));
+                            const path = encodeURIComponent(window.location.pathname);
+                            navigate(`/refresh-route/${path}`, {replace: true});
+                        });
+                } else {
+                    const path = encodeURIComponent(window.location.pathname);
+                    navigate(`/refresh-route/${path}`, {replace: true});
+                }
+                setConfirmationOpen(false);
+            })
+        }
+    };
+
     return (
         <>
+            {confirmationOpen && <ConfirmationDialog isOpen={confirmationOpen}
+                                                     cancel={confirmation.cancel}
+                                                     confirm={confirmation.action}
+                                                     isWarning={confirmation.warning}
+                                                     question={confirmation.question}/>}
+
             <div className={"attributes"}>
                 <div>
                     <p className="attribute">{I18n.t("users.name")}</p>
@@ -56,10 +98,14 @@ const UserAttributes = ({user}) => {
                             <p className="attribute">{I18n.t("profile.roles")}</p>
                             {rolesGroupedByInstitution[membership.institution.id].map(userRole =>
                                 <div className={"user-role"} key={userRole.id}>
-                                    <p>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>
-                                    {userRole.endDate &&
-                                    <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
-                                    {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}
+                                    <div className={"user-role-details"}>
+                                        <p>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>
+                                        {userRole.endDate &&
+                                        <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
+                                        {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}
+                                    </div>
+                                    <Button warningButton={true} txt={I18n.t("forms.delete")}
+                                            onClick={() => doDeleteUserRole(true, userRole)}/>
                                 </div>
                             )}
                             {rolesGroupedByInstitution[membership.institution.id].length === 0 && <span>-</span>}

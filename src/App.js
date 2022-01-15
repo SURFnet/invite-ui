@@ -25,6 +25,7 @@ import Footer from "./components/Footer";
 import Landing from "./pages/Landing";
 import SCIMFailureDetail from "./pages/SCIMFailureDetail";
 import InstitutionGuest from "./pages/InstitutionGuest";
+import RefreshRoute from "./pages/RefreshRoute";
 
 addIcons();
 
@@ -77,6 +78,7 @@ const App = () => {
     if (loading) {
         return null; // render null when app is not ready yet
     }
+
     const user = JSON.parse(sessionStorage.getItem("user"));
     return (
         <div className="invites">
@@ -105,9 +107,10 @@ const App = () => {
                     </Route>
                     <Route path="role/:institutionId/:applicationId/:roleId" element={<RoleForm user={user}/>}/>
                     <Route path="new-invitation/:institutionId" element={<NewInvitation user={user}/>}/>
-                    <Route path="user-detail/:userId/:institutionId" element={<User/>}/>
+                    <Route path="user-detail/:userId/:institutionId" element={<User user={user}/>}/>
                     <Route path="invitation-detail/:invitationId" element={<InvitationDetail/>}/>
                     <Route path="scim-failure-detail/:institutionId/:failureId" element={<SCIMFailureDetail user={user}/>}/>
+                    <Route path="refresh-route/:path" element={<RefreshRoute/>}/>
 
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}

@@ -30,7 +30,17 @@
     }
 
     div.user-role {
+      display: flex;
       margin-bottom: 5px;
+      align-content: center;
+      align-items: center;
+
+      a.button.delete {
+        margin-left: auto;
+        height: 30px;
+        font-size: 16px;
+        padding: 6px 10px;
+      }
     }
 
     h2.section-divider {

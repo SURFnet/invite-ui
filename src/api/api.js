@@ -99,6 +99,10 @@ export function deleteOther(otherUser) {
     return fetchDelete(`/guests/api/users/${otherUser.id}`);
 }
 
+export function deleteUserRole(user, userRole) {
+    return fetchDelete(`/guests/api/users/${user.id}/${userRole.id}`);
+}
+
 //Institutions
 export function allInstitutions() {
     return fetchJson("/guests/api/institutions");
