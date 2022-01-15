@@ -14,7 +14,7 @@ const Home = ({user}) => {
     const navigate = useNavigate();
     const {tab = "institutions"} = useParams();
     const [currentTab, setCurrentTab] = useState(tab);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
