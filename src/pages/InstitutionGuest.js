@@ -35,9 +35,11 @@ const InstitutionGuest = ({user}) => {
     }
 
     const renderApplications = institution => {
+        const userRoles = user.roles.filter(role => role.role.institutionId === institution.id);
         return <div className={"guest-applications"}>
-            <p className="attribute">{I18n.t("institutions.applications")}</p>
-            {user.roles.filter(role => role.role.institutionId === institution.id).map((role, index) =>
+            {userRoles.length === 0 && <p className="attribute">{I18n.t("institutions.noApplications")}</p>}
+            {userRoles.length > 0 && <p className="attribute">{I18n.t("institutions.applications")}</p>}
+            {userRoles.map((role, index) =>
                 <div key={index}>
                     <p>{role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
                     <a href={role.role.applicationLandingPage}

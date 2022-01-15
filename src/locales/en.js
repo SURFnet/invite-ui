@@ -38,6 +38,7 @@ I18n.translations.en = {
         new: "New institution",
         noEntities: "There are no institutions...",
         applications: "Applications",
+        noApplications: "No applications",
         newRole: "New - ",
         endDate: "Ends on ",
         aup: {

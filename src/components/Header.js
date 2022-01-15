@@ -43,6 +43,11 @@ const Header = ({user}) => {
             </a>
             <h1>{I18n.t("header.title")}</h1>
             <div className="logout">
+                {user &&
+                <a href="/institution-guest" className="institution-guest-link" onClick={goto("/institution-guest")}>
+                    <FontAwesomeIcon icon="ellipsis-v"/>
+                    <FontAwesomeIcon icon="ellipsis-v"/>
+                </a>}
                 {user && <a href="/profile" className="profile-link" onClick={goto("/profile")}>
                     <FontAwesomeIcon icon="user-circle"/>
                 </a>}

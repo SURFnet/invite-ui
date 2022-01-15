@@ -38,6 +38,7 @@ I18n.translations.nl = {
         new: "Nieuwe instelling",
         noEntities: "Geen instellingen gevonden...",
         applications: "Applicaties",
+        noApplications: "Geen applicaties",
         newRole: "Nieuw - ",
         endDate: "Ends on ",
         aup: {
