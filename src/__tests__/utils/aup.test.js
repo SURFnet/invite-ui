@@ -2,7 +2,7 @@ import {institutionMembershipsWithNoAup} from "../../utils/aup";
 
 const userTemplate = {
     aups: [{
-        institutionId: 1,
+        institution: {id: 1},
         version: 1
     }
     ],
