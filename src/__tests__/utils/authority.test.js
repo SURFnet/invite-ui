@@ -179,7 +179,9 @@ test("Delete user role allowed", () => {
     };
     const userRole = {
         role: {
-            institutionId: 1
+            application: {
+                institution: {id: 1}
+            }
         }
     }
     const val = deleteUserRoleAllowed(authenticatedUser, subject, userRole);
@@ -207,7 +209,9 @@ test("Delete user role not allowed", () => {
     };
     const userRole = {
         role: {
-            institutionId: 1
+            application: {
+                institution: {id: 1}
+            }
         }
     }
     const val = deleteUserRoleAllowed(authenticatedUser, subject, userRole);
@@ -235,7 +239,9 @@ test("Delete user role allowed for own user role", () => {
     };
     const userRole = {
         role: {
-            institutionId: 1
+            application: {
+                institution: {id: 1}
+            }
         }
     }
     const val = deleteUserRoleAllowed(authenticatedUser, subject, userRole);
