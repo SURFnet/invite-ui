@@ -19,10 +19,10 @@ const InstitutionGuest = ({user}) => {
             const invitationRolesJSON = sessionStorage.getItem("invitationRoles");
             if (!isEmpty(invitationRolesJSON)) {
                 const invitationRoles = JSON.parse(invitationRolesJSON);
-                user.roles.forEach(role => {
-                    role.newRole = (res.find(institution => invitationRoles.institutionId === institution.id) &&
-                        invitationRoles.newRoles.find(app => app.applicationName === role.role.applicationName &&
-                            app.roleName === role.role.name));
+                user.userRole.forEach(userRole => {
+                    userRole.newRole = (res.find(institution => invitationRoles.institutionId === institution.id) &&
+                        invitationRoles.newRoles.find(app => app.applicationName === userRole.role.applicationName &&
+                            app.roleName === userRole.role.name));
                 })
                 sessionStorage.removeItem("invitationRoles");
             }
@@ -35,22 +35,22 @@ const InstitutionGuest = ({user}) => {
     }
 
     const renderApplications = institution => {
-        const userRoles = user.roles.filter(role => role.role.institutionId === institution.id);
+        const userRoles = user.userRoles.filter(userRole => userRole.role.institutionId === institution.id);
         return <div className={"guest-applications"}>
             {userRoles.length === 0 && <p className="attribute">{I18n.t("institutions.noApplications")}</p>}
             {userRoles.length > 0 && <p className="attribute">{I18n.t("institutions.applications")}</p>}
-            {userRoles.map((role, index) =>
+            {userRoles.map((userRole, index) =>
                 <div key={index}>
-                    <p>{role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
-                        <a href={role.role.applicationLandingPage}
+                    <p>{userRole.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
+                        <a href={userRole.role.applicationLandingPage}
                            target="_blank"
-                           className={role.newRole ? "new-role" : ""}
+                           className={userRole.newRole ? "new-role" : ""}
                            rel="noreferrer">
-                            {`${role.role.applicationName} (${role.role.name})`}
+                            {`${userRole.role.applicationName} (${userRole.role.name})`}
                         </a>
                     </p>
-                    {role.endDate ?
-                        <em className="end-date">{I18n.t("institutions.endDate")}{formatDate(role.endDate)}</em> :
+                    {userRole.endDate ?
+                        <em className="end-date">{I18n.t("institutions.endDate")}{formatDate(userRole.endDate)}</em> :
                         <em className="end-date">{I18n.t("profile.noEndDate")}</em>}
                 </div>)}
         </div>;

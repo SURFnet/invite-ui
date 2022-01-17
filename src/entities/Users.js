@@ -39,9 +39,9 @@ const Users = ({user, institutionId, application = null}) => {
 
     const getRoles = entity => {
         return <ul className={meClassName(entity)}>
-            {entity.roles.map((role, i) =>
+            {entity.userRoles.map((userRole, i) =>
                 <li key={i}>
-                    {`${role.role.name} (${role.role.applicationName}) ${role.endDate ? I18n.t("users.expires", {date: formatDateShort(role.endDate)}) : ""}`}
+                    {`${userRole.role.name} (${userRole.role.applicationName}) ${userRole.endDate ? I18n.t("users.expires", {date: formatDateShort(userRole.endDate)}) : ""}`}
                 </li>)}
         </ul>
     }

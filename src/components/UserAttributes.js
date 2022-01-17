@@ -17,7 +17,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
     const [confirmationOpen, setConfirmationOpen] = useState(false);
 
     const getRoles = institutionId => {
-        return user.roles.filter(role => role.role.institutionId === institutionId);
+        return user.userRoles.filter(role => role.role.institutionId === institutionId);
     }
 
     const rolesGroupedByInstitution = user.institutionMemberships.reduce((acc, membership) => {
@@ -59,7 +59,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
         } else {
             deleteUserRole(user, userRole).then(() => {
                 setFlash(I18n.t("user.flash.deleteUserRole", {name: userRole.role.name}));
-                const navigateTo = (user.roles.length === 1 && user.institutionMemberships[0].authority === AUTHORITIES.GUEST.name) ?
+                const navigateTo = (user.userRoles.length === 1 && user.institutionMemberships[0].authority === AUTHORITIES.GUEST.name) ?
                     `/institution-detail/${user.institutionMemberships[0].institution.id}/users` : null;
                 refreshUser(navigateTo);
             })
