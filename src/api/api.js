@@ -67,96 +67,96 @@ function fetchDelete(path, showErrorDialog = true) {
 
 //Base
 export function oauth() {
-    return postPutJson("/guests/api/public/authorize", {}, "POST");
+    return postPutJson("/api/v1/public/authorize", {}, "POST");
 }
 
 //Users
 export function me() {
-    return fetchJson("/guests/api/users/me", {}, {}, false);
+    return fetchJson("/api/v1/users/me", {}, {}, false);
 }
 
 export function other(userId) {
-    return fetchJson(`/guests/api/users/${userId}`, {}, {}, false);
+    return fetchJson(`/api/v1/users/${userId}`, {}, {}, false);
 }
 
 export function allUsersByInstitution(institutionId) {
-    return fetchJson(`/guests/api/users/institution/${institutionId}`);
+    return fetchJson(`/api/v1/users/institution/${institutionId}`);
 }
 
 export function allGuestEmailsByInstitution(institutionId) {
-    return fetchJson(`/guests/api/users/emails/${institutionId}`);
+    return fetchJson(`/api/v1/users/emails/${institutionId}`);
 }
 
 export function allUsersByApplication(applicationId) {
-    return fetchJson(`/guests/api/users/application/${applicationId}`);
+    return fetchJson(`/api/v1/users/application/${applicationId}`);
 }
 
 export function deleteMe() {
-    return fetchDelete(`/guests/api/users`);
+    return fetchDelete(`/api/v1/users`);
 }
 
 export function deleteOther(otherUser) {
-    return fetchDelete(`/guests/api/users/${otherUser.id}`);
+    return fetchDelete(`/api/v1/users/${otherUser.id}`);
 }
 
 export function deleteUserRole(user, userRole) {
-    return fetchDelete(`/guests/api/users/role/${user.id}/${userRole.id}`);
+    return fetchDelete(`/api/v1/users/role/${user.id}/${userRole.id}`);
 }
 
 export function deleteInstitutionMembership(user, membership) {
-    return fetchDelete(`/guests/api/users/membership/${user.id}/${membership.id}`);
+    return fetchDelete(`/api/v1/users/membership/${user.id}/${membership.id}`);
 }
 
 //Institutions
 export function allInstitutions() {
-    return fetchJson("/guests/api/institutions");
+    return fetchJson("/api/v1/institutions");
 }
 
 export function mineInstitutions() {
-    return fetchJson("/guests/api/institutions/mine");
+    return fetchJson("/api/v1/institutions/mine");
 }
 
 export function institutionById(id) {
-    return fetchJson(`/guests/api/institutions/${id}`);
+    return fetchJson(`/api/v1/institutions/${id}`);
 }
 
 export function institutionEntityIdExists(entityId, isExisting) {
-    return postPutJson("/guests/api/institutions/entity-id-exists", {
+    return postPutJson("/api/v1/institutions/entity-id-exists", {
         existingObject: isExisting,
         uniqueAttribute: entityId
     }, "post");
 }
 
 export function institutionSchacHomeExists(schacHome, isExisting) {
-    return postPutJson("/guests/api/institutions/schac-home-exists", {
+    return postPutJson("/api/v1/institutions/schac-home-exists", {
         existingObject: isExisting,
         uniqueAttribute: schacHome
     }, "post");
 }
 
 export function incrementAup(institution) {
-    return postPutJson(`/guests/api/institutions/increment-aup/${institution.id}`, {}, "put");
+    return postPutJson(`/api/v1/institutions/increment-aup/${institution.id}`, {}, "put");
 }
 
 export function saveInstitution(institution) {
-    return postPutJson("/guests/api/institutions", institution, isEmpty(institution.id) ? "post" : "put");
+    return postPutJson("/api/v1/institutions", institution, isEmpty(institution.id) ? "post" : "put");
 }
 
 export function deleteInstitution(institution) {
-    return fetchDelete(`/guests/api/institutions/${institution.id}`);
+    return fetchDelete(`/api/v1/institutions/${institution.id}`);
 }
 
 //Applications
 export function applicationsByInstitution(institutionId) {
-    return fetchJson(`/guests/api/applications/institution/${institutionId}`);
+    return fetchJson(`/api/v1/applications/institution/${institutionId}`);
 }
 
 export function applicationById(id) {
-    return fetchJson(`/guests/api/applications/${id}`);
+    return fetchJson(`/api/v1/applications/${id}`);
 }
 
 export function applicationEntityIdExists(entityId, isExisting, institutionId) {
-    return postPutJson("/guests/api/applications/entity-id-exists", {
+    return postPutJson("/api/v1/applications/entity-id-exists", {
         existingObject: isExisting,
         uniqueAttribute: entityId,
         institutionId: institutionId,
@@ -164,30 +164,30 @@ export function applicationEntityIdExists(entityId, isExisting, institutionId) {
 }
 
 export function saveApplication(application) {
-    return postPutJson("/guests/api/applications", application, "post");
+    return postPutJson("/api/v1/applications", application, "post");
 }
 
 
 export function deleteApplication(application) {
-    return fetchDelete(`/guests/api/applications/${application.id}`);
+    return fetchDelete(`/api/v1/applications/${application.id}`);
 }
 
 
 //Roles
 export function allRolesByInstitution(institutionId) {
-    return fetchJson(`/guests/api/roles/institution/${institutionId}`);
+    return fetchJson(`/api/v1/roles/institution/${institutionId}`);
 }
 
 export function allRolesByApplication(applicationId) {
-    return fetchJson(`/guests/api/roles/application/${applicationId}`);
+    return fetchJson(`/api/v1/roles/application/${applicationId}`);
 }
 
 export function roleById(roleId) {
-    return fetchJson(`/guests/api/roles/${roleId}`);
+    return fetchJson(`/api/v1/roles/${roleId}`);
 }
 
 export function roleNameExists(name, isExisting, applicationId) {
-    return postPutJson("/guests/api/roles/name-exists", {
+    return postPutJson("/api/v1/roles/name-exists", {
         existingObject: isExisting,
         uniqueAttribute: name,
         applicationId: applicationId
@@ -195,78 +195,78 @@ export function roleNameExists(name, isExisting, applicationId) {
 }
 
 export function saveRole(role) {
-    return postPutJson("/guests/api/roles", role, "post");
+    return postPutJson("/api/v1/roles", role, "post");
 }
 
 export function deleteRole(role) {
-    return fetchDelete(`/guests/api/roles/${role.id}`);
+    return fetchDelete(`/api/v1/roles/${role.id}`);
 }
 
 //Validations
 export function validate(type, value) {
-    return postPutJson("/guests/api/validations/validate", {type, value}, "post");
+    return postPutJson("/api/v1/validations/validate", {type, value}, "post");
 }
 
 //Invitations
 export function invitationByHash(hash) {
-    return fetchJson(`/guests/api/invitations/${hash}`, {}, {}, false);
+    return fetchJson(`/api/v1/invitations/${hash}`, {}, {}, false);
 }
 
 export function invitationById(invitationId) {
-    return fetchJson(`/guests/api/invitations/id/${invitationId}`, {}, {}, false);
+    return fetchJson(`/api/v1/invitations/id/${invitationId}`, {}, {}, false);
 }
 
 export function createInvitation(invitationRequest) {
-    return postPutJson("/guests/api/invitations", invitationRequest, "put");
+    return postPutJson("/api/v1/invitations", invitationRequest, "put");
 }
 
 export function acceptInvitation(invitation) {
-    return postPutJson("/guests/api/invitations", invitation, "post", false);
+    return postPutJson("/api/v1/invitations", invitation, "post", false);
 }
 
 export function resendInvitation(invitation) {
-    return postPutJson("/guests/api/invitations/resend", invitation, "put");
+    return postPutJson("/api/v1/invitations/resend", invitation, "put");
 }
 
 export function updateInvitation(invitation) {
-    return postPutJson("/guests/api/invitations/update-expiry-date", invitation, "put");
+    return postPutJson("/api/v1/invitations/update-expiry-date", invitation, "put");
 }
 
 export function deleteInvitation(invitationId) {
-    return fetchDelete(`/guests/api/invitations/${invitationId}`);
+    return fetchDelete(`/api/v1/invitations/${invitationId}`);
 }
 
 export function allInvitationsByInstitution(institutionId) {
-    return fetchJson(`/guests/api/invitations/institution/${institutionId}`);
+    return fetchJson(`/api/v1/invitations/institution/${institutionId}`);
 }
 
 export function allInvitationsByApplication(applicationId) {
-    return fetchJson(`/guests/api/invitations/application/${applicationId}`);
+    return fetchJson(`/api/v1/invitations/application/${applicationId}`);
 }
 
 //Aup
 export function acceptAups(membershipsWithoutAup) {
     const institutionIdentifiers = membershipsWithoutAup.map(membership => membership.institution.id)
-    return postPutJson("/guests/api/aups", institutionIdentifiers, "put");
+    return postPutJson("/api/v1/aups", institutionIdentifiers, "put");
 }
 
 //SCIM
 export function allSCIMFailuresByInstitution(institutionId) {
-    return fetchJson(`/guests/api/scim/institution/${institutionId}`);
+    return fetchJson(`/api/v1/scim/institution/${institutionId}`);
 }
 
 export function countSCIMFailuresByInstitution(institutionId) {
-    return fetchJson(`/guests/api/scim/institution/${institutionId}/count`);
+    return fetchJson(`/api/v1/scim/institution/${institutionId}/count`);
 }
 
 export function scimFailureById(id, institutionId) {
-    return fetchJson(`/guests/api/scim/id/${id}/${institutionId}`);
+    return fetchJson(`/api/v1/scim/id/${id}/${institutionId}`);
 }
 
 export function deleteScimFailure(id, institutionId) {
-    return fetchDelete(`/guests/api/scim/id/${id}/${institutionId}`);
+    return fetchDelete(`/api/v1/scim/id/${id}/${institutionId}`);
 }
 
 export function resendScimFailure(id, institutionId) {
-    return postPutJson(`/guests/api/scim/id/${id}/${institutionId}`,{}, "put", false);
+    return postPutJson(`/api/v1/scim/id/${id}/${institutionId}`,{}, "put", false);
 }
