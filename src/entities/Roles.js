@@ -47,9 +47,9 @@ const Roles = ({institutionId, application = null}) => {
         //     mapper: role => I18n.t(`users.authorities.${role.authority}`),
         // },
         {
-            key: "applicationName",
+            key: "application__name",
             header: I18n.t("roles.applicationName"),
-            mapper: role => role.applicationName,
+            mapper: role => role.application.name,
         },
         {
             key: "auditable_createdAt",

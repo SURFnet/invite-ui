@@ -17,7 +17,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
     const [confirmationOpen, setConfirmationOpen] = useState(false);
 
     const getRoles = institutionId => {
-        return user.userRoles.filter(role => role.role.institutionId === institutionId);
+        return user.userRoles.filter(role => role.role.application.institution.id === institutionId);
     }
 
     const rolesGroupedByInstitution = user.institutionMemberships.reduce((acc, membership) => {
@@ -142,7 +142,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
                             {rolesGroupedByInstitution[membership.institution.id].map(userRole =>
                                 <div className={"user-role is-role"} key={userRole.id}>
                                     <div>
-                                        <p>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>
+                                        <p>{`${userRole.role.name} (${userRole.role.application.name})`}</p>
                                         {userRole.endDate &&
                                         <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
                                         {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}

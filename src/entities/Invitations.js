@@ -34,7 +34,7 @@ const Invitations = ({user, institutionId, application = null}) => {
 
     const getRoles = entity => {
         return <ul>
-            {entity.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.applicationName})`}</li>)}
+            {entity.roles.map((role, i) => <li key={i}>{`${role.role.name} (${role.role.application.name})`}</li>)}
         </ul>
     }
 

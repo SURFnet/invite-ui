@@ -31,7 +31,7 @@ const InvitationDetail = () => {
         invitationById(invitationId).then(res => {
             res.roleValues = res.roles.map(role => ({
                 value: role.id,
-                label: `${role.role.name} (${role.role.applicationName})`
+                label: `${role.role.name} (${role.role.application.name})`
             }));
             res.expiryDate = new Date(res.expiryDate * 1000);
             setInvitation(res);

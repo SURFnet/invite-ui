@@ -125,7 +125,7 @@ const SCIMFailureDetail = ({user}) => {
                     {path: "/", value: I18n.t("breadcrumbs.home")},
                     {
                         path: `/institution-detail/${institutionId}`,
-                        value: scimFailure.application.institutionName
+                        value: scimFailure.application.institution.displayName
                     },
                     {
                         path: `/institution-detail/${institutionId}/scimFailures`,

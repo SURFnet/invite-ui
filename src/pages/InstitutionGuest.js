@@ -21,7 +21,7 @@ const InstitutionGuest = ({user}) => {
                 const invitationRoles = JSON.parse(invitationRolesJSON);
                 user.userRole.forEach(userRole => {
                     userRole.newRole = (res.find(institution => invitationRoles.institutionId === institution.id) &&
-                        invitationRoles.newRoles.find(app => app.applicationName === userRole.role.applicationName &&
+                        invitationRoles.newRoles.find(app => app.applicationName === userRole.role.application.name &&
                             app.roleName === userRole.role.name));
                 })
                 sessionStorage.removeItem("invitationRoles");
@@ -35,18 +35,18 @@ const InstitutionGuest = ({user}) => {
     }
 
     const renderApplications = institution => {
-        const userRoles = user.userRoles.filter(userRole => userRole.role.institutionId === institution.id);
+        const userRoles = user.userRoles.filter(userRole => userRole.role.application.institution.id === institution.id);
         return <div className={"guest-applications"}>
             {userRoles.length === 0 && <p className="attribute">{I18n.t("institutions.noApplications")}</p>}
             {userRoles.length > 0 && <p className="attribute">{I18n.t("institutions.applications")}</p>}
             {userRoles.map((userRole, index) =>
                 <div key={index}>
                     <p>{userRole.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
-                        <a href={userRole.role.applicationLandingPage}
+                        <a href={userRole.role.application.landingPage}
                            target="_blank"
                            className={userRole.newRole ? "new-role" : ""}
                            rel="noreferrer">
-                            {`${userRole.role.applicationName} (${userRole.role.name})`}
+                            {`${userRole.role.application.name} (${userRole.role.name})`}
                         </a>
                     </p>
                     {userRole.endDate ?

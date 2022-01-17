@@ -61,7 +61,7 @@ const NewInvitation = ({user}) => {
                 setInstitution(res[0]);
                 const allRoleOptions = res[1].map(role => ({
                     value: role.id,
-                    label: `${role.name} (${role.applicationName})`,
+                    label: `${role.name} (${role.application.name})`,
                     defaultExpiryDays: role.defaultExpiryDays
                 }));
                 setRoleOptions(allRoleOptions);

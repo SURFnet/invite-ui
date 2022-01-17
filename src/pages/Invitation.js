@@ -26,7 +26,7 @@ const Invitation = ({user}) => {
             setInvitation({...res, hash: h, status: "ACCEPTED"});
             setEmailEqualityConflict(res.emailEqualityConflict);
             if (!isEmpty(user)) {
-                const aup = user.aups.find(aup => aup.version === res.institution.aupVersion && aup.institutionId === res.institution.id);
+                const aup = user.aups.find(aup => aup.version === res.institution.aupVersion && aup.institution.id === res.institution.id);
                 setShowAup(isEmpty(aup));
                 setAgreed(!isEmpty(aup))
             }
@@ -40,11 +40,11 @@ const Invitation = ({user}) => {
                 .then(user => {
                     sessionStorage.setItem("user", JSON.stringify(user));
                     const newRoles = invitation.userRoles.map(userRole => ({
-                        applicationName: userRole.role.applicationName,
+                        applicationName: userRole.role.application.name,
                         roleName: userRole.role.name
                     }));
                     if (!isEmpty(newRoles)) {
-                        const invitationRoles = {institutionId: invitation.roles[0].role.institutionId, newRoles: newRoles}
+                        const invitationRoles = {institutionId: invitation.roles[0].role.application.institution.id, newRoles: newRoles}
                         sessionStorage.setItem("invitationRoles", JSON.stringify(invitationRoles));
                     }
                     navigate(`/home`, {replace: true});
@@ -58,7 +58,7 @@ const Invitation = ({user}) => {
 
     const roleInformation = () => {
         return invitation.roles
-            .map(role => `<strong>${role.role.name}</strong> (application <strong>${role.role.applicationName}</strong>)`)
+            .map(role => `<strong>${role.role.name}</strong> (application <strong>${role.role.application.name}</strong>)`)
             .join(", ");
     }
 

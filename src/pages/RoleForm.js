@@ -136,7 +136,7 @@ const RoleForm = ({user}) => {
                 {path: "/", value: I18n.t("breadcrumbs.home")},
                 {
                     path: `/institution-detail/${institutionId}`,
-                    value: application.institutionName
+                    value: application.institution.displayName
                 },
                 {
                     path: `/application-detail/${institutionId}/${application.id}`,

@@ -68,7 +68,7 @@ export const viewOtherUserAllowed = (authenticatedUser, subject) => {
 
 
 export const deleteUserRoleAllowed = (authenticatedUser, subject, subjectUserRole) => {
-    const institutionId = subjectUserRole.role.institutionId;
+    const institutionId = subjectUserRole.role.application.institution.id;
     const highestAuthority = subject.institutionMemberships
         .map(membership => membership.authority)
         .reduce((prev, current) =>

@@ -162,7 +162,7 @@ const ApplicationForm = ({user}) => {
                 {path: "/", value: I18n.t("breadcrumbs.home")},
                 {
                     path: `/institution-detail/${institutionId}`,
-                    value: isNew ? institution.displayName : application.institutionName
+                    value: isNew ? institution.displayName : application.institution.displayName
                 },
                 {
                     value: isNew ? I18n.t("forms.new", {object: I18n.t("applications.object")}) :
