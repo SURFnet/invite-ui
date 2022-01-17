@@ -15,7 +15,7 @@ import SelectField from "../components/SelectField";
 import Spinner from "../components/Spinner";
 import EmailField from "../components/EmailField";
 import ErrorIndicator from "../components/ErrorIndicator";
-import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
+import {AUTHORITIES, isAllowed, isAllowedForInviter, isInviteAllowed} from "../utils/authority";
 import {useNavigate, useParams} from "react-router-dom";
 import {BreadCrumb} from "../components/BreadCrumb";
 import {futureDate} from "../utils/date";
@@ -165,7 +165,7 @@ const NewInvitation = ({user}) => {
 
             <SelectField
                 value={intendedAuthoritiesOptions.find(option => option.value === invitation.intendedAuthority)}
-                options={intendedAuthoritiesOptions.filter(option => isAllowed(AUTHORITIES[option.value], user, institutionId) &&
+                options={intendedAuthoritiesOptions.filter(option => isInviteAllowed(AUTHORITIES[option.value], user, institutionId) &&
                     isAllowedForInviter(AUTHORITIES[option.value], user, institutionId))}
                 name={I18n.t("invitations.intendedAuthority")}
                 small={true}

@@ -11,7 +11,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {BreadCrumb} from "../components/BreadCrumb";
 import {setFlash} from "../flash/events";
 import ConfirmationDialog from "../components/ConfirmationDialog";
-import {formatDate} from "../utils/date";
+import {formatDateLong} from "../utils/date";
 import {isSuperAdmin} from "../utils/authority";
 
 const SCIMFailureDetail = ({user}) => {
@@ -103,7 +103,7 @@ const SCIMFailureDetail = ({user}) => {
                         name={I18n.t("scimFailures.application")}
                         disabled={true}/>
 
-            <InputField value={formatDate(scimFailure.createdAt)}
+            <InputField value={formatDateLong(scimFailure.createdAt)}
                         name={I18n.t("scimFailures.createdAt")}
                         disabled={true}/>
 

@@ -100,7 +100,11 @@ export function deleteOther(otherUser) {
 }
 
 export function deleteUserRole(user, userRole) {
-    return fetchDelete(`/guests/api/users/${user.id}/${userRole.id}`);
+    return fetchDelete(`/guests/api/users/role/${user.id}/${userRole.id}`);
+}
+
+export function deleteInstitutionMembership(user, membership) {
+    return fetchDelete(`/guests/api/users/membership/${user.id}/${membership.id}`);
 }
 
 //Institutions

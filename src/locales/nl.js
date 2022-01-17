@@ -45,7 +45,8 @@ I18n.translations.nl = {
             increment: "Nieuwe AUP",
             confirmation: "Weet je zeker dat je het versienummer van de overeenkomst wilt ophogen. Alle gebruikers moeten opnieuw de AUP bevestigen bij het inloggen.",
             flash: "AUP versie opgehoogd"
-        }
+        },
+        disclaimer: "Je bent geen lid meer van een instelling. Neem contact op met je instellingsbeheerder als dit je verbaast."
     },
     users: {
         title: "Gebruikers",
@@ -220,6 +221,8 @@ I18n.translations.nl = {
         roles: "Rollen",
         confirmation: {
             delete: "Weet je zeker dat je jouw account wil verwijderen? Dit kan niet ondegaan gemaakt worden, en je moet opnieuw worden uitgenodigd om een nieuw account aan te maken.",
+            deleteUserRole: "Weet je zeker dat je de rol {{userRole}} van je account wilt verwijderen? Dit kan niet ongedaan gemaakt worden.",
+            deleteInstitutionMembership: "Weet je zeker dat je je lidmaatschap van instelling {{institution}} wilt verwijderen? Dit kan niet ongedaan gemaakt worden.",
             afterDelete: "Je kunt dit tabblad nu sluiten."
         }
     },
@@ -243,11 +246,13 @@ I18n.translations.nl = {
     user: {
         confirmation: {
             delete: "Weet je zeker dat je {{name}} wil verwijderen? Dit kan niet ongedaan gemaakt worden, en {{name}} moet opnieuw worden uitgenodig.",
-            deleteUserRole: "Weet je zeker dat je de rol {{userRole}} van {{name}} wilt verwijseren? Dit kan niet ongedaan gemaakt worden."
+            deleteUserRole: "Weet je zeker dat je de rol {{userRole}} van {{name}} wilt verwijderen? Dit kan niet ongedaan gemaakt worden.",
+            deleteInstitutionMembership: "Weet je zeker dat je {{name}} van instelling {{institution}} wilt verwijderen? Dit kan niet ongedaan gemaakt worden.",
         },
         flash: {
             deleted: "Gebruiker {{name}} is verwijderd.",
-            deleteUserRole: "Rol {{userRole}} is verwijderd."
+            deleteUserRole: "Rol {{userRole}} is verwijderd.",
+            deleteInstitutionMembership: "Lidmaatschap instelling is verwijderd"
         }
     },
     footer: {

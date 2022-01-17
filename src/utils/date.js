@@ -17,6 +17,12 @@ export const formatDateShort = epoch => {
     return date.toLocaleDateString(I18n.locale === "en" ? "en-EN" : "nl-NL");
 }
 
+export const formatDateLong = epoch => {
+    const date = new Date(epoch * 1000);
+    const options = {weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"};
+    return date.toLocaleDateString(I18n.locale === "en" ? "en-EN" : "nl-NL", options);
+}
+
 export const isExpired = epoch => {
     const now = new Date().getTime() / 1000;
     return now > epoch;

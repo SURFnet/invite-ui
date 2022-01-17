@@ -42,12 +42,12 @@ const InstitutionGuest = ({user}) => {
             {userRoles.map((role, index) =>
                 <div key={index}>
                     <p>{role.newRole && <span className={"new-role"}>{I18n.t("institutions.newRole")}</span>}
-                    <a href={role.role.applicationLandingPage}
-                       target="_blank"
-                       className={role.newRole ? "new-role" : ""}
-                       rel="noreferrer">
-                        {`${role.role.applicationName} (${role.role.name})`}
-                    </a>
+                        <a href={role.role.applicationLandingPage}
+                           target="_blank"
+                           className={role.newRole ? "new-role" : ""}
+                           rel="noreferrer">
+                            {`${role.role.applicationName} (${role.role.name})`}
+                        </a>
                     </p>
                     {role.endDate ?
                         <em className="end-date">{I18n.t("institutions.endDate")}{formatDate(role.endDate)}</em> :
@@ -68,6 +68,11 @@ const InstitutionGuest = ({user}) => {
                         <h2>{`${I18n.t("institutions.object")} ${institution.displayName}`}</h2>
                         {renderApplications(institution)}
                     </div>)}
+                    {institutions.length === 0 &&
+                    <div className={"disclaimer"}>
+                        <p>{I18n.t("institutions.disclaimer")}</p>
+
+                    </div>}
                 </div>
             </UnitHeader>
         </div>

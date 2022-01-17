@@ -3,11 +3,13 @@ import I18n from "i18n-js";
 import React, {useState} from "react";
 import {formatDate} from "../utils/date";
 import ConfirmationDialog from "./ConfirmationDialog";
-import {deleteUserRole, me} from "../api/api";
+import {deleteInstitutionMembership, deleteUserRole, me} from "../api/api";
 import Button from "./Button";
 import {useNavigate} from "react-router-dom";
+import {setFlash} from "../flash/events";
+import {AUTHORITIES, deleteInstitutionMembershipAllowed, deleteUserRoleAllowed} from "../utils/authority";
 
-const UserAttributes = ({user, isMe}) => {
+const UserAttributes = ({user, isMe, authenticatedUser}) => {
 
     const navigate = useNavigate();
 
@@ -23,29 +25,63 @@ const UserAttributes = ({user, isMe}) => {
         return acc;
     }, {})
 
+    const refreshUser = navigateTo => {
+        if (isMe) {
+            me()
+                .then(res => {
+                    sessionStorage.setItem("user", JSON.stringify(res));
+                    const path = encodeURIComponent(window.location.pathname);
+                    navigate(`/refresh-route/${path}`, {replace: true});
+                });
+        } else {
+            if (navigateTo) {
+                navigate(navigateTo, {replace: true});
+            } else {
+                const path = encodeURIComponent(window.location.pathname);
+                navigate(`/refresh-route/${path}`, {replace: true});
+            }
+        }
+        setConfirmationOpen(false);
+    }
+
     const doDeleteUserRole = (showConfirmation, userRole) => {
         if (showConfirmation) {
             setConfirmation({
                 cancel: () => setConfirmationOpen(false),
                 action: () => doDeleteUserRole(false, userRole),
                 warning: true,
-                question: I18n.t("user.confirmation.deleteUserRole", {userRole: userRole.role.name, name: user.name})
+                question: I18n.t(`${isMe ? "profile" : "user"}.confirmation.deleteUserRole`, {
+                    userRole: userRole.role.name,
+                    name: user.name
+                })
             });
             setConfirmationOpen(true);
         } else {
             deleteUserRole(user, userRole).then(() => {
-                if (isMe) {
-                    me()
-                        .then(res => {
-                            sessionStorage.setItem("user", JSON.stringify(res));
-                            const path = encodeURIComponent(window.location.pathname);
-                            navigate(`/refresh-route/${path}`, {replace: true});
-                        });
-                } else {
-                    const path = encodeURIComponent(window.location.pathname);
-                    navigate(`/refresh-route/${path}`, {replace: true});
-                }
-                setConfirmationOpen(false);
+                setFlash(I18n.t("user.flash.deleteUserRole", {name: userRole.role.name}));
+                const navigateTo = (user.roles.length === 1 && user.institutionMemberships[0].authority === AUTHORITIES.GUEST.name) ?
+                    `/institution-detail/${user.institutionMemberships[0].institution.id}/users` : null;
+                refreshUser(navigateTo);
+            })
+        }
+    };
+
+    const doDeleteInstitutionMembership = (showConfirmation, institutionMembership) => {
+        if (showConfirmation) {
+            setConfirmation({
+                cancel: () => setConfirmationOpen(false),
+                action: () => doDeleteInstitutionMembership(false, institutionMembership),
+                warning: true,
+                question: I18n.t(`${isMe ? "profile" : "user"}.confirmation.deleteInstitutionMembership`, {
+                    institution: institutionMembership.institution.displayName,
+                    name: user.name
+                })
+            });
+            setConfirmationOpen(true);
+        } else {
+            deleteInstitutionMembership(user, institutionMembership).then(() => {
+                setFlash(I18n.t("user.flash.deleteInstitutionMembership"));
+                refreshUser(`/institution-detail/${user.institutionMemberships[0].institution.id}/users`);
             })
         }
     };
@@ -86,9 +122,16 @@ const UserAttributes = ({user, isMe}) => {
                             <p className="attribute">{I18n.t("institutions.name")}</p>
                             <p>{membership.institution.displayName}</p>
                         </div>
-                        <div>
-                            <p className="attribute">{I18n.t("institutions.homeInstitution")}</p>
-                            <p>{membership.institution.homeInstitution}</p>
+                        <div className={"user-role"}>
+                            <div>
+                                <p className="attribute">{I18n.t("institutions.homeInstitution")}</p>
+                                <p>{membership.institution.homeInstitution}</p>
+                            </div>
+                            {deleteInstitutionMembershipAllowed(authenticatedUser, user, membership) &&
+                            <Button className={"user-role-delete"}
+                                    warningButton={true}
+                                    txt={I18n.t("forms.delete")}
+                                    onClick={() => doDeleteInstitutionMembership(true, membership)}/>}
                         </div>
                         <div>
                             <p className="attribute">{I18n.t("users.authority")}</p>
@@ -97,15 +140,16 @@ const UserAttributes = ({user, isMe}) => {
                         <div>
                             <p className="attribute">{I18n.t("profile.roles")}</p>
                             {rolesGroupedByInstitution[membership.institution.id].map(userRole =>
-                                <div className={"user-role"} key={userRole.id}>
-                                    <div className={"user-role-details"}>
+                                <div className={"user-role is-role"} key={userRole.id}>
+                                    <div>
                                         <p>{`${userRole.role.name} (${userRole.role.applicationName})`}</p>
                                         {userRole.endDate &&
                                         <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
                                         {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}
                                     </div>
+                                    {deleteUserRoleAllowed(authenticatedUser, user, userRole) &&
                                     <Button warningButton={true} txt={I18n.t("forms.delete")}
-                                            onClick={() => doDeleteUserRole(true, userRole)}/>
+                                            onClick={() => doDeleteUserRole(true, userRole)}/>}
                                 </div>
                             )}
                             {rolesGroupedByInstitution[membership.institution.id].length === 0 && <span>-</span>}

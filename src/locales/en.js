@@ -45,7 +45,8 @@ I18n.translations.en = {
             increment: "new AUP",
             confirmation: "Are you sure you want to increment the version of the AUP? All users will be prompted to confirm acceptance of the new AUP when they login.",
             flash: "AUP version is incremented"
-        }
+        },
+        disclaimer: "You are not a member any more of an institution. Please contact your institution admin if this surprises you."
     },
     users: {
         title: "Users",
@@ -220,6 +221,8 @@ I18n.translations.en = {
         roles: "Roles",
         confirmation: {
             delete: "Are you sure you want to delete your account? This can not be undone and you'll have to be invited again to re-create an account.",
+            deleteUserRole: "Are you sure you want to delete the role {{userRole}} from your account? This can not be undone.",
+            deleteInstitutionMembership: "Are you sure you want to remove your membership from the institution {{institution}}? This can not be undone.",
             afterDelete: "You can close this tab now."
         }
     },
@@ -243,11 +246,13 @@ I18n.translations.en = {
     user: {
         confirmation: {
             delete: "Are you sure you want to delete {{name}}? This can not be undone and {{name}} has to be invited again to re-create an account.",
-            deleteUserRole: "Are you sure you want to delete the role {{userRole}} of {{name}}? This can not be undone."
+            deleteUserRole: "Are you sure you want to delete the role {{userRole}} of {{name}}? This can not be undone.",
+            deleteInstitutionMembership: "Are you sure you want to remove {{name}} from the institution {{institution}}? This can not be undone."
         },
         flash: {
             deleted: "User {{name}} has been deleted.",
-            deleteUserRole: "Role {{userRole}} has been deleted."
+            deleteUserRole: "Role {{name}} has been deleted.",
+            deleteInstitutionMembership: "Institution membership has been deleted."
         }
     },
     footer: {

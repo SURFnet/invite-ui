@@ -6,7 +6,7 @@ import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
-import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
+import {viewOtherUserAllowed} from "../utils/authority";
 import {formatDateShort} from "../utils/date";
 
 const Users = ({user, institutionId, application = null}) => {
@@ -18,6 +18,11 @@ const Users = ({user, institutionId, application = null}) => {
     useEffect(() => {
         const promise = application ? allUsersByApplication(application.id) : allUsersByInstitution(institutionId);
         promise.then(res => {
+            const institutionIdentifier = parseInt(institutionId, 10);
+            res.forEach(u => {
+                const membership = u.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
+                u.authority = I18n.t(`users.authorities.${membership.authority}`);
+            })
             setUsers(res);
             setLoading(false);
         })
@@ -33,7 +38,7 @@ const Users = ({user, institutionId, application = null}) => {
     }
 
     const getRoles = entity => {
-        return <ul>
+        return <ul className={meClassName(entity)}>
             {entity.roles.map((role, i) =>
                 <li key={i}>
                     {`${role.role.name} (${role.role.applicationName}) ${role.endDate ? I18n.t("users.expires", {date: formatDateShort(role.endDate)}) : ""}`}
@@ -41,41 +46,35 @@ const Users = ({user, institutionId, application = null}) => {
         </ul>
     }
 
-    const isAllowedForUser = entity => {
-        const authorities = entity.institutionMemberships.map(institutionMembership => institutionMembership.authority);
-        return isAllowed(AUTHORITIES.INVITER, user, institutionId) &&
-            authorities.every(authority => isAllowedForInviter(AUTHORITIES[authority], user, institutionId));
-    }
+    const isAllowedForUser = entity => viewOtherUserAllowed(user, entity);
 
     const rowLinkMapper = entity => {
         const allowedFor = isAllowedForUser(entity);
         return allowedFor ? e => openUser(e) : null;
     }
 
+    const meClassName = entity => entity.id === user.id ? "me" : null;
+
     const columns = [
         {
             key: "name",
-            sortable: false,
+            nonSortable: true,
             header: I18n.t("users.name"),
-            mapper: entity => entity.name
+            mapper: entity => <span className={meClassName(entity)}>{entity.name}</span>
         },
         {
             key: "email",
             header: I18n.t("users.email"),
-            mapper: entity => entity.email,
+            mapper: entity => <span className={meClassName(entity)}>{entity.email}</span>
         },
         {
             key: "authority",
             header: I18n.t("users.authority"),
-            mapper: entity => {
-                const institutionIdentifier = parseInt(institutionId, 10);
-                const membership = entity.institutionMemberships.find(membership => membership.institution.id === institutionIdentifier);
-                return I18n.t(`users.authorities.${membership.authority}`);
-            },
+            mapper: entity => <span className={meClassName(entity)}>{entity.authority}</span>
         },
         {
             key: "roles",
-            sortable: false,
+            nonSortable: true,
             header: I18n.t("users.roles"),
             mapper: entity => getRoles(entity),
         },

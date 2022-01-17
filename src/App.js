@@ -111,7 +111,7 @@ const App = () => {
                     <Route path="invitation-detail/:invitationId" element={<InvitationDetail/>}/>
                     <Route path="scim-failure-detail/:institutionId/:failureId" element={<SCIMFailureDetail user={user}/>}/>
                     <Route path="refresh-route/:path" element={<RefreshRoute/>}/>
-
+                    <Route path="test-landing" element={<Landing/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>}
                 {!user && <Routes>

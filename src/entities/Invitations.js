@@ -72,7 +72,7 @@ const Invitations = ({user, institutionId, application = null}) => {
         },
         {
             key: "roles",
-            sortable: false,
+            nonSortable: true,
             header: I18n.t("users.roles"),
             mapper: entity => getRoles(entity),
         },

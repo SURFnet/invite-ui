@@ -9,6 +9,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {setFlash} from "../flash/events";
 import Spinner from "../components/Spinner";
 import UserAttributes from "../components/UserAttributes";
+import {deleteOtherUserAllowed} from "../utils/authority";
 
 const User = ({user}) => {
 
@@ -41,13 +42,24 @@ const User = ({user}) => {
                 cancel: () => setConfirmationOpen(false),
                 action: () => doDelete(false),
                 warning: true,
-                question: I18n.t("user.confirmation.delete", {name: otherUser.name})
+                question: I18n.t(otherUser.id !== user.id ? "user.confirmation.delete" : "profile.confirmation.delete", {name: otherUser.name})
+
             });
             setConfirmationOpen(true);
         } else {
             deleteOther(otherUser).then(() => {
                 setFlash(I18n.t("user.flash.deleted", {name: otherUser.name}));
-                navigate(`/institution-detail/${institutionId}/users`);
+                if (otherUser.id === user.id) {
+                    sessionStorage.clear();
+                    setConfirmation({
+                        cancel: null,
+                        action: null,
+                        warning: false,
+                        question: I18n.t("profile.confirmation.afterDelete")
+                    });
+                } else {
+                    navigate(`/institution-detail/${institutionId}/users`);
+                }
             })
         }
     };
@@ -80,10 +92,11 @@ const User = ({user}) => {
                                                      isWarning={confirmation.warning}
                                                      question={confirmation.question}/>}
             <div className={"profile"}>
-                <UserAttributes user={otherUser} isMe={otherUser.id === user.id}/>
+                <UserAttributes user={otherUser} isMe={otherUser.id === user.id} authenticatedUser={user}/>
                 <section className="actions">
+                    {deleteOtherUserAllowed(user, otherUser) &&
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
-                            onClick={() => doDelete(true)}/>
+                            onClick={() => doDelete(true)}/>}
                 </section>
 
             </div>

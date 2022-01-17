@@ -25,6 +25,12 @@ div.users {
       }
     }
 
+    tbody tr td {
+      span.me, ul.me {
+        color: $primary-green;
+      }
+    }
+
   }
 }
 

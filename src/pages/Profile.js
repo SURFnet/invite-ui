@@ -53,7 +53,7 @@ const Profile = ({user}) => {
                 <h2>
                     {I18n.t("profile.header", {name: `${user.givenName}`})}
                 </h2>
-                <UserAttributes user={user} isMe={true}/>
+                <UserAttributes user={user} isMe={true} authenticatedUser={user}/>
                 <section className="actions">
                     <Button warningButton={true} txt={I18n.t("forms.delete")}
                             onClick={() => doDelete(true)}/>
