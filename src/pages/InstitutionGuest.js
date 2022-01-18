@@ -19,7 +19,7 @@ const InstitutionGuest = ({user}) => {
             const invitationRolesJSON = sessionStorage.getItem("invitationRoles");
             if (!isEmpty(invitationRolesJSON)) {
                 const invitationRoles = JSON.parse(invitationRolesJSON);
-                user.userRole.forEach(userRole => {
+                user.userRoles.forEach(userRole => {
                     userRole.newRole = (res.find(institution => invitationRoles.institutionId === institution.id) &&
                         invitationRoles.newRoles.find(app => app.applicationName === userRole.role.application.name &&
                             app.roleName === userRole.role.name));

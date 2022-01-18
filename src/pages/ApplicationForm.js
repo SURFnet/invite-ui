@@ -67,9 +67,6 @@ const ApplicationForm = ({user}) => {
             })
         } else {
             applicationById(applicationId).then(res => {
-                res.institution = {
-                    id: institutionId
-                }
                 setApplication(res);
                 setLoading(false);
                 setOriginalName(res.name);

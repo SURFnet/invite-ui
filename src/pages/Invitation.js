@@ -39,9 +39,9 @@ const Invitation = ({user}) => {
             me()
                 .then(user => {
                     sessionStorage.setItem("user", JSON.stringify(user));
-                    const newRoles = invitation.userRoles.map(userRole => ({
-                        applicationName: userRole.role.application.name,
-                        roleName: userRole.role.name
+                    const newRoles = invitation.roles.map(invitationRole => ({
+                        applicationName: invitationRole.role.application.name,
+                        roleName: invitationRole.role.name
                     }));
                     if (!isEmpty(newRoles)) {
                         const invitationRoles = {institutionId: invitation.roles[0].role.application.institution.id, newRoles: newRoles}

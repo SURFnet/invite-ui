@@ -63,7 +63,6 @@ const ApplicationDetail = ({user}) => {
     if (loading) {
         return <Spinner/>
     }
-
     return (
         <div className="application-detail">
             <BreadCrumb paths={[
