@@ -167,6 +167,7 @@ const RoleForm = ({user}) => {
                             setAlreadyExists({...alreadyExists, name: false})
                             nameUrnCompatibilityCheck(setState("name", e.target.value));
                         }}
+                        disabled={!isNew}
                         placeholder={I18n.t("roles.namePlaceholder")}
                         onBlur={validateName}
                         toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("roles.object")})}
