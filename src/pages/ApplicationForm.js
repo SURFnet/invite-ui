@@ -222,8 +222,10 @@ const ApplicationForm = ({user}) => {
                 value: application.entityId
             })}/>}
 
-            <CheckBox name="updateRolePutMethod" value={application.updateRolePutMethod}
+            <CheckBox name="updateRolePutMethod"
+                      value={application.updateRolePutMethod}
                       info={I18n.t("applications.updateRolePutMethod")}
+                      tooltip={I18n.t("applications.updateRolePutMethodTooltip")}
                       onChange={() => setState("updateRolePutMethod", !application.updateRolePutMethod)}/>
 
             <InputField value={application.landingPage}

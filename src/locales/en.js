@@ -87,6 +87,7 @@ I18n.translations.en = {
         landingPagePlaceholder: "Landing page of the application",
         provisioningHookUrl: "Provisioning hook URL",
         updateRolePutMethod: "Use SCIM PUT hook (default PATCH)",
+        updateRolePutMethodTooltip: "If checked then a PUT call is made to the provisioning URL with all the users with this role, otherwise a PATCH is made with only the delta (e.g. the user-role which was added or deleted)",
         provisioningHookUrlPlaceholder: "SCIM endpoint URL of the application",
         provisioningHookUsername: "Provisioning hook username",
         provisioningHookUsernamePlaceholder: "Provisioning hook username of the application",
