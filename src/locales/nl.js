@@ -86,6 +86,7 @@ I18n.translations.nl = {
         landingPage: "Landingspagina url",
         landingPagePlaceholder: "Startpagina voor de toepassing",
         provisioningHookUrl: "Provisioning hook URL",
+        updateRolePutMethod: "Gebruik SCIM PUT hook (default PATCH)",
         provisioningHookUrlPlaceholder: "SCIM endpoint voor deze toepassing.",
         provisioningHookUsername: "Provisioning hook inlognaam",
         provisioningHookUsernamePlaceholder: "Provisioning hook inlognaam voor de toepassing",

@@ -8,7 +8,7 @@ Guest application UI
 ### [System Requirements](#system-requirements)
 
 - Yarn
-- Node v12
+- Node v16
 
 ### [Building and running](#building-and-running)
 

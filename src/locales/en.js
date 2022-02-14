@@ -86,6 +86,7 @@ I18n.translations.en = {
         landingPage: "Landing page URL",
         landingPagePlaceholder: "Landing page of the application",
         provisioningHookUrl: "Provisioning hook URL",
+        updateRolePutMethod: "Use SCIM PUT hook (default PATCH)",
         provisioningHookUrlPlaceholder: "SCIM endpoint URL of the application",
         provisioningHookUsername: "Provisioning hook username",
         provisioningHookUsernamePlaceholder: "Provisioning hook username of the application",

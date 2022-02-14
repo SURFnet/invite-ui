@@ -19,6 +19,7 @@ import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
 import Button from "../components/Button";
 import {BreadCrumb} from "../components/BreadCrumb";
+import CheckBox from "../components/CheckBox";
 
 const ApplicationForm = ({user}) => {
 
@@ -55,6 +56,7 @@ const ApplicationForm = ({user}) => {
                     displayName: "",
                     entityId: "",
                     landingPage: "",
+                    updateRolePutMethod: false,
                     provisioningHookUrl: "",
                     provisioningHookUsername: "",
                     provisioningHookPassword: "",
@@ -108,7 +110,7 @@ const ApplicationForm = ({user}) => {
                 action: () => doDelete(false),
                 warning: true,
                 question: I18n.t("confirmationDialog.questions.delete", {
-                    name: application.displayName,
+                    name: application.name,
                     object: I18n.t("applications.object").toLowerCase()
                 })
             });
@@ -132,10 +134,10 @@ const ApplicationForm = ({user}) => {
             setLoading(true);
             saveApplication(application).then(res => {
                 navigate(`/application-detail/${institutionId}/${res.id}`);
-                setFlash(I18n.t("forms.flash.created",
+                setFlash(I18n.t(`forms.flash.${applicationId === "new" ? "created" : "updated"}`,
                     {
                         object: I18n.t("applications.object").toLowerCase(),
-                        name: application.displayName
+                        name: application.name
                     }))
             })
         } else {
@@ -219,6 +221,10 @@ const ApplicationForm = ({user}) => {
                 attribute: I18n.t("applications.entityId").toLowerCase(),
                 value: application.entityId
             })}/>}
+
+            <CheckBox name="updateRolePutMethod" value={application.updateRolePutMethod}
+                      info={I18n.t("applications.updateRolePutMethod")}
+                      onChange={() => setState("updateRolePutMethod", !application.updateRolePutMethod)}/>
 
             <InputField value={application.landingPage}
                         onChange={e => {
