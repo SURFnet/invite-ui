@@ -243,7 +243,8 @@ I18n.translations.nl = {
         agreeWithTerms: "Ik bevestig dat ik de gebruiksvoorwaarden heb gelezen en akkoord ga hiermee.",
         onward: "Doorgaan",
         agreedFlash: "Jouw overeenkomst met {{name}} is opgeslagen.",
-        emailEqualityConflict: "Deze uitnodiging vereist dat je inlogt met hetzelfde emaiadres als waar de uitnodiging aan verstuurd is. Sluit alle browservensters en open de uitnodigings-link opnieuw om met het juiste account in te loggen."
+        emailEqualityConflict: "Deze uitnodiging vereist dat je inlogt met hetzelfde emaiadres als waar de uitnodiging aan verstuurd is. Sluit alle browservensters en open de uitnodigings-link opnieuw om met het juiste account in te loggen.",
+        unspecifiedIdConflict: "De informatie die we hebben ontvangen van de instelling waar je je hebt geauthenticeerd, bevat een unieke ID die al door een andere gebruiker wordt gebruikt. Neem voor hulp contact op met <a href=\"mailto:contact@eduid.nl\">contact@eduid.nl</a>."
     },
     user: {
         confirmation: {

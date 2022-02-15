@@ -18,6 +18,7 @@ const Invitation = ({user}) => {
     const [invitation, setInvitation] = useState({});
     const [loading, setLoading] = useState(true);
     const [emailEqualityConflict, setEmailEqualityConflict] = useState(false);
+    const [unspecifiedIdConflict, setUnspecifiedIdConflict] = useState(false);
 
     useEffect(() => {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -52,6 +53,8 @@ const Invitation = ({user}) => {
         }).catch(e => {
             if (e.response && e.response.status === 409) {
                 setEmailEqualityConflict(true);
+            } else if (e.response && e.response.status === 412) {
+                setUnspecifiedIdConflict(true);
             }
         });
     }
@@ -70,11 +73,13 @@ const Invitation = ({user}) => {
         return <Spinner/>;
     }
 
+    const someConflict = emailEqualityConflict || unspecifiedIdConflict;
+
     return (
         <div className="invitation-container">
             <div className="invitation">
                 <h2>{I18n.t("aup.hi", {name: invitation.email})}</h2>
-                {(!emailEqualityConflict && invitation.roles.length > 0) && <div className="invitation-info">
+                {(!someConflict && invitation.roles.length > 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
                         __html: I18n.t("aup.role", {
                             cardinality: roleCardinality(),
@@ -83,17 +88,17 @@ const Invitation = ({user}) => {
                         })
                     }}/>
                 </div>}
-                {(!emailEqualityConflict && invitation.roles.length === 0) && <div className="invitation-info">
+                {(!someConflict && invitation.roles.length === 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
                         __html: I18n.t("aup.noRoles", {
                             name: invitation.institution.displayName
                         })
                     }}/>
                 </div>}
-                {(!emailEqualityConflict && isEmpty(user)) && <div className="disclaimer">
+                {(!someConflict && isEmpty(user)) && <div className="disclaimer">
                     <p dangerouslySetInnerHTML={{__html: I18n.t("aup.info")}}/>
                 </div>}
-                {(invitation.institution.aupUrl && !emailEqualityConflict && showAup) &&
+                {(invitation.institution.aupUrl && !someConflict && showAup) &&
                 <div>
                     <h2 dangerouslySetInnerHTML={{__html: I18n.t("aup.title")}}/>
                     <p className=""
@@ -103,12 +108,15 @@ const Invitation = ({user}) => {
                                   onChange={() => setAgreed(!agreed)}/>
                     </div>
                 </div>}
-                {!emailEqualityConflict && <section className={"actions"}>
+                {!someConflict && <section className={"actions"}>
                     <Button className="proceed" onClick={proceed}
                             txt={I18n.t("aup.onward")} disabled={!agreed && invitation.institution.aupUrl}/>
                 </section>}
                 {emailEqualityConflict && <section className={"error"}>
                     <p>{I18n.t("aup.emailEqualityConflict")}</p>
+                </section>}
+                {unspecifiedIdConflict && <section className={"error"}>
+                    <p dangerouslySetInnerHTML={{__html: I18n.t("aup.unspecifiedIdConflict")}}/>
                 </section>}
 
             </div>
