@@ -75,7 +75,7 @@ I18n.translations.nl = {
     applications: {
         title: "Toepassing",
         name: "Naam",
-        namePlaceholder: "Naaan voor de Toepassing",
+        namePlaceholder: "Naam voor de Toepassing",
         displayName: "Beschrijving",
         displayNamePlaceholder: "Beschrijving voor deze toepassing",
         object: "Toepassing",
