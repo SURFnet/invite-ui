@@ -232,7 +232,7 @@ I18n.translations.nl = {
         hi: "Hallo {{name}},",
         info: "We gaan jouw profiel aanmaken.",
         name: "Weergave naam.",
-        role: "Je bent gevraagd om de uitnod te accepteren voor {{cardinality}}: {{roles}} bij de instelling {{name}}",
+        role: "Je bent gevraagd om de uitnodiging te accepteren voor {{cardinality}}: {{roles}} bij de instelling {{name}}",
         noRoles: "Je bent gevreegd deel te namen aan {{name}}",
         singleRole: "rol",
         multipleRoles: "rollen",
