@@ -1,6 +1,7 @@
 //Internal API
 import {refreshTokens} from "./frontChannelTokenRequest";
 import {isEmpty} from "../utils/forms";
+import {cookieStorage} from "../utils/storage";
 
 //Internal API
 const config = window.config;
@@ -12,8 +13,8 @@ function validateResponse(showErrorDialog) {
             if (res.status === 401) {
                 //Need to get a new accessToken and reload the page
                 refreshTokens().then(json => {
-                    sessionStorage.setItem("accessToken", json.access_token);
-                    sessionStorage.setItem("refreshToken", json.refresh_token);
+                    cookieStorage.setItem("accessToken", json.access_token);
+                    cookieStorage.setItem("refreshToken", json.refresh_token);
                     window.location.reload(true);
                 })
                 return;
@@ -41,7 +42,7 @@ function validFetch(path, options, headers = {}, showErrorDialog = true) {
         "Content-Type": "application/json",
         ...headers
     };
-    const token = sessionStorage.getItem("accessToken");
+    const token = cookieStorage.getItem("accessToken");
     if (token) {
         contentHeaders["Authorization"] = `Bearer ${token}`;
     }

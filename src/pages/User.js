@@ -10,6 +10,7 @@ import {setFlash} from "../flash/events";
 import Spinner from "../components/Spinner";
 import UserAttributes from "../components/UserAttributes";
 import {deleteOtherUserAllowed} from "../utils/authority";
+import {cookieStorage} from "../utils/storage";
 
 const User = ({user}) => {
 
@@ -50,7 +51,7 @@ const User = ({user}) => {
             deleteOther(otherUser).then(() => {
                 setFlash(I18n.t("user.flash.deleted", {name: otherUser.name}));
                 if (otherUser.id === user.id) {
-                    sessionStorage.clear();
+                    cookieStorage.clear();
                     setConfirmation({
                         cancel: null,
                         action: null,

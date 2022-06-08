@@ -7,6 +7,7 @@ import Spinner from "../components/Spinner";
 import {BreadCrumb} from "../components/BreadCrumb";
 import {isEmpty} from "../utils/forms";
 import {formatDate} from "../utils/date";
+import {cookieStorage} from "../utils/storage";
 
 const InstitutionGuest = ({user}) => {
 
@@ -16,7 +17,7 @@ const InstitutionGuest = ({user}) => {
     useEffect(() => {
         mineInstitutions().then(res => {
             setInstitutions(res);
-            const invitationRolesJSON = sessionStorage.getItem("invitationRoles");
+            const invitationRolesJSON = cookieStorage.getItem("invitationRoles");
             if (!isEmpty(invitationRolesJSON)) {
                 const invitationRoles = JSON.parse(invitationRolesJSON);
                 user.userRoles.forEach(userRole => {
@@ -24,7 +25,7 @@ const InstitutionGuest = ({user}) => {
                         invitationRoles.newRoles.find(app => app.applicationName === userRole.role.application.name &&
                             app.roleName === userRole.role.name));
                 })
-                sessionStorage.removeItem("invitationRoles");
+                cookieStorage.removeItem("invitationRoles");
             }
             setLoading(false);
         });
@@ -64,10 +65,11 @@ const InstitutionGuest = ({user}) => {
             ]}/>
             <UnitHeader>
                 <div className="info">
-                    {institutions.map(institution => <div>
-                        <h2>{`${I18n.t("institutions.object")} ${institution.displayName}`}</h2>
-                        {renderApplications(institution)}
-                    </div>)}
+                    {institutions.map((institution, index) =>
+                        <div key={index}>
+                            <h2>{`${I18n.t("institutions.object")} ${institution.displayName}`}</h2>
+                            {renderApplications(institution)}
+                        </div>)}
                     {institutions.length === 0 &&
                     <div className={"disclaimer"}>
                         <p>{I18n.t("institutions.disclaimer")}</p>

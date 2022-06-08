@@ -7,6 +7,7 @@ import {acceptInvitation, invitationByHash, me} from "../api/api";
 import CheckBox from "../components/CheckBox";
 import Spinner from "../components/Spinner";
 import {isEmpty} from "../utils/forms";
+import {cookieStorage} from "../utils/storage";
 
 
 const Invitation = ({user}) => {
@@ -39,14 +40,14 @@ const Invitation = ({user}) => {
         acceptInvitation(invitation).then(() => {
             me()
                 .then(user => {
-                    sessionStorage.setItem("user", JSON.stringify(user));
+                    cookieStorage.setItem("user", JSON.stringify(user));
                     const newRoles = invitation.roles.map(invitationRole => ({
                         applicationName: invitationRole.role.application.name,
                         roleName: invitationRole.role.name
                     }));
                     if (!isEmpty(newRoles)) {
                         const invitationRoles = {institutionId: invitation.roles[0].role.application.institution.id, newRoles: newRoles}
-                        sessionStorage.setItem("invitationRoles", JSON.stringify(invitationRoles));
+                        cookieStorage.setItem("invitationRoles", JSON.stringify(invitationRoles));
                     }
                     navigate(`/home`, {replace: true});
                 })

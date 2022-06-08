@@ -26,6 +26,7 @@ import Landing from "./pages/Landing";
 import SCIMFailureDetail from "./pages/SCIMFailureDetail";
 import InstitutionGuest from "./pages/InstitutionGuest";
 import RefreshRoute from "./pages/RefreshRoute";
+import {cookieStorage} from "./utils/storage";
 
 addIcons();
 
@@ -35,29 +36,33 @@ const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const options = sessionStorage.getItem("options");
-        const accessToken = sessionStorage.getItem("accessToken");
+        const options = cookieStorage.getItem("options");
+        const accessToken = cookieStorage.getItem("accessToken");
         const urlSearchParams = new URLSearchParams(window.location.search);
         const inAuthRedirect = urlSearchParams.has("code");
         if (!accessToken && !options) {
-            sessionStorage.setItem("path", `${window.location.pathname}${window.location.search}`);
+            const previousPath = cookieStorage.getItem("path");
+            if (!previousPath) {
+                cookieStorage.setItem("path", `${window.location.pathname}${window.location.search}`);
+            }
             oauth().then(r => {
-                sessionStorage.setItem("options", JSON.stringify(r));
+                cookieStorage.setItem("options", JSON.stringify(r));
                 window.location.href = r.authorizationUrl;
             });
         } else if (inAuthRedirect && options) {
             const optionsDict = JSON.parse(options);
-            optionsDict.code = urlSearchParams.get("code")
-            getTokensFrontChannel(optionsDict).then(r => {
-                sessionStorage.setItem("accessToken", r.access_token);
-                sessionStorage.setItem("refreshToken", r.refresh_token);
-                sessionStorage.setItem("clientId", optionsDict.clientId);
-                sessionStorage.setItem("tokenUrl", optionsDict.tokenUrl);
-                sessionStorage.removeItem("options");
-                const path = sessionStorage.getItem("path") || "/";
+            optionsDict.code = urlSearchParams.get("code");
+            getTokensFrontChannel(optionsDict)
+                .then(r => {
+                cookieStorage.setItem("accessToken", r.access_token);
+                cookieStorage.setItem("refreshToken", r.refresh_token);
+                cookieStorage.setItem("clientId", optionsDict.clientId);
+                cookieStorage.setItem("tokenUrl", optionsDict.tokenUrl);
+                cookieStorage.removeItem("options");
+                const path = cookieStorage.getItem("path") || "/";
                 me()
                     .then(user => {
-                        sessionStorage.setItem("user", JSON.stringify(user));
+                        cookieStorage.setItem("user", JSON.stringify(user));
                         const membershipsWithoutAup = institutionMembershipsWithNoAup(user);
                         const navigationPath = isEmpty(membershipsWithoutAup) ? path : "/aup";
                         navigate(navigationPath, {replace: true});
@@ -65,11 +70,11 @@ const App = () => {
                     })
                     .catch(() => {
                         //Unknown user who has received an invitation
-                        sessionStorage.removeItem("user");
+                        cookieStorage.removeItem("user");
                         navigate(path, {replace: true});
                         setLoading(false);
                     });
-            });
+            })
         } else {
             setLoading(false);
         }
@@ -79,7 +84,7 @@ const App = () => {
         return null; // render null when app is not ready yet
     }
 
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = JSON.parse(cookieStorage.getItem("user"));
     return (
         <div className="invites">
             <div className="container">

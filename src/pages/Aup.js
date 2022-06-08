@@ -7,6 +7,7 @@ import I18n from "i18n-js";
 import Spinner from "../components/Spinner";
 import CheckBox from "../components/CheckBox";
 import Button from "../components/Button";
+import {cookieStorage} from "../utils/storage";
 
 const Aup = ({user}) => {
 
@@ -30,8 +31,8 @@ const Aup = ({user}) => {
         acceptAups(membershipsWithoutAup).then(() => {
             me()
                 .then(user => {
-                    sessionStorage.setItem("user", JSON.stringify(user));
-                    const path = sessionStorage.getItem("path") || "/";
+                    cookieStorage.setItem("user", JSON.stringify(user));
+                    const path = cookieStorage.getItem("path") || "/";
                     navigate(path, {replace: true});
                 });
         });

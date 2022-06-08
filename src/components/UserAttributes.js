@@ -8,6 +8,7 @@ import Button from "./Button";
 import {useNavigate} from "react-router-dom";
 import {setFlash} from "../flash/events";
 import {AUTHORITIES, deleteInstitutionMembershipAllowed, deleteUserRoleAllowed} from "../utils/authority";
+import {cookieStorage} from "../utils/storage";
 
 const UserAttributes = ({user, isMe, authenticatedUser}) => {
 
@@ -29,7 +30,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
         if (isMe) {
             me()
                 .then(res => {
-                    sessionStorage.setItem("user", JSON.stringify(res));
+                    cookieStorage.setItem("user", JSON.stringify(res));
                     const path = encodeURIComponent(window.location.pathname);
                     navigate(`/refresh-route/${path}`, {replace: true});
                 });

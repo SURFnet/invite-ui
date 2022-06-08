@@ -6,6 +6,7 @@ import {deleteMe} from "../api/api";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import Button from "../components/Button";
 import UserAttributes from "../components/UserAttributes";
+import {cookieStorage} from "../utils/storage";
 
 const Profile = ({user}) => {
 
@@ -23,7 +24,7 @@ const Profile = ({user}) => {
             setConfirmationOpen(true);
         } else {
             deleteMe().then(() => {
-                sessionStorage.clear();
+                cookieStorage.clear();
                 setConfirmation({
                     cancel: null,
                     action: null,

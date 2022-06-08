@@ -7,6 +7,7 @@ import {stopEvent} from "../utils/forms";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import ConfirmationDialog from "./ConfirmationDialog";
+import {cookieStorage} from "../utils/storage";
 
 const Header = ({user}) => {
 
@@ -21,7 +22,7 @@ const Header = ({user}) => {
     }
 
     const logout = () => {
-        sessionStorage.clear();
+        cookieStorage.clear();
         setConfirmation({
             question: I18n.t("header.afterLogout"),
             confirmationHeader: I18n.t("header.confirmationHeader")
