@@ -257,6 +257,7 @@ const ApplicationForm = ({user}) => {
                             setInvalid({...setInvalid, provisioningHookUrl: false});
                         }}
                         placeholder={I18n.t("applications.provisioningHookUrlPlaceholder")}
+                        toolTip={I18n.t("forms.provisioningHookUrlTooltip")}
                         onBlur={validateProvisioningHookUrl}
                         error={invalid.provisioningHookUrl}
                         name={I18n.t("applications.provisioningHookUrl")}/>

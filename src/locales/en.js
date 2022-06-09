@@ -88,7 +88,7 @@ I18n.translations.en = {
         provisioningHookUrl: "Provisioning hook URL",
         updateRolePutMethod: "Use SCIM PUT hook (default PATCH)",
         updateRolePutMethodTooltip: "If checked then a PUT call is made to the provisioning URL with all the users with this role, otherwise a PATCH is made with only the delta (e.g. the user-role which was added or deleted)",
-        provisioningHookUrlPlaceholder: "SCIM endpoint URL of the application",
+        provisioningHookUrlPlaceholder: "SCIM endpoint URL of the application, e.g. https://university.nl/scim/v1",
         provisioningHookUsername: "Provisioning hook username",
         provisioningHookUsernamePlaceholder: "Provisioning hook username of the application",
         provisioningHookPassword: "Provisioning hook password",
@@ -172,7 +172,8 @@ I18n.translations.en = {
             updated: "Updated {{object}} {{name}}",
             deleted: "Deleted {{object}} {{name}}"
         },
-        nameTooltip: "The name of the {{object}} is part of the group membership URN that is send to services. Therefore it may not contain spaces or other non-asci characters."
+        nameTooltip: "The name of the {{object}} is part of the group membership URN that is send to services. Therefore it may not contain spaces or other non-asci characters.",
+        provisioningHookUrlTooltip: "The provisioning URL including the path. E.g. https://university.nl/scim/v1"
     },
     invitations: {
         new: "New invite",
