@@ -84,7 +84,8 @@ const App = () => {
         return null; // render null when app is not ready yet
     }
 
-    const user = JSON.parse(cookieStorage.getItem("user"));
+    const userJson = cookieStorage.getItem("user");
+    const user = userJson ? JSON.parse(userJson) : null;
     return (
         <div className="invites">
             <div className="container">
