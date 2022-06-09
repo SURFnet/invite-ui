@@ -121,6 +121,10 @@ export function institutionById(id) {
     return fetchJson(`/api/v1/institutions/${id}`);
 }
 
+export function institutionUserCount(id) {
+    return fetchJson(`/api/v1/institutions/user-count/${id}`);
+}
+
 export function institutionEntityIdExists(entityId, isExisting) {
     return postPutJson("/api/v1/institutions/entity-id-exists", {
         existingObject: isExisting,
@@ -173,6 +177,9 @@ export function deleteApplication(application) {
     return fetchDelete(`/api/v1/applications/${application.id}`);
 }
 
+export function applicationUserCount(id) {
+    return fetchJson(`/api/v1/applications/user-count/${id}`);
+}
 
 //Roles
 export function allRolesByInstitution(institutionId) {

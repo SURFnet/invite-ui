@@ -6,7 +6,9 @@ import {
     institutionById,
     institutionEntityIdExists,
     institutionSchacHomeExists,
-    saveInstitution, validate
+    saveInstitution,
+    validate,
+    institutionUserCount
 } from "../api/api";
 import Spinner from "../components/Spinner";
 import I18n from "i18n-js";
@@ -29,6 +31,7 @@ const InstitutionForm = ({user}) => {
 
     const required = ["displayName", "entityId", "homeInstitution"];
     const [institution, setInstitution] = useState({});
+    const [userCount, setUserCount] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
     const [isNew, setIsNew] = useState(false);
@@ -55,10 +58,11 @@ const InstitutionForm = ({user}) => {
             });
             setLoading(false);
         } else {
-            institutionById(institutionId).then(res => {
-                setInstitution(res);
+            Promise.all([institutionById(institutionId), institutionUserCount(institutionId)]).then(res => {
+                setInstitution(res[0]);
+                setUserCount(res[1]);
                 setLoading(false);
-                setOriginalName(res.displayName);
+                setOriginalName(res[0].displayName);
             });
         }
     }, [institutionId, user, navigate]);
@@ -229,7 +233,9 @@ const InstitutionForm = ({user}) => {
 
             <section className="actions">
                 {!isNew &&
-                <Button warningButton={true} txt={I18n.t("forms.delete")}
+                <Button warningButton={true}
+                        disabled={userCount > 0}
+                        txt={I18n.t("forms.delete")}
                         onClick={() => doDelete(true)}/>}
                 <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
                 <Button disabled={disabledSubmit} txt={I18n.t("forms.save")} onClick={submit}/>

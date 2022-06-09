@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {
     applicationById,
     applicationEntityIdExists,
+    applicationUserCount,
     deleteApplication,
     institutionById,
     saveApplication,
@@ -32,6 +33,7 @@ const ApplicationForm = ({user}) => {
 
     const required = ["name", "entityId", "landingPage"];
     const [application, setApplication] = useState({});
+    const [userCount, setUserCount] = useState({});
     const [institution, setInstitution] = useState({});
     const [loading, setLoading] = useState(true);
     const [initial, setInitial] = useState(true);
@@ -68,10 +70,11 @@ const ApplicationForm = ({user}) => {
                 setLoading(false);
             })
         } else {
-            applicationById(applicationId).then(res => {
-                setApplication(res);
+            Promise.all([applicationById(applicationId), applicationUserCount(applicationId)]).then(res => {
+                setApplication(res[0]);
+                setUserCount(res[1]);
                 setLoading(false);
-                setOriginalName(res.name);
+                setOriginalName(res[0].name);
             });
         }
     }, [applicationId, institutionId, user, navigate]);
@@ -296,11 +299,16 @@ const ApplicationForm = ({user}) => {
 
             <section className="actions">
                 {!isNew &&
-                <Button warningButton={true} txt={I18n.t("forms.delete")}
-                        onClick={() => doDelete(true)}/>}
+                <Button warningButton={true}
+                        disabled={userCount > 0}
+                        txt={I18n.t("forms.delete")}
+                        onClick={() => doDelete(true)}/>
+                }
                 <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
                 <Button disabled={disabledSubmit} txt={I18n.t("forms.save")} onClick={submit}/>
+
             </section>
+
 
         </div>
     )
