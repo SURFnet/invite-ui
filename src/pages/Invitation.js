@@ -8,7 +8,7 @@ import CheckBox from "../components/CheckBox";
 import Spinner from "../components/Spinner";
 import {isEmpty} from "../utils/forms";
 import {cookieStorage} from "../utils/storage";
-
+import DOMPurify from "dompurify";
 
 const Invitation = ({user}) => {
 
@@ -46,7 +46,10 @@ const Invitation = ({user}) => {
                         roleName: invitationRole.role.name
                     }));
                     if (!isEmpty(newRoles)) {
-                        const invitationRoles = {institutionId: invitation.roles[0].role.application.institution.id, newRoles: newRoles}
+                        const invitationRoles = {
+                            institutionId: invitation.roles[0].role.application.institution.id,
+                            newRoles: newRoles
+                        }
                         cookieStorage.setItem("invitationRoles", JSON.stringify(invitationRoles));
                     }
                     navigate(`/home`, {replace: true});
@@ -82,28 +85,28 @@ const Invitation = ({user}) => {
                 <h2>{I18n.t("aup.hi", {name: invitation.email})}</h2>
                 {(!someConflict && invitation.roles.length > 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
-                        __html: I18n.t("aup.role", {
+                        __html: DOMPurify.sanitize(I18n.t("aup.role", {
                             cardinality: roleCardinality(),
                             roles: roleInformation(),
                             name: invitation.institution.displayName
-                        })
+                        }))
                     }}/>
                 </div>}
                 {(!someConflict && invitation.roles.length === 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
-                        __html: I18n.t("aup.noRoles", {
+                        __html: DOMPurify.sanitize(I18n.t("aup.noRoles", {
                             name: invitation.institution.displayName
-                        })
+                        }))
                     }}/>
                 </div>}
                 {(!someConflict && isEmpty(user)) && <div className="disclaimer">
-                    <p dangerouslySetInnerHTML={{__html: I18n.t("aup.info")}}/>
+                    <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(I18n.t("aup.info"))}}/>
                 </div>}
                 {(invitation.institution.aupUrl && !someConflict && showAup) &&
                 <div>
-                    <h2 dangerouslySetInnerHTML={{__html: I18n.t("aup.title")}}/>
+                    <h2 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(I18n.t("aup.title"))}}/>
                     <p className=""
-                       dangerouslySetInnerHTML={{__html: I18n.t("aup.disclaimer", {url: invitation.institution.aupUrl})}}/>
+                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(I18n.t("aup.disclaimer", {url: invitation.institution.aupUrl}))}}/>
                     <div className="terms">
                         <CheckBox name="aup" value={agreed} info={I18n.t("aup.agreeWithTerms")}
                                   onChange={() => setAgreed(!agreed)}/>
@@ -117,7 +120,7 @@ const Invitation = ({user}) => {
                     <p>{I18n.t("aup.emailEqualityConflict")}</p>
                 </section>}
                 {unspecifiedIdConflict && <section className={"error"}>
-                    <p dangerouslySetInnerHTML={{__html: I18n.t("aup.unspecifiedIdConflict")}}/>
+                    <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(I18n.t("aup.unspecifiedIdConflict"))}}/>
                 </section>}
 
             </div>

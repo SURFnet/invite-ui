@@ -2,6 +2,7 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./Tooltip.scss";
 import ReactTooltip from "react-tooltip";
+import DOMPurify from "dompurify";
 
 const Tooltip = ({name, tooltip}) => {
     return (
@@ -10,7 +11,7 @@ const Tooltip = ({name, tooltip}) => {
                 <FontAwesomeIcon icon="info-circle"/>
             </span>
             <ReactTooltip id={name} type="info" effect="solid">
-                <p dangerouslySetInnerHTML={{__html: tooltip}}/>
+                <p dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(tooltip)}}/>
             </ReactTooltip>
         </>
     )

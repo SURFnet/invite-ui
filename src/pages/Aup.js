@@ -8,6 +8,7 @@ import Spinner from "../components/Spinner";
 import CheckBox from "../components/CheckBox";
 import Button from "../components/Button";
 import {cookieStorage} from "../utils/storage";
+import DOMPurify from "dompurify";
 
 const Aup = ({user}) => {
 
@@ -55,10 +56,10 @@ const Aup = ({user}) => {
                 <h2 dangerouslySetInnerHTML={{__html: I18n.t("aup.title")}}/>
                 {membershipsWithoutAup.map(membership => <div key={membership.id}>
                     <p dangerouslySetInnerHTML={{
-                        __html: I18n.t("aup.disclaimerChanged", {
+                        __html: DOMPurify.sanitize(I18n.t("aup.disclaimerChanged", {
                             name: membership.institution.displayName,
                             url: membership.institution.aupUrl
-                        })
+                        }))
                     }}/>
                     <div className="terms">
                         <CheckBox name={`aup_${membership.id}`}

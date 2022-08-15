@@ -1,6 +1,7 @@
 import {stopEvent} from "../utils/forms";
 import "./Button.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import DOMPurify from "dompurify";
 
 const Button = ({
                     onClick, txt, disabled = false, cancelButton = false,
@@ -22,7 +23,7 @@ const Button = ({
         {!warningButton && txt}{icon}
     </a>
     const withHtml = <a className={cn} href={`/${encodeURIComponent(txt)}`} onClick={onClickInternal}>
-        <span dangerouslySetInnerHTML={{__html: html}}/>
+        <span dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(html)}}/>
     </a>
     if (centralize) {
         return (

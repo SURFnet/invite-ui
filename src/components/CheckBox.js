@@ -2,6 +2,7 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./CheckBox.scss";
 import Tooltip from "./Tooltip";
+import DOMPurify from "dompurify";
 
 const CheckBox = ({name, value, info, onChange, tooltip, className = "checkbox", readOnly = false}) => {
 
@@ -22,7 +23,7 @@ const CheckBox = ({name, value, info, onChange, tooltip, className = "checkbox",
                 </label>
                 {info && <span>
                     <label htmlFor={name} className={`info ${readOnly ? "disabled" : ""}`}
-                           dangerouslySetInnerHTML={{__html: info}}/>
+                           dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(info)}}/>
                     {tooltip && <Tooltip tooltip={tooltip} name={name}/>}
                 </span>}
             </div>
