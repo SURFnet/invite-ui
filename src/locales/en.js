@@ -106,6 +106,7 @@ I18n.translations.en = {
         displayName: "Description",
         displayNamePlaceholder: "Description of the role",
         applicationName: "Application",
+        urn: "URN",
         new: "New role",
         searchPlaceHolder: "Search roles",
         noEntities: "There are no roles...",

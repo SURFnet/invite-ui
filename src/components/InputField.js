@@ -1,6 +1,7 @@
 import React from "react";
 import "./InputField.scss";
 import Tooltip from "./Tooltip";
+import ClipBoardCopy from "./ClipBoardCopy";
 
 
 export default function InputField({
@@ -18,7 +19,8 @@ export default function InputField({
                                        cols = 5,
                                        maxLength = 255,
                                        displayLabel = true,
-                                       isNumeric = false
+                                       isNumeric = false,
+                                       copyClipBoard = false
                                    }) {
     placeholder = disabled ? "" : placeholder;
     if (error) {
@@ -44,6 +46,7 @@ export default function InputField({
                                onEnter(e);
                            }
                        }}/>}
+                {copyClipBoard && <ClipBoardCopy txt={value} right={true}/>}
                 {multiline &&
                 <textarea disabled={disabled}
                           value={value}

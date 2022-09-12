@@ -4,8 +4,7 @@ import {isEmpty} from "../utils/forms";
 import {cookieStorage} from "../utils/storage";
 
 //Internal API
-const config = window.config;
-const serverUrl = config.serverUrl;
+const serverUrl = window.config.serverUrl;
 
 function validateResponse(showErrorDialog) {
     return res => {
