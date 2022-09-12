@@ -239,6 +239,7 @@ I18n.translations.en = {
         singleRole: "role",
         multipleRoles: "roles",
         email: "Email address",
+        alreadyAccepted: "This invite has already been accepted. Contact <a href=\"mailto:{{inviter}}\">{{inviter}}</a> if you think this is an error.",
         title: "Acceptable use policy",
         disclaimer: "By logging on the Invite app, you become a user and agree to the <a href=\"{{url}}\" target=\"_blank\">term and conditions of our AUP.</a>",
         disclaimerChanged: "Institution {{name}} has updated the <a href=\"{{url}}\" target=\"_blank\">terms and conditions of their AUP.</a>",

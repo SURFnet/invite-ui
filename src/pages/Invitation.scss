@@ -9,6 +9,16 @@
     .invitation {
         margin: 0 auto;
         max-width: $mobile;
+
+        div.already-accepted {
+            display: flex;
+            height: 50vh;
+
+            p {
+                margin-top: 15px;
+                color: $primary-red;
+            }
+        }
     }
 
     div.disclaimer {
