@@ -1,39 +1,52 @@
 @import "../styles/vars";
 
 div.invitations {
-  background-color: white;
+    background-color: white;
 
-  table.invitations {
+    div.inviter {
 
-    thead {
-      th {
-        &.email {
-          width: 25%;
+        span {
+            display: block;
+
         }
-
-        &.authority {
-          width: 20%;
-        }
-
-        &.status {
-          width: 20%;
-        }
-
-        &.roles {
-          width: 35%;
-        }
-      }
     }
 
-    tbody {
-      tr {
-        td {
-          span.open-invitation {
-            color: $primary-green;
-          }
+    table.invitations {
+
+        thead {
+            th {
+                &.email {
+                    width: 20%;
+                }
+
+                &.authority {
+                    width: 15%;
+                }
+
+                &.inviter {
+                    width: 20%;
+                }
+
+                &.status {
+                    width: 20%;
+                }
+
+                &.roles {
+                    width: 25%;
+                }
+            }
         }
-      }
+
+        tbody {
+            tr {
+                td {
+                    span.open-invitation {
+                        color: black;
+                    }
+                }
+
+            }
+        }
     }
-  }
 }
 

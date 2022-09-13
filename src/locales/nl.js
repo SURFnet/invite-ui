@@ -55,6 +55,7 @@ I18n.translations.nl = {
         email: "Email",
         roles: "Rollen",
         authority: "Autoriteit",
+        inviter: "Uitnodiger",
         intendedAuthority: "Gewenste Autoriteit",
         expires: " - verloopt {{date}}",
         authorities: {

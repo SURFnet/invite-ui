@@ -55,6 +55,7 @@ I18n.translations.en = {
         email: "Email",
         roles: "Roles",
         authority: "Authority",
+        inviter: "Inviter",
         intendedAuthority: "Intended authority",
         expires: " - expires {{date}}",
         authorities: {

@@ -6,6 +6,7 @@ import {stopEvent} from "../utils/forms";
 import {useNavigate} from "react-router-dom";
 import Entities from "../components/Entities";
 import "./Users.scss";
+import "./Invitations.scss";
 import {AUTHORITIES, isAllowed, isAllowedForInviter} from "../utils/authority";
 import {formatDateShort, isExpired} from "../utils/date";
 
@@ -60,6 +61,14 @@ const Invitations = ({user, institutionId, application = null}) => {
             key: "authority",
             header: I18n.t("users.intendedAuthority"),
             mapper: entity => I18n.t(`users.authorities.${entity.intendedAuthority}`),
+        },
+        {
+            key: "inviter",
+            header: I18n.t("users.inviter"),
+            mapper: entity => <div className="inviter">
+                <span>{entity.inviter.email}</span>
+                <span>{`(${entity.inviter.name})`}</span>
+            </div>
         },
         {
             key: "status",
