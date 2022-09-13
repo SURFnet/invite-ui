@@ -86,6 +86,7 @@ I18n.translations.en = {
         noProvisioning: "None",
         landingPage: "Landing page URL",
         landingPagePlaceholder: "Landing page of the application",
+        landingPageTooltip: "The landing page is used as the link in the user profile page. The %%eppn%% variable will be substituted with the eppn of the user.",
         provisioningHookUrl: "Provisioning hook URL",
         updateRolePutMethod: "Use SCIM PUT hook (default PATCH)",
         updateRolePutMethodTooltip: "If checked then a PUT call is made to the provisioning URL with all the users with this role, otherwise a PATCH is made with only the delta (e.g. the user-role which was added or deleted)",

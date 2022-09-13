@@ -237,6 +237,7 @@ const ApplicationForm = ({user}) => {
                             setInvalid({...setInvalid, landingPage: false});
                         }}
                         placeholder={I18n.t("applications.landingPagePlaceholder")}
+                        toolTip={I18n.t("applications.landingPageTooltip")}
                         onBlur={validateLandingPage}
                         error={invalid.landingPage || (!initial && isEmpty(application.landingPage))}
                         name={I18n.t("applications.landingPage")}/>

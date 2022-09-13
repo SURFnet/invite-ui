@@ -86,6 +86,7 @@ I18n.translations.nl = {
         noProvisioning: "Geen",
         landingPage: "Landingspagina url",
         landingPagePlaceholder: "Startpagina voor de toepassing",
+        landingPageTooltip: "De landingspagina wordt gebruikt als de link op de gebruikers profiel pagina. De variabele %%eppn%% wordt vervangen door de eppn van de gebruiker.",
         provisioningHookUrl: "Provisioning hook URL",
         updateRolePutMethod: "Gebruik SCIM PUT hook (default PATCH)",
         updateRolePutMethodTooltip: "If checked then a PUT call is made to the provisioning URL with all the users with this role, otherwise a PATCH is made with only the delta (e.g. the user-role which was added or deleted)",
