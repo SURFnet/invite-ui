@@ -222,6 +222,8 @@ I18n.translations.nl = {
         institution: "Instelling",
         institutions: "Instellingen",
         endDate: "Einddatum: ",
+        inviter: "Uitgenodigd door: ",
+        noInviter: "Onbekend",
         noEndDate: "Geen einddatum",
         roles: "Rollen",
         confirmation: {

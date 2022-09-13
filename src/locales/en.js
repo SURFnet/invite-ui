@@ -222,6 +222,8 @@ I18n.translations.en = {
         institution: "Institution",
         institutions: "Institutions",
         endDate: "End date: ",
+        inviter: "Invited by: ",
+        noInviter: "Unknown",
         noEndDate: "No end date",
         roles: "Roles",
         confirmation: {
