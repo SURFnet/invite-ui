@@ -147,6 +147,7 @@ const UserAttributes = ({user, isMe, authenticatedUser}) => {
                                         {userRole.endDate &&
                                         <p>{I18n.t("profile.endDate")}<em>{formatDate(userRole.endDate)}</em></p>}
                                         {!userRole.endDate && <p>{I18n.t("profile.noEndDate")}</p>}
+                                        <p>{I18n.t("profile.inviter")}<em>{userRole.inviter || I18n.t("profile.noInviter")}</em></p>
                                     </div>
                                     {deleteUserRoleAllowed(authenticatedUser, user, userRole) &&
                                     <Button warningButton={true} txt={I18n.t("forms.delete")}

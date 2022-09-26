@@ -2,10 +2,10 @@
 import {refreshTokens} from "./frontChannelTokenRequest";
 import {isEmpty} from "../utils/forms";
 import {cookieStorage} from "../utils/storage";
+import I18n from "i18n-js";
 
 //Internal API
-const config = window.config;
-const serverUrl = config.serverUrl;
+const serverUrl = window.config.serverUrl;
 
 function validateResponse(showErrorDialog) {
     return res => {
@@ -40,6 +40,7 @@ function validFetch(path, options, headers = {}, showErrorDialog = true) {
     const contentHeaders = {
         "Accept": "application/json",
         "Content-Type": "application/json",
+        "Accept-Language": I18n.locale,
         ...headers
     };
     const token = cookieStorage.getItem("accessToken");

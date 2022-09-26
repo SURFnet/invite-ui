@@ -16,6 +16,8 @@ const Invitation = ({user}) => {
 
     const [agreed, setAgreed] = useState(false);
     const [showAup, setShowAup] = useState(true);
+    const [error, setError] = useState(false);
+    const [inviter, setInviter] = useState("");
     const [invitation, setInvitation] = useState({});
     const [loading, setLoading] = useState(true);
     const [emailEqualityConflict, setEmailEqualityConflict] = useState(false);
@@ -33,7 +35,19 @@ const Invitation = ({user}) => {
                 setAgreed(!isEmpty(aup))
             }
             setLoading(false);
-        }).catch(() => navigate("/404"));
+        }).catch(e => {
+            if (e.response && e.response.status === 409) {
+                e.response.json().then(j => {
+                    const message = j.message;
+                    setInviter(message);
+                    setError(true);
+                    setLoading(false);
+                })
+            } else {
+                navigate("/404");
+            }
+
+        });
     }, [navigate, user]);
 
     const proceed = () => {
@@ -78,7 +92,21 @@ const Invitation = ({user}) => {
     }
 
     const someConflict = emailEqualityConflict || unspecifiedIdConflict;
-
+    if (error) {
+        return (
+            <div className="invitation-container">
+                <div className="invitation">
+                    <div className={"already-accepted"}>
+                        <p dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(I18n.t("aup.alreadyAccepted", {
+                                inviter: inviter
+                            }))
+                        }}/>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className="invitation-container">
             <div className="invitation">

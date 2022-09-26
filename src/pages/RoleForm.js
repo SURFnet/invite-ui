@@ -12,6 +12,7 @@ import InputField from "../components/InputField";
 import ErrorIndicator from "../components/ErrorIndicator";
 import Button from "../components/Button";
 import {BreadCrumb} from "../components/BreadCrumb";
+import {urnFromRole} from "../utils/roles";
 
 const RoleForm = ({user}) => {
 
@@ -201,6 +202,11 @@ const RoleForm = ({user}) => {
                         isNumeric={true}
                         toolTip={I18n.t("roles.defaultExpiryDaysTooltip")}
                         name={I18n.t("roles.defaultExpiryDays")}/>
+
+            <InputField value={urnFromRole(application, role)}
+                        disabled={true}
+                        copyClipBoard={true}
+                        name={I18n.t("roles.urn")}/>
 
             <InputField value={application.name}
                         disabled={true}
