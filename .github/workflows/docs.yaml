@@ -1,0 +1,21 @@
+---
+name: Check Documentation
+
+# Triggers the workflow on push or pull request events
+on: [push, pull_request]
+
+jobs:
+  test-documentatuin:
+    runs-on: ubuntu-latest
+    name: Validate markdown
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: lint markdown files
+        uses: nosborn/github-action-markdown-cli@v2.0.0
+        with:
+          files: .
+
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
