@@ -6,7 +6,7 @@
     <artifactId>invite-ui</artifactId>
     <packaging>pom</packaging>
     <name>invite-ui</name>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
