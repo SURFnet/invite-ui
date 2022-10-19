@@ -59,11 +59,18 @@ const NewInvitation = ({user}) => {
                 allGuestEmailsByInstitution(institutionId)
             ]).then(res => {
                 setInstitution(res[0]);
-                const allRoleOptions = res[1].map(role => ({
+                let allRoleOptions = res[1].map(role => ({
                     value: role.id,
                     label: `${role.name} (${role.application.name})`,
                     defaultExpiryDays: role.defaultExpiryDays
                 }));
+                if (!isAllowed(AUTHORITIES.SUPER_ADMIN, user, institutionId) &&
+                    !isAllowed(AUTHORITIES.INSTITUTION_ADMINISTRATOR, user, institutionId)) {
+                    const roleIdentifiers = user.userRoles
+                        .filter(userRole => userRole.role.application.institution.id === parseInt(institutionId, 10))
+                        .map(userRole => userRole.role.id);
+                    allRoleOptions = allRoleOptions.filter(role => roleIdentifiers.includes(role.value));
+                }
                 setRoleOptions(allRoleOptions);
                 setGuestEmails(res[2]);
                 setLoading(false);
@@ -73,7 +80,7 @@ const NewInvitation = ({user}) => {
 
 
     const isValid = () => {
-        return !isEmpty(invites) && (!isEmpty(roles) || invitation.intendedAuthority !== AUTHORITIES.GUEST.name);
+        return !isEmpty(invites) && (!isEmpty(roles) || !showRoles());
     };
 
     const setState = (attr, value) => {
@@ -83,15 +90,16 @@ const NewInvitation = ({user}) => {
 
     const submit = () => {
         setInitial(false);
+        const invitationRoles = showRoles() ? roles.map(r => ({
+            role: {id: r.value},
+            endDate: roleExpiryDate,
+        })) : [];
         if (isValid()) {
             setLoading(true);
             const invitationWithRoles = {
                 ...invitation,
                 institution: {id: institutionId},
-                roles: roles.map(r => ({
-                    role: {id: r.value},
-                    endDate: roleExpiryDate,
-                }))
+                roles: invitationRoles
             }
             const invitationRequest = {
                 invites: invites,
@@ -147,7 +155,10 @@ const NewInvitation = ({user}) => {
         }
     }
 
-    const invitationForm = (disabledSubmit) => (
+    const showRoles = () => invitation.intendedAuthority === AUTHORITIES.GUEST.name ||
+        invitation.intendedAuthority === AUTHORITIES.INVITER.name
+
+    const invitationForm = disabledSubmit => (
         <>
 
             <EmailField value={email}
@@ -163,6 +174,12 @@ const NewInvitation = ({user}) => {
             {(!initial && isEmpty(invites)) &&
             <ErrorIndicator msg={I18n.t("invitations.requiredEmail")}/>}
 
+            <CheckBox name={I18n.t("invitations.enforceEmailEquality")}
+                      value={invitation.enforceEmailEquality}
+                      info={I18n.t("invitations.enforceEmailEquality")}
+                      onChange={() => setState("enforceEmailEquality", !invitation.enforceEmailEquality)}
+                      tooltip={I18n.t("invitations.enforceEmailEqualityTooltip")}/>
+
             <SelectField
                 value={intendedAuthoritiesOptions.find(option => option.value === invitation.intendedAuthority)}
                 options={intendedAuthoritiesOptions.filter(option => isInviteAllowed(AUTHORITIES[option.value], user, institutionId) &&
@@ -173,11 +190,31 @@ const NewInvitation = ({user}) => {
                 toolTip={I18n.t("invitations.intendedAuthorityTooltip")}
                 onChange={selectedOption => setState("intendedAuthority", selectedOption ? selectedOption.value : null)}/>
 
-            <CheckBox name={I18n.t("invitations.enforceEmailEquality")}
-                      value={invitation.enforceEmailEquality}
-                      info={I18n.t("invitations.enforceEmailEquality")}
-                      onChange={() => setState("enforceEmailEquality", !invitation.enforceEmailEquality)}
-                      tooltip={I18n.t("invitations.enforceEmailEqualityTooltip")}/>
+            {showRoles() && <SelectField value={roles}
+                         options={roleOptions.filter(role => !roles.find(r => r.value === role.value))}
+                         name={I18n.t("invitations.roles")}
+                         toolTip={I18n.t("invitations.rolesTooltip")}
+                         isMulti={true}
+                         error={!initial && isEmpty(roles) && showRoles()}
+                         searchable={true}
+                         placeholder={I18n.t("invitations.rolesPlaceHolder")}
+                         onChange={rolesChanged}/>}
+            {(!initial && isEmpty(roles) && (invitation.intendedAuthority === AUTHORITIES.GUEST.name)) &&
+            <ErrorIndicator msg={I18n.t("invitations.requiredRole")}/>}
+
+            {showRoles() &&<DateField value={roleExpiryDate}
+                       onChange={e => setRoleExpiryDate(e)}
+                       allowNull={true}
+                       showYearDropdown={true}
+                       name={I18n.t("invitations.expiryDateRole")}
+                       tooltip={I18n.t("invitations.expiryDateRoleTooltip")}/>}
+
+            <InputField value={invitation.message}
+                        onChange={e => setState("message", e.target.value)}
+                        placeholder={I18n.t("invitations.messagePlaceholder")}
+                        name={I18n.t("invitations.message")}
+                        large={true}
+                        multiline={true}/>
 
             <DateField value={invitation.expiryDate}
                        onChange={e => setState("expiryDate", e)}
@@ -186,32 +223,6 @@ const NewInvitation = ({user}) => {
                        maxDate={futureDate(30)}
                        name={I18n.t("invitations.expiryDate")}
                        tooltip={I18n.t("invitations.expiryDateTooltip")}/>
-
-            <SelectField value={roles}
-                         options={roleOptions.filter(role => !roles.find(r => r.value === role.value))}
-                         name={I18n.t("invitations.roles")}
-                         toolTip={I18n.t("invitations.rolesTooltip")}
-                         isMulti={true}
-                         error={!initial && isEmpty(roles) && invitation.intendedAuthority === AUTHORITIES.GUEST.name}
-                         searchable={true}
-                         placeholder={I18n.t("invitations.rolesPlaceHolder")}
-                         onChange={rolesChanged}/>
-            {(!initial && isEmpty(roles) && invitation.intendedAuthority === AUTHORITIES.GUEST.name) &&
-            <ErrorIndicator msg={I18n.t("invitations.requiredRole")}/>}
-
-            <DateField value={roleExpiryDate}
-                       onChange={e => setRoleExpiryDate(e)}
-                       allowNull={true}
-                       showYearDropdown={true}
-                       name={I18n.t("invitations.expiryDateRole")}
-                       tooltip={I18n.t("invitations.expiryDateRoleTooltip")}/>
-
-            <InputField value={invitation.message}
-                        onChange={e => setState("message", e.target.value)}
-                        placeholder={I18n.t("invitations.messagePlaceholder")}
-                        name={I18n.t("invitations.message")}
-                        large={true}
-                        multiline={true}/>
 
             <section className="actions">
                 <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
