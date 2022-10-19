@@ -4,6 +4,7 @@ import {isEmpty} from "../utils/forms";
 import {cookieStorage} from "../utils/storage";
 import I18n from "i18n-js";
 
+
 //Internal API
 const serverUrl = window.config.serverUrl;
 
@@ -12,12 +13,17 @@ function validateResponse(showErrorDialog) {
         if (!res.ok) {
             if (res.status === 401) {
                 //Need to get a new accessToken and reload the page
-                refreshTokens().then(json => {
-                    cookieStorage.setItem("accessToken", json.access_token);
-                    cookieStorage.setItem("refreshToken", json.refresh_token);
-                    window.location.reload(true);
-                })
-                return;
+                refreshTokens()
+                    .then(json => {
+                        cookieStorage.setItem("accessToken", json.access_token);
+                        cookieStorage.setItem("refreshToken", json.refresh_token);
+                        window.location.reload();
+                    })
+                    .catch(() => {
+                        cookieStorage.clear();
+                        window.location.reload();
+                    })
+                return Promise.resolve({json: () => ({})});
             }
             if (res.type === "opaqueredirect") {
                 setTimeout(() => window.location.reload(true), 100);
@@ -277,5 +283,5 @@ export function deleteScimFailure(id, institutionId) {
 }
 
 export function resendScimFailure(id, institutionId) {
-    return postPutJson(`/api/v1/scim/id/${id}/${institutionId}`,{}, "put", false);
+    return postPutJson(`/api/v1/scim/id/${id}/${institutionId}`, {}, "put", false);
 }

@@ -1,3 +1,5 @@
+import {cookieStorage} from "../utils/storage";
+
 const fetchTokens = (body, url) => {
     const fetchOptions = {
         method: "POST",
@@ -8,14 +10,18 @@ const fetchTokens = (body, url) => {
             "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
         }
     };
-    return fetch(url, fetchOptions).then(res => {
-        if (!res.ok) {
-            sessionStorage.clear();
-            window.location.reload(true);
-        } else {
-            return res.json();
-        }
-    });
+    return fetch(url, fetchOptions)
+        .then(res => {
+            if (!res.ok) {
+                cookieStorage.clear();
+                window.location.reload();
+            } else {
+                return res.json();
+            }
+        }).catch(() => {
+            cookieStorage.clear();
+            window.location.reload();
+        });
 }
 
 export function getTokensFrontChannel(options) {
@@ -36,9 +42,9 @@ export function refreshTokens() {
     const body = {
         "grant_type": "refresh_token",
         "scope": "openid",
-        "client_id": sessionStorage.getItem("clientId"),
-        "refresh_token": sessionStorage.getItem("refreshToken")
+        "client_id": cookieStorage.getItem("clientId"),
+        "refresh_token": cookieStorage.getItem("refreshToken")
     }
-    const tokenUrl = sessionStorage.getItem("tokenUrl");
+    const tokenUrl = cookieStorage.getItem("tokenUrl");
     return fetchTokens(body, tokenUrl);
 }

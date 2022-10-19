@@ -47,7 +47,6 @@ const App = () => {
             }
             oauth().then(r => {
                 cookieStorage.setItem("options", JSON.stringify(r));
-                cookieStorage.setItem()
                 window.location.href = r.authorizationUrl;
             });
         } else if (inAuthRedirect && options) {
