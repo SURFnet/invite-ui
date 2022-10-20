@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - yyyy-mm-dd
 
+- Limit inviters to roles
+- Fix authentication on session timeout
+
 ## [0.0.2] - 05-10-2022
 
 - Add group urn to interface
