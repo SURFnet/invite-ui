@@ -238,8 +238,16 @@ I18n.translations.nl = {
         hi: "Hallo {{name}},",
         info: "We gaan jouw profiel aanmaken.",
         name: "Weergave naam.",
-        role: "Je bent gevraagd om de uitnodiging te accepteren voor {{cardinality}}: {{roles}} bij de instelling {{name}}",
-        noRoles: "Je bent gevreegd deel te namen aan {{name}}",
+        invitation: "Je bent uitgenodigd om een <strong>{{authority}}</strong> te worden bij de instelling {{name}}.",
+        inviter: "Je krijgt het recht om mensen uit te nodigen voor de volgende {{cardinality}}: {{roles}}.",
+        guest: "Je krijgt de volgende {{cardinality}} toebedeeld: {{roles}}.",
+        roles: {
+            inviter: "uitnodiger",
+            guest: "gast",
+            super_admin: "super beheerder",
+            institution_administrator: "instellingsbeheerder"
+        },
+        noRoles: "Je bent uitgenodigd om een <strong>{{authority}}</strong> te worden bij de instelling {{name}}",
         singleRole: "rol",
         multipleRoles: "rollen",
         email: "Email adres",

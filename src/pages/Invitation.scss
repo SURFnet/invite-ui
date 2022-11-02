@@ -10,6 +10,10 @@
         margin: 0 auto;
         max-width: $mobile;
 
+        p.roles {
+            margin-top: 5px;
+        }
+
         div.already-accepted {
             display: flex;
             height: 50vh;

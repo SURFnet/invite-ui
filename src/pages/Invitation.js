@@ -107,22 +107,32 @@ const Invitation = ({user}) => {
             </div>
         );
     }
+    const intendedAuthority = invitation.intendedAuthority.toLowerCase();
+    const intendedAuthorityLocale = I18n.t(`aup.roles.${intendedAuthority}`);
     return (
         <div className="invitation-container">
             <div className="invitation">
                 <h2>{I18n.t("aup.hi", {name: invitation.email})}</h2>
                 {(!someConflict && invitation.roles.length > 0) && <div className="invitation-info">
-                    <p dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(I18n.t("aup.role", {
-                            cardinality: roleCardinality(),
-                            roles: roleInformation(),
-                            name: invitation.institution.displayName
-                        }))
-                    }}/>
+                        <p dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(I18n.t("aup.invitation", {
+                                authority: intendedAuthorityLocale,
+                                name: invitation.institution.displayName
+                            }))
+                        }}/>
+                        {["inviter", "guest"].includes(intendedAuthority) &&
+                        <p className={"roles"} dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(I18n.t(`aup.${intendedAuthority}`, {
+                                cardinality: roleCardinality(),
+                                roles: roleInformation()
+                            }))
+                        }}/>
+                        }
                 </div>}
                 {(!someConflict && invitation.roles.length === 0) && <div className="invitation-info">
                     <p dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(I18n.t("aup.noRoles", {
+                            authority: intendedAuthorityLocale,
                             name: invitation.institution.displayName
                         }))
                     }}/>

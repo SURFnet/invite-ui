@@ -238,8 +238,16 @@ I18n.translations.en = {
         hi: "Hi {{name}},",
         info: "We are ready to create your profile.",
         name: "Display name.",
-        role: "You have been invited to accept the following {{cardinality}}: {{roles}} at the institution {{name}}",
-        noRoles: "You have been invited to become a member at the institution {{name}}",
+        invitation: "You have been invited to become <strong>{{authority}}</strong> at the institution {{name}}. ",
+        inviter: "You will be granted the right to invite people for the following {{cardinality}}: {{roles}}.",
+        guest: "You will be granted the following {{cardinality}}: {{roles}}.",
+        roles: {
+            inviter: "inviter",
+            guest: "guest",
+            super_admin: "super admin",
+            institution_administrator: "institution administrator"
+        },
+        noRoles: "You have been invited to become a <strong>{{authority}}</strong> at the institution {{name}}",
         singleRole: "role",
         multipleRoles: "roles",
         email: "Email address",
