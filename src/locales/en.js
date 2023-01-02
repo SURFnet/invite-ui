@@ -20,7 +20,7 @@ I18n.translations.en = {
     },
     breadcrumbs: {
         home: "Home",
-        mineApplications: "Mine applications"
+        mineApplications: "My applications"
     },
     institutions: {
         title: "Institutions",
