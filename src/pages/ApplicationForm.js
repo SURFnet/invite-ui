@@ -63,6 +63,7 @@ const ApplicationForm = ({user}) => {
                     provisioningHookUsername: "",
                     provisioningHookPassword: "",
                     provisioningHookEmail: "",
+                    apiKey: "",
                     institution: {
                         id: institutionId
                     }
@@ -298,6 +299,11 @@ const ApplicationForm = ({user}) => {
             })}/>}
             {(!isEmpty(application.provisioningHookEmail) && !isEmpty(application.provisioningHookUrl)) &&
             <ErrorIndicator msg={I18n.t("applications.conflictProvisioning")}/>}
+
+            <InputField value={application.apiKey}
+                        onChange={e => setState("apiKey", e.target.value)}
+                        placeholder={I18n.t("applications.apiKeyPlaceholder")}
+                        name={I18n.t("applications.apiKey")}/>
 
             <section className="actions">
                 {!isNew &&

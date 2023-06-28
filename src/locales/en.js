@@ -97,6 +97,8 @@ I18n.translations.en = {
         provisioningHookPasswordPlaceholder: "Provisioning hook password of the application",
         provisioningHookEmail: "Provisioning hook email",
         provisioningHookEmailPlaceholder: "Provisioning hook email of the application",
+        apiKey: "API Key (eVA)",
+        apiKeyPlaceholder: "secret-key",
         searchPlaceHolder: "Search applications",
         new: "New application",
         noEntities: "There are no applications...",
