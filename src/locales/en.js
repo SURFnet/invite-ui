@@ -102,7 +102,8 @@ I18n.translations.en = {
         searchPlaceHolder: "Search applications",
         new: "New application",
         noEntities: "There are no applications...",
-        conflictProvisioning: "You can not both configure a provisioningHookUrl and a provisioningHookEmail"
+        conflictProvisioning: "You can not both configure a provisioningHookUrl and a provisioningHookEmail",
+        conflictEvaProvisioning: "You can not both configure a provisioningHookUrl / provisioningHookEmail and an API Key"
     },
     roles: {
         name: "Name",

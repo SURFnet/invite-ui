@@ -102,7 +102,9 @@ I18n.translations.nl = {
         searchPlaceHolder: "Zoek toepassingen",
         new: "Nieuwe toepassing",
         noEntities: "Geen toepassingen gevonden...",
-        conflictProvisioning: "Je kun niet zowel een provisioningHookUrl als een provisioningHookEmail gebruiken"
+        conflictProvisioning: "Je kun niet zowel een provisioningHookUrl als een provisioningHookEmail gebruiken",
+        conflictEvaProvisioning: "Je kun niet zowel een provisioningHookUrl / provisioningHookEmail en een API Key gebruiken"
+
     },
     roles: {
         name: "Naam",

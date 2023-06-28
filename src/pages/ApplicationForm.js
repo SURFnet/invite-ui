@@ -103,7 +103,9 @@ const ApplicationForm = ({user}) => {
     const isValid = () => {
         const inValid = Object.values(invalid).some(val => val) || Object.values(alreadyExists).some(val => val) ||
             required.some(attr => isEmpty(application[attr])) ||
-            (!isEmpty(application.provisioningHookUrl) && !isEmpty(application.provisioningHookEmail));
+            (!isEmpty(application.provisioningHookUrl) && !isEmpty(application.provisioningHookEmail))
+            || ((!isEmpty(application.provisioningHookUrl) || !isEmpty(application.provisioningHookEmail)) &&
+                !isEmpty(application.apiKey));
         return !inValid
     };
 
@@ -196,9 +198,9 @@ const ApplicationForm = ({user}) => {
                         toolTip={I18n.t("forms.nameTooltip", {object: I18n.t("applications.object")})}
                         name={I18n.t("applications.name")}/>
             {(!initial && isEmpty(application.name)) &&
-            <ErrorIndicator msg={I18n.t("forms.required", {
-                attribute: I18n.t("applications.name")
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.required", {
+                    attribute: I18n.t("applications.name")
+                })}/>}
 
             <InputField value={application.displayName}
                         onChange={e => setState("displayName", e.target.value)}
@@ -215,16 +217,16 @@ const ApplicationForm = ({user}) => {
                         error={alreadyExists.entityId || (!initial && isEmpty(application.entityId))}
                         name={I18n.t("applications.entityId")}/>
             {(!initial && isEmpty(application.entityId)) &&
-            <ErrorIndicator msg={I18n.t("forms.required", {
-                attribute: I18n.t("applications.entityId")
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.required", {
+                    attribute: I18n.t("applications.entityId")
+                })}/>}
 
             {alreadyExists.entityId &&
-            <ErrorIndicator msg={I18n.t("forms.alreadyExists", {
-                object: I18n.t("applications.object").toLowerCase(),
-                attribute: I18n.t("applications.entityId").toLowerCase(),
-                value: application.entityId
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.alreadyExists", {
+                    object: I18n.t("applications.object").toLowerCase(),
+                    attribute: I18n.t("applications.entityId").toLowerCase(),
+                    value: application.entityId
+                })}/>}
 
             <CheckBox name="updateRolePutMethod"
                       value={application.updateRolePutMethod}
@@ -243,14 +245,14 @@ const ApplicationForm = ({user}) => {
                         error={invalid.landingPage || (!initial && isEmpty(application.landingPage))}
                         name={I18n.t("applications.landingPage")}/>
             {invalid.landingPage &&
-            <ErrorIndicator msg={I18n.t("forms.invalid", {
-                attribute: I18n.t("applications.landingPage").toLowerCase(),
-                value: application.landingPage
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.invalid", {
+                    attribute: I18n.t("applications.landingPage").toLowerCase(),
+                    value: application.landingPage
+                })}/>}
             {(!initial && isEmpty(application.landingPage)) &&
-            <ErrorIndicator msg={I18n.t("forms.required", {
-                attribute: I18n.t("applications.landingPage")
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.required", {
+                    attribute: I18n.t("applications.landingPage")
+                })}/>}
 
 
             <InputField value={application.provisioningHookUrl}
@@ -264,10 +266,10 @@ const ApplicationForm = ({user}) => {
                         error={invalid.provisioningHookUrl}
                         name={I18n.t("applications.provisioningHookUrl")}/>
             {invalid.provisioningHookUrl &&
-            <ErrorIndicator msg={I18n.t("forms.invalid", {
-                attribute: I18n.t("applications.provisioningHookUrl").toLowerCase(),
-                value: application.provisioningHookUrl
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.invalid", {
+                    attribute: I18n.t("applications.provisioningHookUrl").toLowerCase(),
+                    value: application.provisioningHookUrl
+                })}/>}
 
             <InputField value={application.provisioningHookUsername}
                         onChange={e => {
@@ -293,24 +295,27 @@ const ApplicationForm = ({user}) => {
                         error={invalid.provisioningHookEmail}
                         name={I18n.t("applications.provisioningHookEmail")}/>
             {invalid.provisioningHookEmail &&
-            <ErrorIndicator msg={I18n.t("forms.invalid", {
-                attribute: I18n.t("applications.provisioningHookEmail").toLowerCase(),
-                value: application.provisioningHookEmail
-            })}/>}
+                <ErrorIndicator msg={I18n.t("forms.invalid", {
+                    attribute: I18n.t("applications.provisioningHookEmail").toLowerCase(),
+                    value: application.provisioningHookEmail
+                })}/>}
             {(!isEmpty(application.provisioningHookEmail) && !isEmpty(application.provisioningHookUrl)) &&
-            <ErrorIndicator msg={I18n.t("applications.conflictProvisioning")}/>}
+                <ErrorIndicator msg={I18n.t("applications.conflictProvisioning")}/>}
 
             <InputField value={application.apiKey}
                         onChange={e => setState("apiKey", e.target.value)}
                         placeholder={I18n.t("applications.apiKeyPlaceholder")}
                         name={I18n.t("applications.apiKey")}/>
+            {((!isEmpty(application.provisioningHookEmail) || !isEmpty(application.provisioningHookUrl))
+                && !isEmpty(application.apiKey))&&
+                <ErrorIndicator msg={I18n.t("applications.conflictEvaProvisioning")}/>}
 
             <section className="actions">
                 {!isNew &&
-                <Button warningButton={true}
-                        disabled={userCount > 0}
-                        txt={I18n.t("forms.delete")}
-                        onClick={() => doDelete(true)}/>
+                    <Button warningButton={true}
+                            disabled={userCount > 0}
+                            txt={I18n.t("forms.delete")}
+                            onClick={() => doDelete(true)}/>
                 }
                 <Button cancelButton={true} txt={I18n.t("forms.cancel")} onClick={cancel}/>
                 <Button disabled={disabledSubmit} txt={I18n.t("forms.save")} onClick={submit}/>
