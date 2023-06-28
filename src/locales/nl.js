@@ -97,6 +97,8 @@ I18n.translations.nl = {
         provisioningHookPasswordPlaceholder: "Provisioning hook wachtwoord voor de toepassing",
         provisioningHookEmail: "Provisioning hook email",
         provisioningHookEmailPlaceholder: "Email adres voor provisioning",
+        apiKey: "API Key (eVA)",
+        apiKeyPlaceholder: "secret-key",
         searchPlaceHolder: "Zoek toepassingen",
         new: "Nieuwe toepassing",
         noEntities: "Geen toepassingen gevonden...",
